@@ -1,0 +1,10 @@
+.mapboxgl-ctrl-group,
+.mapboxgl-ctrl-group {
+  border: none !important;
+  box-shadow: none !important;
+  background: none !important;
+  box-shadow: none !important;
+}
+.mapboxgl-ctrl .mapboxgl-ctrl-logo {
+  display: none;
+}
