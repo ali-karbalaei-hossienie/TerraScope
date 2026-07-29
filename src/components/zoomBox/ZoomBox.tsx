@@ -1,27 +1,33 @@
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
+import NavigationOutlinedIcon from "@mui/icons-material/NavigationOutlined";
 import RemoveOutlinedIcon from "@mui/icons-material/RemoveOutlined";
 import { Box, IconButton } from "@mui/material";
 import { useCallback, useEffect, useRef, type FC } from "react";
+import { useMap } from "react-map-gl/mapbox";
 import { MapControl } from "../mapControl/MapControl";
 import { NavigationContainer } from "./style/zoomStyle";
-import { useMap } from "react-map-gl/mapbox";
 
 const MapNavigation: FC = () => {
   const { map } = useMap();
   const zoomTextRef = useRef<HTMLDivElement>(null);
+  const compassRef = useRef<HTMLSpanElement>(null);
 
   const flyToHome = useCallback(() => {
     map?.flyTo({ center: [53.688, 32.4279], zoom: 5, duration: 2000 });
-  }, [map]);
+  }, []);
 
   const handleZoomIn = useCallback(() => {
     map?.zoomIn({ duration: 500 });
-  }, [map]);
+  }, []);
 
   const handleZoomOut = useCallback(() => {
     map?.zoomOut({ duration: 500 });
-  }, [map]);
+  }, []);
+
+  const handleCompass = useCallback(() => {
+    map?.resetNorth({ duration: 500 });
+  }, []);
 
   useEffect(() => {
     if (!map) return;
@@ -32,12 +38,21 @@ const MapNavigation: FC = () => {
       }
     };
 
+    const updateCompass = () => {
+      if (compassRef.current) {
+        compassRef.current.style.transform = `rotate(${-map.getBearing() - 45}deg)`;
+      }
+    };
+
     updateZoom();
+    updateCompass();
 
     map.on("zoom", updateZoom);
+    map.on("rotate", updateCompass);
 
     return () => {
       map.off("zoom", updateZoom);
+      map.off("rotate", updateCompass);
     };
   }, [map]);
 
@@ -56,6 +71,25 @@ const MapNavigation: FC = () => {
 
           <IconButton onClick={handleZoomOut}>
             <RemoveOutlinedIcon />
+          </IconButton>
+          <IconButton
+            sx={{
+              display: "flex !important",
+              alignItems: "center !important",
+              justifyContent: "center !important",
+            }}
+            onClick={handleCompass}
+          >
+            <span
+              ref={compassRef}
+              style={{
+                display: "flex",
+                transition: "transform 100ms linear",
+                transformOrigin: "center",
+              }}
+            >
+              <NavigationOutlinedIcon />
+            </span>
           </IconButton>
         </Box>
       </NavigationContainer>
