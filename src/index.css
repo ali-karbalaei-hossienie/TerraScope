@@ -8,3 +8,15 @@
 .mapboxgl-ctrl .mapboxgl-ctrl-logo {
   display: none;
 }
+
+.mapboxgl-ctrl.mapboxgl-ctrl-group.group-draw {
+  display: none;
+}
+
+.mapboxgl-ctrl.mapboxgl-ctrl-group.group-edit {
+  display: none;
+}
+
+.mapboxgl-ctrl.mapboxgl-ctrl-group.group-helper {
+  display: none;
+}

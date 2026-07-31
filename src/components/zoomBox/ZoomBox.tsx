@@ -5,7 +5,7 @@ import RemoveOutlinedIcon from "@mui/icons-material/RemoveOutlined";
 import { Box, IconButton } from "@mui/material";
 import { useCallback, useEffect, useRef, type FC } from "react";
 import { useMap } from "react-map-gl/mapbox";
-import { MapControl } from "../mapControl/MapControl";
+import { MapControl } from "../MapControl/MapControl";
 import { NavigationContainer } from "./style/zoomStyle";
 
 const MapNavigation: FC = () => {
@@ -40,7 +40,7 @@ const MapNavigation: FC = () => {
 
     const updateCompass = () => {
       if (compassRef.current) {
-        compassRef.current.style.transform = `rotate(${-map.getBearing() - 45}deg)`;
+        compassRef.current.style.transform = `rotate(${-map.getBearing()}deg)`;
       }
     };
 

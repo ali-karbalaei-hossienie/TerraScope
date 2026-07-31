@@ -1,9 +1,8 @@
 import React, { useState, type ReactNode } from "react";
 import { createPortal } from "react-dom";
-import { useControl } from "react-map-gl/mapbox";
 import type { ControlPosition } from "react-map-gl/mapbox";
+import { useControl } from "react-map-gl/mapbox";
 
-// 1. تعریف تایپ برای Props های کامپوننت
 interface MapControlProps {
   position?: ControlPosition; //  'top-left' | 'top' | 'top-right' | 'right' | 'bottom-right' | 'bottom' | 'bottom-left' | 'left';
   children?: ReactNode;
@@ -24,8 +23,7 @@ class CustomControlContainer {
     e.stopPropagation();
   }
 
-  public onAdd(map: unknown): HTMLDivElement {
-    this.map = map;
+  public onAdd(): HTMLDivElement {
     this.container = document.createElement("div");
     this.container.className = "mapboxgl-ctrl mapboxgl-ctrl-group";
 
@@ -53,7 +51,6 @@ class CustomControlContainer {
       }
     }
 
-    this.map = undefined;
     this.onUnmount();
   }
 }
