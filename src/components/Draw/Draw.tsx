@@ -13,10 +13,8 @@ import { useStyles } from "./styles/ToolsStyles";
 
 type ModeType = "marker" | "circle" | "polygon" | "line" | null;
 
-const Tools = () => {
+const Draw = () => {
   const [activeMode, setActiveMode] = useState<ModeType>(null);
-
-  console.log(activeMode);
 
   const { classes } = useStyles();
   const { map } = useMap();
@@ -44,7 +42,7 @@ const Tools = () => {
   return (
     <div>
       <MapControl position="right">
-        <MapButton>
+        <MapButton title="draw">
           <ToggleButtonGroup
             color="primary"
             value={activeMode}
@@ -71,4 +69,4 @@ const Tools = () => {
   );
 };
 
-export default Tools;
+export default Draw;

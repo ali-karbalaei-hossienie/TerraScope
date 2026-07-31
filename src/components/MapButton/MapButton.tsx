@@ -11,9 +11,10 @@ import { useStyles } from "./styles/MapButtonStyles";
 
 interface MapButtonProps {
   children?: ReactNode;
+  title?: string;
 }
 
-const MapButton: FC<MapButtonProps> = ({ children }) => {
+const MapButton: FC<MapButtonProps> = ({ children, title }) => {
   const { classes } = useStyles();
   const [expanded, setExpanded] = useState(true);
 
@@ -49,7 +50,9 @@ const MapButton: FC<MapButtonProps> = ({ children }) => {
           />
         }
       >
-        <Typography className={classes["map-button__text"]}>Tools</Typography>
+        <Typography variant="body1" className={classes["map-button__text"]}>
+          {title}
+        </Typography>
       </AccordionSummary>
 
       <AccordionDetails className={classes["map-button__details"]}>

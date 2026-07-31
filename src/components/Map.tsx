@@ -4,8 +4,9 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import { useEffect, useRef } from "react";
 import { Map as MapBox, useMap } from "react-map-gl/mapbox";
 import { registerGeoman, unregisterGeoman } from "../map/drawStore";
-import Tools from "./Tools/Tools";
 import MapNavigation from "./zoomBox/ZoomBox";
+import Draw from "./Draw/Draw";
+import Edit from "./Edit/Edit";
 const Map = () => {
   const { map } = useMap();
 
@@ -45,7 +46,8 @@ const Map = () => {
         mapStyle="https://api.maptiler.com/maps/openstreetmap/style.json?key=OSQvmkeEjIl23WjHmrjA"
       >
         <MapNavigation />
-        <Tools />
+        <Draw />
+        <Edit />
       </MapBox>
     </div>
   );

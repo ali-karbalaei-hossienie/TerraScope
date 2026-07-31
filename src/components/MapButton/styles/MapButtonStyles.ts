@@ -25,11 +25,10 @@ export const useStyles = makeStyles()((theme) => ({
   },
   "map-button__text": {
     writingMode: "vertical-rl",
-    transform: "rotate(180deg)",
+    transform: "rotate(0deg)",
     whiteSpace: "nowrap",
     fontWeight: "bold",
     letterSpacing: "2px",
-    fontSize: "14px",
   },
   "map-button__details": {
     padding: 0,
