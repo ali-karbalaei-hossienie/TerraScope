@@ -1,77 +1,70 @@
-import type { Geoman } from "@geoman-io/mapbox-geoman-free";
 import CircleIcon from "@mui/icons-material/Circle";
 import PolylineIcon from "@mui/icons-material/Polyline";
 import RoomIcon from "@mui/icons-material/Room";
-import { Button } from "@mui/material";
-import { useMap, type MapRef } from "react-map-gl/mapbox";
+import ToggleButton from "@mui/material/ToggleButton";
+import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
+import { useEffect, useState } from "react";
+import { useMap } from "react-map-gl/mapbox";
 import { getGeoman } from "../../map/drawStore";
 import PolygonIcon from "../assets/PolygonIcon";
 import MapButton from "../MapButton/MapButton";
 import { MapControl } from "../MapControl/MapControl";
 import { useStyles } from "./styles/ToolsStyles";
 
-type ModeType = "marker" | "circle" | "polygon" | "line";
-
-const helper = (map: MapRef | undefined, mode: ModeType) => {
-  const geoman = getGeoman(map);
-
-  if (!geoman) return;
-
-  const activeModes = geoman.getActiveDrawModes();
-
-  if (activeModes.includes(mode)) {
-    geoman.disableDraw();
-  } else {
-    geoman.enableDraw(mode);
-  }
-};
+type ModeType = "marker" | "circle" | "polygon" | "line" | null;
 
 const Tools = () => {
+  const [activeMode, setActiveMode] = useState<ModeType>(null);
+
+  console.log(activeMode);
+
   const { classes } = useStyles();
   const { map } = useMap();
-  const handleDrawPoint = (mode: ModeType) => {
-    helper(map, mode);
-  };
-  const handleDrawCircle = (mode: ModeType) => {
-    helper(map, mode);
-  };
 
-  const handleDrawPolygon = (mode: ModeType) => {
-    helper(map, mode);
-  };
+  useEffect(() => {
+    const geoman = getGeoman(map);
 
-  const handleDrawLine = (mode: ModeType) => {
-    helper(map, mode);
+    if (!geoman) return;
+
+    if (activeMode === null) {
+      geoman.disableDraw();
+      return;
+    }
+
+    geoman.enableDraw(activeMode);
+  }, [activeMode, map]);
+
+  const handleChange = (
+    event: React.MouseEvent<HTMLElement>,
+    mode: ModeType,
+  ) => {
+    setActiveMode(mode);
   };
 
   return (
     <div>
       <MapControl position="right">
         <MapButton>
-          <Button
-            onClick={() => handleDrawPoint("marker")}
-            className={classes["tools__draw-button"]}
+          <ToggleButtonGroup
+            color="primary"
+            value={activeMode}
+            exclusive
+            onChange={handleChange}
+            className={classes["toggle-button-group"]}
           >
-            <RoomIcon />
-          </Button>
-          <Button
-            onClick={() => handleDrawCircle("circle")}
-            className={classes["tools__draw-button"]}
-          >
-            <CircleIcon />
-          </Button>
-          <Button
-            onClick={() => handleDrawPolygon("polygon")}
-            className={classes["tools__draw-button"]}
-          >
-            <PolygonIcon />
-          </Button>
-          <Button
-            onClick={() => handleDrawLine("line")}
-            className={classes["tools__draw-button"]}
-          >
-            <PolylineIcon />
-          </Button>
+            <ToggleButton className={classes["draw-button"]} value="marker">
+              <RoomIcon />
+            </ToggleButton>
+            <ToggleButton className={classes["draw-button"]} value="circle">
+              <CircleIcon />
+            </ToggleButton>
+            <ToggleButton className={classes["draw-button"]} value="polygon">
+              <PolygonIcon />
+            </ToggleButton>
+            <ToggleButton className={classes["draw-button"]} value="line">
+              <PolylineIcon />
+            </ToggleButton>
+          </ToggleButtonGroup>
         </MapButton>
       </MapControl>
     </div>

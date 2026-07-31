@@ -20,3 +20,11 @@
 .mapboxgl-ctrl.mapboxgl-ctrl-group.group-helper {
   display: none;
 }
+
+.mapboxgl-ctrl-group button + button {
+  display: none;
+  border-top: none;
+}
+.mapboxgl-ctrl button:not(:disabled):hover {
+  background-color: inherit;
+}
