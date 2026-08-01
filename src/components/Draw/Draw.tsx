@@ -7,9 +7,9 @@ import { useEffect, useState } from "react";
 import { useMap } from "react-map-gl/mapbox";
 import { getGeoman } from "../../map/drawStore";
 import PolygonIcon from "../assets/PolygonIcon";
-import MapButton from "../MapButton/MapButton";
 import { MapControl } from "../MapControl/MapControl";
 import { useStyles } from "./styles/ToolsStyles";
+import AccordionButton from "../AccordionButton/AccordionButton";
 
 type ModeType = "marker" | "circle" | "polygon" | "line" | null;
 
@@ -42,7 +42,7 @@ const Draw = () => {
   return (
     <div>
       <MapControl position="right">
-        <MapButton title="draw">
+        <AccordionButton title="draw">
           <ToggleButtonGroup
             color="primary"
             value={activeMode}
@@ -63,7 +63,7 @@ const Draw = () => {
               <PolylineIcon />
             </ToggleButton>
           </ToggleButtonGroup>
-        </MapButton>
+        </AccordionButton>
       </MapControl>
     </div>
   );

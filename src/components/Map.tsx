@@ -4,9 +4,10 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import { useEffect, useRef } from "react";
 import { Map as MapBox, useMap } from "react-map-gl/mapbox";
 import { registerGeoman, unregisterGeoman } from "../map/drawStore";
-import MapNavigation from "./zoomBox/ZoomBox";
 import Draw from "./Draw/Draw";
 import Edit from "./Edit/Edit";
+import MultiMapLayers from "./MultiMapLayers/MultiMapLayers";
+import MapNavigation from "./zoomBox/ZoomBox";
 const Map = () => {
   const { map } = useMap();
 
@@ -48,6 +49,7 @@ const Map = () => {
         <MapNavigation />
         <Draw />
         <Edit />
+        <MultiMapLayers />
       </MapBox>
     </div>
   );

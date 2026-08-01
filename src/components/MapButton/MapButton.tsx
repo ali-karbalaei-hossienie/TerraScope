@@ -1,70 +1,72 @@
-import ExpandLessIcon from "@mui/icons-material/ExpandLess";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import { IconButton } from "@mui/material";
-import Accordion from "@mui/material/Accordion";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import { useState, type FC, type ReactNode } from "react";
-import { useStyles } from "./styles/MapButtonStyles";
+import {
+  Box,
+  ClickAwayListener,
+  Fade,
+  IconButton,
+  Paper,
+  Popper,
+  Typography,
+  type PopperPlacementType,
+} from "@mui/material";
+import React, { useState } from "react";
+import { MapButtonStyles } from "./styles/MapButtonStyles";
 
 interface MapButtonProps {
-  children?: ReactNode;
-  title?: string;
+  children?: React.ReactNode;
+  icon: React.ReactNode;
+  newPlacement: PopperPlacementType;
 }
+const MapButton = ({ children, icon, newPlacement }: MapButtonProps) => {
+  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+  const [open, setOpen] = useState(false);
+  const [placement, setPlacement] = React.useState<PopperPlacementType>();
 
-const MapButton: FC<MapButtonProps> = ({ children, title }) => {
-  const { classes } = useStyles();
-  const [expanded, setExpanded] = useState(true);
+  const { classes } = MapButtonStyles();
 
-  const handleAccordionChange = (
-    _event: React.SyntheticEvent,
-    isExpanded: boolean,
-  ) => {
-    setExpanded(isExpanded);
-  };
-
-  const handleClose = () => {
-    setExpanded(false);
-  };
+  const handleClick =
+    (newPlacement: PopperPlacementType) =>
+    (event: React.MouseEvent<HTMLButtonElement>) => {
+      setAnchorEl(event.currentTarget);
+      setOpen((prev) => placement !== newPlacement || !prev);
+      setPlacement(newPlacement);
+    };
 
   return (
-    <Accordion
-      expanded={expanded}
-      onChange={handleAccordionChange}
-      disableGutters
-      className={classes["map-button"]}
-      slotProps={{ transition: { unmountOnExit: true, timeout: 400 } }}
-    >
-      <AccordionSummary
-        className={classes["map-button__summary"]}
-        expandIcon={
-          <KeyboardArrowDownIcon
-            sx={{
-              width: "100% !important",
-              marginTop: expanded ? 0 : "1rem",
-              opacity: expanded ? 0 : 1,
-              transition: "all 0.3s ease-in-out",
-            }}
-          />
-        }
+    <div>
+      <Popper
+        sx={{ zIndex: 1200 }}
+        open={open}
+        anchorEl={anchorEl}
+        placement={placement}
+        transition
+        modifiers={[
+          {
+            name: "offset",
+            options: {
+              offset: [0, 4],
+            },
+          },
+        ]}
       >
-        <Typography variant="body1" className={classes["map-button__text"]}>
-          {title}
-        </Typography>
-      </AccordionSummary>
-
-      <AccordionDetails className={classes["map-button__details"]}>
-        <Box className={classes["map-button__body"]}>{children}</Box>
-
-        <Box className={classes["map-button__footer"]}>
-          <IconButton onClick={handleClose} aria-label="close">
-            <ExpandLessIcon />
-          </IconButton>
-        </Box>
-      </AccordionDetails>
-    </Accordion>
+        {({ TransitionProps }) => (
+          <Fade {...TransitionProps} timeout={350}>
+            <Paper>
+              <ClickAwayListener onClickAway={() => setOpen(false)}>
+                <Typography sx={{ p: 2 }}>{children}</Typography>
+              </ClickAwayListener>
+            </Paper>
+          </Fade>
+        )}
+      </Popper>
+      <Box className={classes["mapLayers-button-container"]}>
+        <IconButton
+          className={classes["mapLayers-button"]}
+          onClick={handleClick(newPlacement)}
+        >
+          {icon}
+        </IconButton>
+      </Box>
+    </div>
   );
 };
 

@@ -3,19 +3,18 @@ import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import { useEffect, useState } from "react";
 import { useMap } from "react-map-gl/mapbox";
 import { getGeoman } from "../../map/drawStore";
+import AccordionButton from "../AccordionButton/AccordionButton";
+import DeleteIcon from "../assets/DeleteIcon";
 import DragIcon from "../assets/DragIcon";
-import { useStyles } from "../Draw/styles/ToolsStyles";
-import MapButton from "../MapButton/MapButton";
-import { MapControl } from "../MapControl/MapControl";
 import EditIcon from "../assets/EditIcon";
 import RotateIcon from "../assets/RotateIcon";
-import DeleteIcon from "../assets/DeleteIcon";
+import { useStyles } from "../Draw/styles/ToolsStyles";
+import { MapControl } from "../MapControl/MapControl";
+
 type EditMode = "edit" | "change" | "delete" | "drag" | "rotate" | null;
 
 const Edit = () => {
   const [activeMode, setActiveMode] = useState<EditMode>(null);
-
-  console.log(activeMode);
 
   const { classes } = useStyles();
   const { map } = useMap();
@@ -26,8 +25,10 @@ const Edit = () => {
     if (!geoman) return;
 
     if (activeMode === null) {
-      geoman.disableDraw();
-      return;
+      geoman.disableGlobalDragMode();
+      geoman.disableGlobalEditMode();
+      geoman.disableGlobalRemovalMode();
+      geoman.disableGlobalRotateMode();
     }
     switch (activeMode) {
       case "drag":
@@ -58,7 +59,7 @@ const Edit = () => {
   return (
     <div>
       <MapControl position="right">
-        <MapButton title="edit">
+        <AccordionButton title="edit">
           <ToggleButtonGroup
             color="primary"
             value={activeMode}
@@ -79,7 +80,7 @@ const Edit = () => {
               <DeleteIcon />
             </ToggleButton>
           </ToggleButtonGroup>
-        </MapButton>
+        </AccordionButton>
       </MapControl>
     </div>
   );
