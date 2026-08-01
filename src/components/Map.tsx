@@ -1,5 +1,4 @@
 import { Geoman } from "@geoman-io/mapbox-geoman-free";
-import "@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { useEffect, useRef } from "react";
 import { Map as MapBox, useMap } from "react-map-gl/mapbox";

@@ -1,32 +1,33 @@
 import { Box, ButtonBase, Typography } from "@mui/material";
 import { type FC } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import type { RootState } from "../../../../../app/store";
+import { setSelectedLeftLayers } from "../../../../../features/multiMapLayers/multiMapLayersSlice";
+import type { LayerType } from "../../../types/mapLayerType";
 import { useLeftLayerStyles } from "../styles/useLeftLayerStyles";
 
 interface BaseLayerProps {
-  map: {
-    id: string;
-    name: string;
-    image: string;
-  };
-  selectedLeftLayers: string;
-  setSelectedLeftLayers: React.Dispatch<React.SetStateAction<string>>;
+  map: LayerType;
 }
 
-const LeftLayer: FC<BaseLayerProps> = ({
-  map,
-  selectedLeftLayers,
-  setSelectedLeftLayers,
-}) => {
+const LeftLayer: FC<BaseLayerProps> = ({ map }) => {
   const { classes, cx } = useLeftLayerStyles();
+  const dispatch = useDispatch();
+  const selectedLeftLayers = useSelector(
+    (state: RootState) => state.multiMapLayer.selectedLeftLayers,
+  );
+  const handleSelectLeftLayer = (item: LayerType) => {
+    dispatch(setSelectedLeftLayers(item));
+  };
 
   return (
     <>
       <ButtonBase
         key={map.id}
-        onClick={() => setSelectedLeftLayers(map.id)}
+        onClick={() => handleSelectLeftLayer(map)}
         className={cx(
           classes["left-layers-button"],
-          selectedLeftLayers === map.id &&
+          selectedLeftLayers[0].id === map.id &&
             classes["left-layers-button--selected"],
         )}
       >

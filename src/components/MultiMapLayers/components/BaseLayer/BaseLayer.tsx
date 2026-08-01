@@ -1,32 +1,35 @@
 import { Box, ButtonBase, Typography } from "@mui/material";
 import { type FC } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import type { RootState } from "../../../../app/store";
+import { setSelectedBaseLayers } from "../../../../features/multiMapLayers/multiMapLayersSlice";
 import { useMapLayerStyles } from "../../styles/useMapLayerStyles";
+import type { LayerType } from "../../types/mapLayerType";
 
 interface BaseLayerProps {
-  map: {
-    id: string;
-    name: string;
-    image: string;
-  };
-  selectedMap: string;
-  setSelectedMap: (id: string) => void;
+  map: LayerType;
 }
 
-const BaseLayer: FC<BaseLayerProps> = ({
-  map,
-  selectedMap,
-  setSelectedMap,
-}) => {
+const BaseLayer: FC<BaseLayerProps> = ({ map }) => {
   const { classes, cx } = useMapLayerStyles();
+
+  const dispatch = useDispatch();
+  const selectedBaseLayers = useSelector(
+    (state: RootState) => state.multiMapLayer.selectedBaseLayers,
+  );
+  const handleSelectBaseLayer = (item: LayerType) => {
+    dispatch(setSelectedBaseLayers(item));
+  };
 
   return (
     <>
       <ButtonBase
         key={map.id}
-        onClick={() => setSelectedMap(map.id)}
+        onClick={() => handleSelectBaseLayer(map)}
         className={cx(
           classes["base-layers-button"],
-          selectedMap === map.id && classes["base-layers-button--selected"],
+          selectedBaseLayers[0].id === map.id &&
+            classes["base-layers-button--selected"],
         )}
       >
         <Box
