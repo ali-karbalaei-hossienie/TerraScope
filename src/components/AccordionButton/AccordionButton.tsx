@@ -43,7 +43,7 @@ const AccordionButton: FC<AccordionButtonProps> = ({ children, title }) => {
           <KeyboardArrowDownIcon
             sx={{
               width: "100% !important",
-              marginTop: expanded ? 0 : "1rem",
+              mt: expanded ? 0 : "1rem",
               opacity: expanded ? 0 : 1,
               transition: "all 0.3s ease-in-out",
             }}
