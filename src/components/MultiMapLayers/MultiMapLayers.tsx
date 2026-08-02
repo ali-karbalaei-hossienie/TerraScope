@@ -5,7 +5,7 @@ import MapLayers from "./components/MapLayers/MapLayers";
 import { useMultiMapLayers } from "./hooks/useMultiMapLayers";
 
 const MultiMapLayers = () => {
-  useMultiMapLayers();
+  const { swipeRef, isSplitMode, startDragging } = useMultiMapLayers();
 
   return (
     <div>
@@ -18,6 +18,48 @@ const MultiMapLayers = () => {
           <MapLayers />
         </MapButton>
       </MapControl>
+      {isSplitMode && (
+        <div
+          ref={swipeRef}
+          onMouseDown={startDragging}
+          onTouchStart={startDragging}
+          style={{
+            position: "absolute",
+            top: 0,
+            left: "50%",
+            width: "4px",
+            height: "100%",
+            background: "#fff",
+            borderLeft: "1px solid #000",
+            borderRight: "1px solid #000",
+            cursor: "ew-resize",
+            zIndex: 10,
+            transform: "translateX(-50%)",
+          }}
+        >
+          <div
+            style={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              width: "42px",
+              height: "42px",
+              backgroundColor: "#3b82f6",
+              border: "3px solid #fff",
+              borderRadius: "50%",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              boxShadow: "0 2px 6px rgba(0, 0, 0, 0.4)",
+            }}
+          >
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="white">
+              <path d="M10 19L3 12L10 5V19ZM14 5L21 12L14 19V5Z" />
+            </svg>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

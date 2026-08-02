@@ -1,14 +1,19 @@
 import { Box, Divider, Switch, Typography } from "@mui/material";
 import { AnimatePresence, motion } from "framer-motion";
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import type { RootState } from "../../../../app/store";
+import { setIsSplitMode } from "../../../../features/multiMapLayers/multiMapLayersSlice";
 import { LAYERS } from "../../constants/layers";
 import { useMapLayerStyles } from "../../styles/useMapLayerStyles";
 import BaseLayer from "../BaseLayer/BaseLayer";
 import { SplitMode } from "../SplitMode/SplitMode";
 
 const MapLayers = () => {
-  const [isSplitMode, setIsSplitMode] = useState(false);
   const { classes } = useMapLayerStyles();
+  const dispatch = useDispatch();
+  const { isSplitMode } = useSelector(
+    (state: RootState) => state.multiMapLayer,
+  );
 
   return (
     <div>
@@ -20,7 +25,10 @@ const MapLayers = () => {
         <Typography component="div">
           {isSplitMode ? "Single Mode" : "Split Mode"}
         </Typography>
-        <Switch onChange={() => setIsSplitMode((prev) => !prev)} />
+        <Switch
+          checked={isSplitMode}
+          onChange={() => dispatch(setIsSplitMode(!isSplitMode))}
+        />
       </Box>
       <AnimatePresence mode="wait">
         {!isSplitMode ? (

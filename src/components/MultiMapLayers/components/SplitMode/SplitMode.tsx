@@ -12,7 +12,7 @@ import RightLayers from "../RightLayers/RightLayers";
 
 export const SplitMode = () => {
   const [value, setValue] = React.useState("left");
-  const handleChange = (event: React.SyntheticEvent, newValue: string) => {
+  const handleChange = (_event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
   };
   const { classes } = splitModeStyle();

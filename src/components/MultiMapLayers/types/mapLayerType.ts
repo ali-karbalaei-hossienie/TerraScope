@@ -8,4 +8,5 @@ export interface MultiMapLayer {
   selectedBaseLayers: LayerType[];
   selectedRightLayers: LayerType[];
   selectedLeftLayers: LayerType[];
+  isSplitMode: boolean;
 }

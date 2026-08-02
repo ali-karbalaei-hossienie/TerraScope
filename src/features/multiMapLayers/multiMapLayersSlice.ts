@@ -6,10 +6,11 @@ const initialState: MultiMapLayer = {
   selectedBaseLayers: [LAYERS[0]],
   selectedRightLayers: [LAYERS[0]],
   selectedLeftLayers: [LAYERS[0]],
+  isSplitMode: false,
 };
 
 const multiMapLayersSlice = createSlice({
-  name: "multimapLayers",
+  name: "multiMapLayers",
   initialState: initialState,
   reducers: {
     setSelectedBaseLayers: (state, action) => {
@@ -21,6 +22,9 @@ const multiMapLayersSlice = createSlice({
     setSelectedRightLayers: (state, action) => {
       state.selectedRightLayers = [action.payload];
     },
+    setIsSplitMode: (state, action) => {
+      state.isSplitMode = action.payload;
+    },
   },
 });
 
@@ -28,5 +32,6 @@ export const {
   setSelectedBaseLayers,
   setSelectedLeftLayers,
   setSelectedRightLayers,
+  setIsSplitMode,
 } = multiMapLayersSlice.actions;
 export default multiMapLayersSlice.reducer;

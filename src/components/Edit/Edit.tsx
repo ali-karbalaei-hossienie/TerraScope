@@ -20,37 +20,52 @@ const Edit = () => {
   const { map } = useMap();
 
   useEffect(() => {
+    const mapBox = map?.getMap();
+
+    if (!map || !mapBox || !mapBox.isStyleLoaded()) {
+      return;
+    }
+
     const geoman = getGeoman(map);
 
     if (!geoman) return;
 
-    if (activeMode === null) {
-      geoman.disableGlobalDragMode();
-      geoman.disableGlobalEditMode();
-      geoman.disableGlobalRemovalMode();
-      geoman.disableGlobalRotateMode();
-    }
-    switch (activeMode) {
-      case "drag":
-        geoman.enableGlobalDragMode();
-        break;
+    const syncMode = async () => {
+      try {
+        await Promise.all([
+          geoman.disableGlobalDragMode(),
+          geoman.disableGlobalEditMode(),
+          geoman.disableGlobalRemovalMode(),
+          geoman.disableGlobalRotateMode(),
+        ]);
 
-      case "edit":
-        geoman.enableGlobalEditMode();
-        break;
+        switch (activeMode) {
+          case "drag":
+            await geoman.enableGlobalDragMode();
+            break;
 
-      case "rotate":
-        geoman.enableGlobalRotateMode();
-        break;
+          case "edit":
+            await geoman.enableGlobalEditMode();
+            break;
 
-      case "delete":
-        geoman.enableGlobalRemovalMode();
-        break;
-    }
+          case "rotate":
+            await geoman.enableGlobalRotateMode();
+            break;
+
+          case "delete":
+            await geoman.enableGlobalRemovalMode();
+            break;
+        }
+      } catch (error) {
+        console.warn("Geoman edit mode update failed:", error);
+      }
+    };
+
+    void syncMode();
   }, [activeMode, map]);
 
   const handleChange = (
-    event: React.MouseEvent<HTMLElement>,
+    _event: React.MouseEvent<HTMLElement>,
     mode: EditMode,
   ) => {
     setActiveMode(mode);
