@@ -17,6 +17,7 @@ const LeftLayer: FC<BaseLayerProps> = ({ map }) => {
     (state: RootState) => state.multiMapLayer.selectedLeftLayers,
   );
   const handleSelectLeftLayer = (item: LayerType) => {
+    if (selectedLeftLayers[0].id === item.id) return;
     dispatch(setSelectedLeftLayers(item));
   };
 

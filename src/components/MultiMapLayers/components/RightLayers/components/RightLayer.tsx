@@ -14,10 +14,12 @@ const RightLayer: FC<BaseLayerProps> = ({ map }) => {
   const { classes, cx } = useRightLayerStyles();
 
   const dispatch = useDispatch();
-  const selectedLeftLayers = useSelector(
+  const selectedRightLayers = useSelector(
     (state: RootState) => state.multiMapLayer.selectedRightLayers,
   );
   const handleSelectRightLayer = (item: LayerType) => {
+    if (selectedRightLayers[0].id === item.id) return;
+
     dispatch(setSelectedRightLayers(item));
   };
 
@@ -28,7 +30,7 @@ const RightLayer: FC<BaseLayerProps> = ({ map }) => {
         onClick={() => handleSelectRightLayer(map)}
         className={cx(
           classes["right-layers-button"],
-          selectedLeftLayers[0].id === map.id &&
+          selectedRightLayers[0].id === map.id &&
             classes["right-layers-button--selected"],
         )}
       >

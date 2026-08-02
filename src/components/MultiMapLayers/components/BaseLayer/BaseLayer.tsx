@@ -18,6 +18,8 @@ const BaseLayer: FC<BaseLayerProps> = ({ map }) => {
     (state: RootState) => state.multiMapLayer.selectedBaseLayers,
   );
   const handleSelectBaseLayer = (item: LayerType) => {
+    if (selectedBaseLayers[0].id === item.id) return;
+
     dispatch(setSelectedBaseLayers(item));
   };
 

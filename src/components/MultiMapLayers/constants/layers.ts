@@ -1,5 +1,12 @@
 export const LAYERS = [
   {
+    id: "hybrid",
+    name: "Hybrid",
+    image:
+      "https://cloud.maptiler.com/static/img/maps/hybrid-v4.png?t=1785135362",
+    tile: "https://api.maptiler.com/maps/hybrid-v4/256/{z}/{x}/{y}.png?key=OSQvmkeEjIl23WjHmrjA",
+  },
+  {
     id: "osm",
     name: "OpenStreetMap",
     image:
@@ -13,13 +20,7 @@ export const LAYERS = [
       "https://cloud.maptiler.com/static/img/maps/aquarelle-v4.png?t=1785135362",
     tile: "https://api.maptiler.com/maps/aquarelle-v4/256/{z}/{x}/{y}.png?key=OSQvmkeEjIl23WjHmrjA",
   },
-  {
-    id: "hybrid",
-    name: "Hybrid",
-    image:
-      "https://cloud.maptiler.com/static/img/maps/hybrid-v4.png?t=1785135362",
-    tile: "https://api.maptiler.com/maps/hybrid-v4/256/{z}/{x}/{y}.png?key=OSQvmkeEjIl23WjHmrjA",
-  },
+
   {
     id: "topo",
     name: "Topo",
