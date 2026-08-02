@@ -2,8 +2,11 @@ import MapButton from "../MapButton/MapButton";
 import { MapControl } from "../MapControl/MapControl";
 import LayersIcon from "@mui/icons-material/Layers";
 import MapLayers from "./components/MapLayers/MapLayers";
+import { useMultiMapLayers } from "./hooks/useMultiMapLayers";
 
 const MultiMapLayers = () => {
+  useMultiMapLayers();
+
   return (
     <div>
       <MapControl position="top-left">
