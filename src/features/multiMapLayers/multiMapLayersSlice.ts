@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { LAYERS } from "../../components/MultiMapLayers/constants/layers";
-import type { MultiMapLayer } from "../../components/MultiMapLayers/types/mapLayerType";
+import type { MultiMapLayer } from "./types";
 
 const initialState: MultiMapLayer = {
   selectedBaseLayers: [LAYERS[0]],
@@ -25,6 +25,11 @@ const multiMapLayersSlice = createSlice({
     setIsSplitMode: (state, action) => {
       state.isSplitMode = action.payload;
     },
+    setSwapLayers: (state) => {
+      const temp = state.selectedLeftLayers;
+      state.selectedLeftLayers = state.selectedRightLayers;
+      state.selectedRightLayers = temp;
+    },
   },
 });
 
@@ -33,5 +38,6 @@ export const {
   setSelectedLeftLayers,
   setSelectedRightLayers,
   setIsSplitMode,
+  setSwapLayers,
 } = multiMapLayersSlice.actions;
 export default multiMapLayersSlice.reducer;

@@ -3,10 +3,11 @@ import type {
   LayerSpecification,
   Map as MapboxMap,
 } from "mapbox-gl";
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, type RefObject } from "react";
 import { useMap } from "react-map-gl/mapbox";
 import { useSelector } from "react-redux";
 import type { RootState } from "../../../app/store";
+import type { UseMultiMapLayers } from "../types/mapLayerType";
 
 const BASE_SOURCE_LEFT_ID = "base-source-left";
 const BASE_SOURCE_RIGHT_ID = "base-source-right";
@@ -27,7 +28,16 @@ type ScissorLayer = CustomLayerInterface & {
   map?: MapboxMap;
 };
 
-export const useMultiMapLayers = () => {
+interface UseMultiMapLayersReturn {
+  swipeRef: RefObject<HTMLDivElement | null>;
+  isSplitMode: boolean;
+  startDragging: () => void;
+}
+
+export const useMultiMapLayers = ({
+  extraLeftLayers,
+  extraRightLayers,
+}: UseMultiMapLayers = {}): UseMultiMapLayersReturn => {
   const {
     selectedBaseLayers,
     selectedLeftLayers,
@@ -193,6 +203,15 @@ export const useMultiMapLayers = () => {
       };
 
       safeAddLayer(mapBox, leftScissorLayer);
+      if (extraLeftLayers) {
+        extraLeftLayers.forEach((item) => {
+          if (!mapBox.getSource(item.sourceId)) {
+            mapBox.addSource(item.sourceId, item.source);
+          }
+          safeAddLayer(mapBox, item.layer);
+        });
+      }
+
       safeAddLayer(mapBox, {
         id: BASE_LAYER_LEFT_ID,
         type: "raster",
@@ -200,6 +219,16 @@ export const useMultiMapLayers = () => {
       } satisfies LayerSpecification);
 
       safeAddLayer(mapBox, rightScissorLayer);
+
+      if (extraRightLayers) {
+        extraRightLayers.forEach((item) => {
+          if (!mapBox.getSource(item.sourceId)) {
+            mapBox.addSource(item.sourceId, item.source);
+          }
+          safeAddLayer(mapBox, item.layer);
+        });
+      }
+
       safeAddLayer(mapBox, {
         id: BASE_LAYER_RIGHT_ID,
         type: "raster",
@@ -214,6 +243,8 @@ export const useMultiMapLayers = () => {
       selectedLeftLayers,
       selectedRightLayers,
       safeAddLayer,
+      extraLeftLayers,
+      extraRightLayers,
     ],
   );
 

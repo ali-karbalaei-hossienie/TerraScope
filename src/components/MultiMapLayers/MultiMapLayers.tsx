@@ -2,10 +2,23 @@ import MapButton from "../MapButton/MapButton";
 import { MapControl } from "../MapControl/MapControl";
 import LayersIcon from "@mui/icons-material/Layers";
 import MapLayers from "./components/MapLayers/MapLayers";
+import type { FC } from "react";
+import type { ItemLayer } from "./types/mapLayerType";
 import { useMultiMapLayers } from "./hooks/useMultiMapLayers";
 
-const MultiMapLayers = () => {
-  const { swipeRef, isSplitMode, startDragging } = useMultiMapLayers();
+interface MultiMapLayersProps {
+  extraLeftLayers?: ItemLayer[];
+  extraRightLayers?: ItemLayer[];
+}
+
+const MultiMapLayers: FC<MultiMapLayersProps> = ({
+  extraLeftLayers,
+  extraRightLayers,
+}) => {
+  const { swipeRef, isSplitMode, startDragging } = useMultiMapLayers({
+    extraLeftLayers,
+    extraRightLayers,
+  });
 
   return (
     <div>
@@ -29,7 +42,7 @@ const MultiMapLayers = () => {
             left: "50%",
             width: "4px",
             height: "100%",
-            background: "#fff",
+            background: "#000",
             borderLeft: "1px solid #000",
             borderRight: "1px solid #000",
             cursor: "ew-resize",
@@ -52,6 +65,7 @@ const MultiMapLayers = () => {
               justifyContent: "center",
               alignItems: "center",
               boxShadow: "0 2px 6px rgba(0, 0, 0, 0.4)",
+              userSelect: "none",
             }}
           >
             <svg width="22" height="22" viewBox="0 0 24 24" fill="white">

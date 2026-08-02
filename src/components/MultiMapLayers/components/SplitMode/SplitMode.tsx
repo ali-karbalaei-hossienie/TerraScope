@@ -9,18 +9,24 @@ import TabPanel from "@mui/lab/TabPanel";
 import { splitModeStyle } from "./styles/splitModeStyle";
 import LeftLayers from "../LeftLayers/LeftLayers";
 import RightLayers from "../RightLayers/RightLayers";
+import { useDispatch } from "react-redux";
+import { setSwapLayers } from "../../../../features/multiMapLayers/multiMapLayersSlice";
 
 export const SplitMode = () => {
   const [value, setValue] = React.useState("left");
   const handleChange = (_event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
   };
+  const dispatch = useDispatch();
   const { classes } = splitModeStyle();
 
+  const swapLayer = () => {
+    dispatch(setSwapLayers());
+  };
   return (
     <div>
       <Divider>
-        <IconButton>
+        <IconButton onClick={swapLayer}>
           <SwapHorizIcon />
         </IconButton>
       </Divider>

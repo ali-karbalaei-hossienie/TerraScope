@@ -33,7 +33,7 @@ const Draw = () => {
   }, [activeMode, map]);
 
   const handleChange = (
-    event: React.MouseEvent<HTMLElement>,
+    _event: React.MouseEvent<HTMLElement>,
     mode: ModeType,
   ) => {
     setActiveMode(mode);

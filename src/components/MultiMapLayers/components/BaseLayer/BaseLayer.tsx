@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../../../../app/store";
 import { setSelectedBaseLayers } from "../../../../features/multiMapLayers/multiMapLayersSlice";
 import { useMapLayerStyles } from "../../styles/useMapLayerStyles";
-import type { LayerType } from "../../types/mapLayerType";
+import type { LayerType } from "../../../../features/multiMapLayers/types";
 
 interface BaseLayerProps {
   map: LayerType;

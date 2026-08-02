@@ -3,8 +3,8 @@ import { type FC } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../../../../../app/store";
 import { setSelectedRightLayers } from "../../../../../features/multiMapLayers/multiMapLayersSlice";
-import type { LayerType } from "../../../types/mapLayerType";
 import { useRightLayerStyles } from "../styles/useRightLayerStyles";
+import type { LayerType } from "../../../../../features/multiMapLayers/types";
 
 interface BaseLayerProps {
   map: LayerType;

@@ -1,12 +1,19 @@
-export interface LayerType {
-  id: string | number;
-  name: string;
-  image: string;
-  tile: string;
+import type {
+  CanvasSourceSpecification,
+  CustomSourceInterface,
+  LayerSpecification,
+  SourceSpecification,
+} from "mapbox-gl";
+
+export interface ItemLayer {
+  sourceId: string;
+  source:
+    | SourceSpecification
+    | CanvasSourceSpecification
+    | CustomSourceInterface<unknown>;
+  layer: LayerSpecification;
 }
-export interface MultiMapLayer {
-  selectedBaseLayers: LayerType[];
-  selectedRightLayers: LayerType[];
-  selectedLeftLayers: LayerType[];
-  isSplitMode: boolean;
+export interface UseMultiMapLayers {
+  extraLeftLayers?: ItemLayer[];
+  extraRightLayers?: ItemLayer[];
 }
