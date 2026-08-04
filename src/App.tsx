@@ -5,6 +5,7 @@ import Map from "./components/Map";
 import { CssBaseline } from "@mui/material";
 import { Provider } from "react-redux";
 import { store } from "./app/store";
+import SideBar from "./components/SideBar/SideBar";
 
 function App() {
   return (
@@ -12,7 +13,7 @@ function App() {
       <ThemeProvider theme={customTheme}>
         <CssBaseline />
         <MapProvider>
-          <Map />
+          <SideBar />
         </MapProvider>
       </ThemeProvider>
     </Provider>

@@ -9,8 +9,8 @@ import {
   type PopperPlacementType,
 } from "@mui/material";
 import React, { useState } from "react";
-import { MapButtonStyles } from "./styles/MapButtonStyles";
 import type { CSSProperties } from "@mui/material/styles";
+import { useMapButtonStyles } from "./styles/useMapButtonStyles";
 
 interface MapButtonProps {
   children?: React.ReactNode;
@@ -24,7 +24,7 @@ const MapButton = ({ children, icon, newPlacement, style }: MapButtonProps) => {
   const [open, setOpen] = useState(false);
   const [placement, setPlacement] = React.useState<PopperPlacementType>();
 
-  const { classes } = MapButtonStyles();
+  const { classes } = useMapButtonStyles();
 
   const handleClick =
     (newPlacement: PopperPlacementType) =>

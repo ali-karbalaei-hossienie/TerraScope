@@ -1,6 +1,6 @@
 import { makeStyles } from "tss-react/mui";
 
-export const MapButtonStyles = makeStyles()((theme) => ({
+export const useMapButtonStyles = makeStyles()((theme) => ({
   "mapLayers-button-container": {
     backgroundColor: theme.palette.background.paper,
     borderRadius: theme.shape.borderRadius,

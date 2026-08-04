@@ -7,9 +7,9 @@ import Draw from "./Draw/Draw";
 import Edit from "./Edit/Edit";
 import MultiMapLayers from "./MultiMapLayers/MultiMapLayers";
 import MapNavigation from "./zoomBox/ZoomBox";
+
 const Map = () => {
   const { map } = useMap();
-
   const geomanRef = useRef<Geoman | null>(null);
 
   useEffect(() => {
@@ -18,39 +18,36 @@ const Map = () => {
     if (!geomanRef.current) {
       const geoman = new Geoman(map.getMap());
       geomanRef.current = geoman;
-
       registerGeoman(map, geoman);
     }
 
     return () => {
       if (!map || !geomanRef.current) return;
-
       unregisterGeoman(map);
-
       geomanRef.current.destroy();
       geomanRef.current = null;
     };
   }, [map]);
 
+  // ⭐️ تگ div اضافه حذف شد. فقط خود MapBox را برمی‌گردانیم
   return (
-    <div style={{ width: "100%", height: "100vh" }}>
-      <MapBox
-        mapboxAccessToken="OSQvmkeEjIl23WjHmrjA"
-        initialViewState={{
-          longitude: 51.389,
-          latitude: 35.6892,
-          zoom: 4,
-        }}
-        id="map"
-        style={{ width: "100%", height: "100%" }}
-        mapStyle="https://api.maptiler.com/maps/openstreetmap/style.json?key=OSQvmkeEjIl23WjHmrjA"
-      >
-        <MapNavigation />
-        <Draw />
-        <Edit />
-        <MultiMapLayers />
-      </MapBox>
-    </div>
+    <MapBox
+      mapboxAccessToken="OSQvmkeEjIl23WjHmrjA"
+      initialViewState={{
+        longitude: 51.389,
+        latitude: 35.6892,
+        zoom: 4,
+      }}
+      id="map"
+      // این استایل حالا مستقیما به کانتینر اصلی می‌چسبد
+      style={{ width: "100%", height: "100%" }}
+      mapStyle="https://api.maptiler.com/maps/openstreetmap/style.json?key=OSQvmkeEjIl23WjHmrjA"
+    >
+      <MapNavigation />
+      <Draw />
+      <Edit />
+      <MultiMapLayers />
+    </MapBox>
   );
 };
 
