@@ -7,7 +7,15 @@ import Draw from "./Draw/Draw";
 import Edit from "./Edit/Edit";
 import MultiMapLayers from "./MultiMapLayers/MultiMapLayers";
 import MapNavigation from "./zoomBox/ZoomBox";
+import Weather from "./_Weather/Weather";
+import type { StyleSpecification } from "mapbox-gl";
 
+const blankStyle: StyleSpecification = {
+  version: 8,
+  glyphs: "https://demotiles.maplibre.org/font/{fontstack}/{range}.pbf",
+  sources: {},
+  layers: [],
+};
 const Map = () => {
   const { map } = useMap();
   const geomanRef = useRef<Geoman | null>(null);
@@ -29,7 +37,6 @@ const Map = () => {
     };
   }, [map]);
 
-  // ⭐️ تگ div اضافه حذف شد. فقط خود MapBox را برمی‌گردانیم
   return (
     <MapBox
       mapboxAccessToken="OSQvmkeEjIl23WjHmrjA"
@@ -39,14 +46,14 @@ const Map = () => {
         zoom: 4,
       }}
       id="map"
-      // این استایل حالا مستقیما به کانتینر اصلی می‌چسبد
       style={{ width: "100%", height: "100%" }}
-      mapStyle="https://api.maptiler.com/maps/openstreetmap/style.json?key=OSQvmkeEjIl23WjHmrjA"
+      mapStyle={blankStyle}
     >
       <MapNavigation />
       <Draw />
       <Edit />
       <MultiMapLayers />
+      <Weather />
     </MapBox>
   );
 };

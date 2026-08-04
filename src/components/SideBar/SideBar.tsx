@@ -1,16 +1,19 @@
-import MapIcon from "@mui/icons-material/Map";
 import PublicIcon from "@mui/icons-material/Public";
-import SatelliteIcon from "@mui/icons-material/Satellite";
+import ThunderstormIcon from "@mui/icons-material/Thunderstorm";
+import TimelapseIcon from "@mui/icons-material/Timelapse";
 import { Box, Typography } from "@mui/material";
 import { useState } from "react";
 import Map from "../Map";
+import Weather from "../Weather/Weather";
 import SideBarItem from "./components/SidebarItem/SideBarItem";
 import { useSideBarStyles } from "./styles/useSideBarStyles";
 
-const SideBar = () => {
-  const [activeMenu, setActiveMenu] = useState<string | null>("maps");
+type ActiveMenuType = "discover" | "weather" | "timeLaps" | null;
 
-  const handleMenuClick = (menu: string) => {
+const SideBar = () => {
+  const [activeMenu, setActiveMenu] = useState<ActiveMenuType>("discover");
+
+  const handleMenuClick = (menu: ActiveMenuType) => {
     setActiveMenu((prev) => (prev === menu ? null : menu));
   };
   const isMenuOpen = Boolean(activeMenu);
@@ -27,16 +30,16 @@ const SideBar = () => {
           onClick={() => handleMenuClick("discover")}
         />
         <SideBarItem
-          icon={<MapIcon sx={{ width: 32, height: 32 }} />}
-          label="Maps"
-          isActive={activeMenu === "maps"}
-          onClick={() => handleMenuClick("maps")}
+          icon={<ThunderstormIcon sx={{ width: 32, height: 32 }} />}
+          label="Weather"
+          isActive={activeMenu === "weather"}
+          onClick={() => handleMenuClick("weather")}
         />
         <SideBarItem
-          icon={<SatelliteIcon sx={{ width: 32, height: 32 }} />}
-          label="Satellite"
-          isActive={activeMenu === "satellite"}
-          onClick={() => handleMenuClick("satellite")}
+          icon={<TimelapseIcon sx={{ width: 32, height: 32 }} />}
+          label="Timelapse"
+          isActive={activeMenu === "timeLaps"}
+          onClick={() => handleMenuClick("timeLaps")}
         />
       </Box>
 
@@ -45,6 +48,9 @@ const SideBar = () => {
           <Typography variant="h6" className={classes.panelTitle}>
             {activeMenu ? `${activeMenu} Panel` : ""}
           </Typography>
+          <Box sx={{ flexGrow: 1, overflowY: "auto" }}>
+            {activeMenu === "weather" && <Weather />}
+          </Box>
         </Box>
       </Box>
 
