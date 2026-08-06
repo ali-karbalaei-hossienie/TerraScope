@@ -7,8 +7,10 @@ import Draw from "./Draw/Draw";
 import Edit from "./Edit/Edit";
 import MultiMapLayers from "./MultiMapLayers/MultiMapLayers";
 import MapNavigation from "./zoomBox/ZoomBox";
-import Weather from "./_Weather/Weather";
+// import Weather from "./_Weather/Weather";
 import type { StyleSpecification } from "mapbox-gl";
+import { MapControl } from "./MapControl/MapControl";
+import Slider from "./Slider/Slider";
 
 const blankStyle: StyleSpecification = {
   version: 8,
@@ -53,7 +55,8 @@ const Map = () => {
       <Draw />
       <Edit />
       <MultiMapLayers />
-      <Weather />
+      {/* <CustomTimeline /> */}
+      <Slider />
     </MapBox>
   );
 };

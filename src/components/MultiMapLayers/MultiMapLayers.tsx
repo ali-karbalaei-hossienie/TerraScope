@@ -5,6 +5,7 @@ import MapLayers from "./components/MapLayers/MapLayers";
 import type { FC } from "react";
 import type { ItemLayer } from "./types/mapLayerType";
 import { useMultiMapLayers } from "./hooks/useMultiMapLayers";
+import { memo } from "react";
 
 interface MultiMapLayersProps {
   extraLeftLayers?: ItemLayer[];
@@ -78,4 +79,4 @@ const MultiMapLayers: FC<MultiMapLayersProps> = ({
   );
 };
 
-export default MultiMapLayers;
+export default memo(MultiMapLayers);
