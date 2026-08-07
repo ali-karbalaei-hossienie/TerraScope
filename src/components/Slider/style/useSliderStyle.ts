@@ -1,6 +1,6 @@
 import { makeStyles } from "tss-react/mui";
 
-export const useSlider = makeStyles()((theme) => ({
+export const useSliderStyle = makeStyles()((theme) => ({
   sliderContainer: {
     position: "relative",
     width: "50vw",

@@ -6,7 +6,6 @@ import {
 } from "@mui/material";
 import { useWeather } from "./hooks/useWeather";
 import { useWeatherStyles } from "./styles/useWeatherStyles";
-import { MapControl } from "../MapControl/MapControl";
 
 const Weather = () => {
   const { handleWeather, weather } = useWeather();
