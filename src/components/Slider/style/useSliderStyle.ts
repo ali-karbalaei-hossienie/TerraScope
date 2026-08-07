@@ -17,7 +17,7 @@ export const useSliderStyle = makeStyles()((theme) => ({
     "& .MuiSlider-rail": {
       opacity: 1,
       height: 40,
-      width: "100%",
+      width: "50vw",
       top: 0,
       transform: "none",
       backgroundColor: theme.palette.background.paper,
@@ -62,10 +62,9 @@ export const useSliderStyle = makeStyles()((theme) => ({
       transform: "none",
       width: 1,
       backgroundColor: theme.palette.divider,
-      "&.MuiSlider-mark[style*='left: 0%'], &.MuiSlider-mark[style*='left: 100%']":
-        {
-          backgroundColor: "transparent",
-        },
+      "&.MuiSlider-mark[style*='left: 0%']": {
+        backgroundColor: "transparent",
+      },
     },
     "& .MuiSlider-markLabel": {
       position: "absolute",

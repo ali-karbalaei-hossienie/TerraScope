@@ -7,8 +7,8 @@ export const useWeatherStyles = makeStyles()((theme) => ({
   },
   weather__group: {
     display: "flex",
-    flexDirection: "column",
     gap: theme.spacing(1),
+    alignItems: "center",
   },
   weather__item: {
     display: "flex",

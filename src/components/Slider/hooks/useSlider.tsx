@@ -26,8 +26,6 @@ export const useSlider = (): useSliderReturn => {
   const isVisible = useSelector((state: RootState) => state.slider.isVisible);
   const dispatch = useDispatch();
 
-  // const currentSelectedItem = sliderData[currentIndex];
-
   useEffect(() => {
     const currentSelectedItem = sliderData[currentIndex];
     dispatch(setTime(currentSelectedItem.fullFormatted));
@@ -39,20 +37,19 @@ export const useSlider = (): useSliderReturn => {
 
     const animate = (time: number) => {
       if (!isPlay) return;
+      console.log(lastTime, time);
 
-      // بررسی اینکه آیا ۱ ثانیه (۱۰۰۰ میلی‌ثانیه) گذشته است یا خیر
       if (time - lastTime >= 2000) {
         setCurrentIndex((prevIndex) => {
           if (prevIndex >= sliderData.length - 1) {
             setIsPlay(false);
-            return prevIndex;
+            return 0;
           }
           return prevIndex + 1;
         });
-        lastTime = time; // آپدیت کردن زمان برای پله بعدی
+        lastTime = time;
       }
 
-      // درخواست فریم بعدی
       animationFrameId = requestAnimationFrame(animate);
     };
 

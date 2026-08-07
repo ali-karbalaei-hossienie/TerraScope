@@ -1,20 +1,22 @@
-import { useEffect, useState, useRef } from "react";
-import { useMap } from "react-map-gl/mapbox";
-import { useSelector } from "react-redux";
-import type { RootState } from "../../../app/store";
 import type { MapSourceDataEvent } from "mapbox-gl";
+import { useEffect, useRef, useState } from "react";
+import { useMap } from "react-map-gl/mapbox";
+import { useDispatch, useSelector } from "react-redux";
+import type { RootState } from "../../../app/store";
+import { setVisibleSlider } from "../../../features/slider/slider";
 
 const WEATHER_URLS: Record<string, (time: string) => string> = {
   clouds: (time) =>
     `https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_CorrectedReflectance_TrueColor/default/${time}/GoogleMapsCompatible_Level9/{z}/{y}/{x}.jpg`,
   rain: (time) =>
-    `https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/GPM_3IMERGHHE_Precipitation_Rate/default/${time}/GoogleMapsCompatible_Level6/{z}/{y}/{x}.png`,
+    `https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/IMERG_Precipitation_Rate/default/${time}/GoogleMapsCompatible_Level6/{z}/{y}/{x}.png`,
 };
 
 export const useWeather = () => {
   const { map } = useMap();
   const [weather, setWeather] = useState<string | null>(null);
   const timeSlider = useSelector((state: RootState) => state.slider.timeSlider);
+  const dispatch = useDispatch();
 
   const mapInstance = map!.getMap();
 
@@ -47,6 +49,7 @@ export const useWeather = () => {
 
     // 1. If the user turns off the weather entirely
     if (!tileUrl) {
+      dispatch(setVisibleSlider(false));
       removeAllWeatherLayers();
       activeWeatherRef.current = null;
       return;
@@ -122,6 +125,7 @@ export const useWeather = () => {
     newFormats: string | null,
   ) => {
     setWeather(newFormats);
+    dispatch(setVisibleSlider(true));
   };
 
   return { weather, setWeather, handleWeather };

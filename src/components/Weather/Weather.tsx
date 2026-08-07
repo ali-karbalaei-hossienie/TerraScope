@@ -37,6 +37,26 @@ const Weather = () => {
             clouds
           </Typography>
         </Box>
+
+        <Box className={classes["weather__item"]}>
+          <ToggleButton
+            value="rain"
+            className={classes["weather__item__button"]}
+          >
+            <img
+              className={classes.weather_item__img}
+              src="/src/components/Weather/images/rain.jpg"
+              alt="rain"
+            />
+          </ToggleButton>
+          <Typography
+            variant="caption"
+            noWrap
+            className={classes["weather__label"]}
+          >
+            rain
+          </Typography>
+        </Box>
       </ToggleButtonGroup>
     </Box>
   );
