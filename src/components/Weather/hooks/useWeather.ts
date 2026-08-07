@@ -18,8 +18,6 @@ export const useWeather = () => {
 
   const mapInstance = map!.getMap();
 
-  // Reference to prevent time conflicts during Play mode
-  const latestTimeRef = useRef<string | null>(null);
   // Reference to detect weather type changes (e.g., from clouds to rain)
   const activeWeatherRef = useRef<string | null>(null);
 
@@ -35,7 +33,7 @@ export const useWeather = () => {
       }
     });
 
-    Object.keys(style.sources || {}).forEach((sourceId) => {
+    Object.keys(style.sources).forEach((sourceId) => {
       if (sourceId.includes("-source-")) {
         if (mapInstance.getSource(sourceId)) mapInstance.removeSource(sourceId);
       }
@@ -45,7 +43,6 @@ export const useWeather = () => {
   useEffect(() => {
     if (!mapInstance || !timeSlider) return;
 
-    latestTimeRef.current = timeSlider;
     const tileUrl = weather ? WEATHER_URLS[weather]?.(timeSlider) : null;
 
     // 1. If the user turns off the weather entirely
@@ -106,11 +103,8 @@ export const useWeather = () => {
         e.sourceDataType !== "metadata" &&
         mapInstance.isSourceLoaded(sourceId)
       ) {
-        // Is the Player still on this time? (Prevents flickering on slow connections)
-        if (latestTimeRef.current === timeSlider && weather) {
-          mapInstance.setPaintProperty(layerId, "raster-opacity", 1);
-          hideOtherLayers(layerId);
-        }
+        mapInstance.setPaintProperty(layerId, "raster-opacity", 1);
+        hideOtherLayers(layerId);
 
         mapInstance.off("sourcedata", handleSourceLoaded);
       }
