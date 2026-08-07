@@ -33,6 +33,39 @@ export const useSlider = (): useSliderReturn => {
     dispatch(setTime(currentSelectedItem.fullFormatted));
   }, [currentIndex]);
 
+  useEffect(() => {
+    let animationFrameId: number;
+    let lastTime = performance.now();
+
+    const animate = (time: number) => {
+      if (!isPlay) return;
+
+      // بررسی اینکه آیا ۱ ثانیه (۱۰۰۰ میلی‌ثانیه) گذشته است یا خیر
+      if (time - lastTime >= 2000) {
+        setCurrentIndex((prevIndex) => {
+          if (prevIndex >= sliderData.length - 1) {
+            setIsPlay(false);
+            return prevIndex;
+          }
+          return prevIndex + 1;
+        });
+        lastTime = time; // آپدیت کردن زمان برای پله بعدی
+      }
+
+      // درخواست فریم بعدی
+      animationFrameId = requestAnimationFrame(animate);
+    };
+
+    if (isPlay) {
+      animationFrameId = requestAnimationFrame(animate);
+    }
+
+    // Cleanup
+    return () => {
+      if (animationFrameId) cancelAnimationFrame(animationFrameId);
+    };
+  }, [isPlay, sliderData.length]);
+
   const marks = useMemo(() => {
     const generatedMarks: { value: number; label: React.ReactNode }[] = [];
 
@@ -59,23 +92,6 @@ export const useSlider = (): useSliderReturn => {
 
     return generatedMarks;
   }, [sliderData]);
-
-  // انیمیشن پخش
-  // useEffect(() => {
-  //   let interval: NodeJS.Timeout;
-  //   if (isPlay) {
-  //     interval = setInterval(() => {
-  //       setCurrentIndex((prevIndex) => {
-  //         if (prevIndex >= sliderData.length - 1) {
-  //           setIsPlay(false);
-  //           return 0;
-  //         }
-  //         return prevIndex + 1;
-  //       });
-  //     }, 800);
-  //   }
-  //   return () => clearInterval(interval);
-  // }, [isPlay, sliderData.length]);
 
   const handleChange = (_: Event, newValue: number | number[]) => {
     setCurrentIndex(newValue as number);

@@ -17,61 +17,77 @@ export const useWeather = () => {
   const timeSlider = useSelector((state: RootState) => state.slider.timeSlider);
 
   const mapInstance = map!.getMap();
-  const activeLayerRef = useRef<string | null>(null);
-  const timeoutRef = useRef<number | null>(null);
 
-  // Helper function to force-remove ALL weather layers & sources from the map
+  // Reference to prevent time conflicts during Play mode
+  const latestTimeRef = useRef<string | null>(null);
+  // Reference to detect weather type changes (e.g., from clouds to rain)
+  const activeWeatherRef = useRef<string | null>(null);
+
+  // Helper function to completely remove all weather layers and sources from the map
   const removeAllWeatherLayers = () => {
     if (!mapInstance) return;
-
-    // Clear any pending timeout
-    if (timeoutRef.current) clearTimeout(timeoutRef.current);
-
     const style = mapInstance.getStyle();
     if (!style) return;
 
-    // 1. Remove all weather layers
     style.layers?.forEach((layer) => {
       if (layer.id.includes("-layer-")) {
         if (mapInstance.getLayer(layer.id)) mapInstance.removeLayer(layer.id);
       }
     });
 
-    // 2. Remove all weather sources
     Object.keys(style.sources || {}).forEach((sourceId) => {
       if (sourceId.includes("-source-")) {
         if (mapInstance.getSource(sourceId)) mapInstance.removeSource(sourceId);
       }
     });
-
-    activeLayerRef.current = null;
   };
 
   useEffect(() => {
     if (!mapInstance || !timeSlider) return;
 
+    latestTimeRef.current = timeSlider;
     const tileUrl = weather ? WEATHER_URLS[weather]?.(timeSlider) : null;
 
-    // If weather is turned off or invalid, do a complete sweep
+    // 1. If the user turns off the weather entirely
     if (!tileUrl) {
       removeAllWeatherLayers();
+      activeWeatherRef.current = null;
       return;
+    }
+
+    // 2. If the weather type changes (e.g., clouds off and rain on), clear memory
+    if (activeWeatherRef.current !== weather) {
+      removeAllWeatherLayers();
+      activeWeatherRef.current = weather;
     }
 
     const sourceId = `${weather}-source-${timeSlider}`;
     const layerId = `${weather}-layer-${timeSlider}`;
 
-    // If this specific source already exists, don't recreate it
-    if (mapInstance.getSource(sourceId)) return;
+    // Helper function to hide other layers
+    const hideOtherLayers = (targetLayerId: string) => {
+      const style = mapInstance.getStyle();
+      style?.layers?.forEach((layer) => {
+        if (layer.id.includes("-layer-") && layer.id !== targetLayerId) {
+          mapInstance.setPaintProperty(layer.id, "raster-opacity", 0);
+        }
+      });
+    };
 
-    // 1. Add new source
+    // 3. Cache Hit: If this layer has already been downloaded and exists on the map
+    if (mapInstance.getSource(sourceId)) {
+      mapInstance.setPaintProperty(layerId, "raster-opacity", 1);
+      hideOtherLayers(layerId);
+      return;
+    }
+
+    // 4. If it's a new layer, add it with zero opacity
     mapInstance.addSource(sourceId, {
       type: "raster",
       tiles: [tileUrl],
       tileSize: 256,
     });
 
-    // 2. Add new invisible layer
     mapInstance.addLayer({
       id: layerId,
       type: "raster",
@@ -82,35 +98,18 @@ export const useWeather = () => {
       },
     });
 
-    const prevLayer = activeLayerRef.current;
-
+    // 5. Wait for complete download from NASA
     const handleSourceLoaded = (e: MapSourceDataEvent) => {
-      if (e.sourceId === sourceId && mapInstance.isSourceLoaded(sourceId)) {
-        // Double check: if user turned off weather while loading, clean up immediately!
-        if (!weather) {
-          removeAllWeatherLayers();
-          return;
-        }
-
-        // Show new layer
-        mapInstance.setPaintProperty(layerId, "raster-opacity", 1);
-
-        // Fade out previous layer
-        if (prevLayer && prevLayer !== layerId) {
-          const prevSource = prevLayer.replace("layer", "source");
-
-          if (mapInstance.getLayer(prevLayer)) {
-            mapInstance.setPaintProperty(prevLayer, "raster-opacity", 0);
-          }
-
-          if (timeoutRef.current) clearTimeout(timeoutRef.current);
-
-          timeoutRef.current = setTimeout(() => {
-            if (mapInstance.getLayer(prevLayer))
-              mapInstance.removeLayer(prevLayer);
-            if (mapInstance.getSource(prevSource))
-              mapInstance.removeSource(prevSource);
-          }, 500);
+      if (
+        e.sourceId === sourceId &&
+        e.isSourceLoaded &&
+        e.sourceDataType !== "metadata" &&
+        mapInstance.isSourceLoaded(sourceId)
+      ) {
+        // Is the Player still on this time? (Prevents flickering on slow connections)
+        if (latestTimeRef.current === timeSlider && weather) {
+          mapInstance.setPaintProperty(layerId, "raster-opacity", 1);
+          hideOtherLayers(layerId);
         }
 
         mapInstance.off("sourcedata", handleSourceLoaded);
@@ -118,7 +117,6 @@ export const useWeather = () => {
     };
 
     mapInstance.on("sourcedata", handleSourceLoaded);
-    activeLayerRef.current = layerId;
 
     return () => {
       mapInstance.off("sourcedata", handleSourceLoaded);
