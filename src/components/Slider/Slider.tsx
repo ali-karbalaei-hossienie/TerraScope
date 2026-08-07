@@ -1,75 +1,92 @@
+import React, { useState, useEffect, useMemo } from "react";
 import { Box, Slider as SliderMui } from "@mui/material";
-import { useState } from "react";
 import { MapControl } from "../MapControl/MapControl";
 import Player from "./components/player/Player";
 import { useSlider } from "./style/useSlider";
-const CrownIcon = () => (
-  <svg
-    width="14"
-    height="14"
-    viewBox="0 0 24 24"
-    fill="#fbc02d" // رنگ طلایی
-    style={{ marginLeft: "4px", marginBottom: "2px" }}
-  >
-    <path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3c0 .6-.4 1-1 1H6c-.6 0-1-.4-1-1v-1h14v1z" />
-  </svg>
-);
-const marks = [
-  { value: 0, label: "Wed 5" },
-  { value: 10, label: "Thurs 6" },
-  { value: 20, label: "Fri 7" },
-  { value: 30, label: "Sat 8" },
-  { value: 40, label: "Sun 9" },
-  { value: 50, label: "Mon 10" },
-  {
-    value: 60,
-    label: (
-      <span style={{ display: "flex", alignItems: "center" }}>
-        Tue 11 <CrownIcon />
-      </span>
-    ),
-  },
-  {
-    value: 70,
-    label: (
-      <span style={{ display: "flex", alignItems: "center" }}>
-        Wed 12 <CrownIcon />
-      </span>
-    ),
-  },
-  {
-    value: 80,
-    label: (
-      <span style={{ display: "flex", alignItems: "center" }}>
-        Thu 13 <CrownIcon />
-      </span>
-    ),
-  },
-  {
-    value: 90,
-    label: (
-      <span style={{ display: "flex", alignItems: "center" }}>
-        Fri 14 <CrownIcon />
-      </span>
-    ),
-  },
-];
+import { getSliderData } from "../Weather/utils";
+import { useDispatch, useSelector } from "react-redux";
+import type { RootState } from "../../app/store";
+import { setTime } from "../../features/slider/slider";
 
 const Slider = () => {
+  const [isPlay, setIsPlay] = useState<boolean>(false);
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
+
+  const sliderData = useMemo(() => getSliderData(10, [0, 6, 12, 18]), []);
   const { classes } = useSlider();
-  const [isPlay, setIsPlay] = useState(false);
-  function valuetext(value: number) {
-    return `${value}°C`;
-  }
+  const isVisible = useSelector((state: RootState) => state.slider.isVisible);
+  const dispatch = useDispatch();
+
+  // const currentSelectedItem = sliderData[currentIndex];
+
+  useEffect(() => {
+    const currentSelectedItem = sliderData[currentIndex];
+    dispatch(setTime(currentSelectedItem.fullFormatted));
+  }, [currentIndex]);
+
+  const marks = useMemo(() => {
+    const generatedMarks: { value: number; label: React.ReactNode }[] = [];
+
+    sliderData.forEach((item, index) => {
+      const isFirstHourOfDay =
+        index === 0 || sliderData[index - 1].dateOnly !== item.dateOnly;
+
+      if (isFirstHourOfDay) {
+        const dayLabel = item.dateObj.toLocaleDateString("en-US", {
+          weekday: "short",
+          day: "numeric",
+        });
+
+        generatedMarks.push({
+          value: index,
+          label: (
+            <span style={{ display: "flex", alignItems: "center" }}>
+              {dayLabel}
+            </span>
+          ),
+        });
+      }
+    });
+
+    return generatedMarks;
+  }, [sliderData]);
+
+  // انیمیشن پخش
+  // useEffect(() => {
+  //   let interval: NodeJS.Timeout;
+  //   if (isPlay) {
+  //     interval = setInterval(() => {
+  //       setCurrentIndex((prevIndex) => {
+  //         if (prevIndex >= sliderData.length - 1) {
+  //           setIsPlay(false);
+  //           return 0;
+  //         }
+  //         return prevIndex + 1;
+  //       });
+  //     }, 800);
+  //   }
+  //   return () => clearInterval(interval);
+  // }, [isPlay, sliderData.length]);
+
+  const handleChange = (_: Event, newValue: number | number[]) => {
+    setCurrentIndex(newValue as number);
+  };
+
+  if (!sliderData.length || !isVisible) return null;
 
   return (
     <MapControl position="bottom-left">
       <Box className={classes.sliderContainer}>
         <Player isPlay={isPlay} setIsPlay={setIsPlay} />
         <SliderMui
-          getAriaValueText={valuetext}
+          min={0}
+          max={sliderData.length - 1}
+          step={1}
+          value={currentIndex}
+          onChange={handleChange}
           marks={marks}
-          valueLabelDisplay="on"
+          valueLabelDisplay="auto"
+          valueLabelFormat={(idx) => sliderData[idx]?.timeOnly || ""}
           className={classes.slider}
         />
       </Box>

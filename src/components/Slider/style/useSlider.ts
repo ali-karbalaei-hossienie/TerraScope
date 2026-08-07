@@ -4,7 +4,7 @@ export const useSlider = makeStyles()((theme) => ({
   sliderContainer: {
     position: "relative",
     width: "50vw",
-    margin: "0 20px",
+    margin: "0 10px",
     display: "grid",
     gridTemplateColumns: "50px 1fr",
     "& .MuiSlider-root": {
@@ -57,30 +57,34 @@ export const useSlider = makeStyles()((theme) => ({
       },
     },
     "& .MuiSlider-mark": {
-      display: "none",
+      height: "40px",
+      top: 0,
+      transform: "none",
+      width: 1,
+      backgroundColor: theme.palette.divider,
+      "&.MuiSlider-mark[style*='left: 0%'], &.MuiSlider-mark[style*='left: 100%']":
+        {
+          backgroundColor: "transparent",
+        },
     },
     "& .MuiSlider-markLabel": {
       position: "absolute",
-
+      marginLeft: "16px",
       top: 5,
       height: 35,
-      width: "10%",
       transform: "none",
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
       color: theme.palette.text.primary,
       fontSize: "0.7rem",
-      borderRight: `1px solid ${theme.palette.text.secondary}`,
       boxSizing: "border-box",
-      '&[data-index="9"]': {
-        borderRight: "none",
-      },
     },
     "& .MuiSlider-valueLabel": {
       backgroundColor: theme.palette.primary.main,
       boxShadow: "0 0 4px #000",
       width: "auto",
+      transform: "translateY(-100%) scale(1)",
       "&::before": {
         display: "none",
       },

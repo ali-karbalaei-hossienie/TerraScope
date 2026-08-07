@@ -55,7 +55,6 @@ const Map = () => {
       <Draw />
       <Edit />
       <MultiMapLayers />
-      {/* <CustomTimeline /> */}
       <Slider />
     </MapBox>
   );
