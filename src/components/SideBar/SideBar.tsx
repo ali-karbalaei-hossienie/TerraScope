@@ -48,7 +48,7 @@ const SideBar = () => {
           <Typography variant="h6" className={classes.panelTitle}>
             {activeMenu ? `${activeMenu} Panel` : ""}
           </Typography>
-          <Box sx={{ flexGrow: 1, overflowY: "auto" }}>
+          <Box sx={{ flexGrow: 1 }}>
             {activeMenu === "weather" && <Weather />}
           </Box>
         </Box>

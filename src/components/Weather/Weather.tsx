@@ -10,6 +10,7 @@ import { useWeatherStyles } from "./styles/useWeatherStyles";
 const Weather = () => {
   const { handleWeather, weather } = useWeather();
   const { classes } = useWeatherStyles();
+
   return (
     <Box className={classes["weather"]}>
       <ToggleButtonGroup
@@ -33,8 +34,14 @@ const Weather = () => {
             variant="caption"
             noWrap
             className={classes["weather__label"]}
+            sx={(theme) => ({
+              color:
+                weather === "clouds"
+                  ? theme.palette.primary.main
+                  : theme.palette.primary.contrastText,
+            })}
           >
-            clouds
+            Clouds
           </Typography>
         </Box>
 
@@ -53,8 +60,116 @@ const Weather = () => {
             variant="caption"
             noWrap
             className={classes["weather__label"]}
+            sx={(theme) => ({
+              color:
+                weather === "rain"
+                  ? theme.palette.primary.main
+                  : theme.palette.primary.contrastText,
+            })}
           >
-            rain
+            Rain
+          </Typography>
+        </Box>
+
+        <Box className={classes["weather__item"]}>
+          <ToggleButton
+            value="temperature"
+            className={classes["weather__item__button"]}
+          >
+            <img
+              className={classes.weather_item__img}
+              src="/src/components/Weather/images/temp.jpg"
+              alt="rain"
+            />
+          </ToggleButton>
+          <Typography
+            variant="caption"
+            noWrap
+            className={classes["weather__label"]}
+            sx={(theme) => ({
+              color:
+                weather === "temperature"
+                  ? theme.palette.primary.main
+                  : theme.palette.primary.contrastText,
+            })}
+          >
+            Temperature
+          </Typography>
+        </Box>
+        <Box className={classes["weather__item"]}>
+          <ToggleButton
+            value="aerosol"
+            className={classes["weather__item__button"]}
+          >
+            <img
+              className={classes.weather_item__img}
+              src="/src/components/Weather/images/drought40.jpg"
+              alt="rain"
+            />
+          </ToggleButton>
+          <Typography
+            variant="caption"
+            noWrap
+            className={classes["weather__label"]}
+            sx={(theme) => ({
+              color:
+                weather === "aerosol"
+                  ? theme.palette.primary.main
+                  : theme.palette.primary.contrastText,
+            })}
+          >
+            Aerosol
+          </Typography>
+        </Box>
+        <Box className={classes["weather__item"]}>
+          <ToggleButton
+            value="fires"
+            className={classes["weather__item__button"]}
+          >
+            <img
+              className={classes.weather_item__img}
+              src="/src/components/Weather/images/fires.jpg"
+              alt="rain"
+            />
+          </ToggleButton>
+          <Typography
+            variant="caption"
+            noWrap
+            className={classes["weather__label"]}
+            sx={(theme) => ({
+              color:
+                weather === "fires"
+                  ? theme.palette.primary.main
+                  : theme.palette.primary.contrastText,
+            })}
+          >
+            Fires
+          </Typography>
+        </Box>
+
+        <Box className={classes["weather__item"]}>
+          <ToggleButton
+            value="seaTemperature"
+            className={classes["weather__item__button"]}
+          >
+            <img
+              className={classes.weather_item__img}
+              src="/src/components/Weather/images/seaTemp.jpg"
+              alt="rain"
+            />
+          </ToggleButton>
+          <Typography
+            variant="caption"
+            noWrap
+            className={classes["weather__label"]}
+            sx={(theme) => ({
+              color:
+                weather === "seaTemperature"
+                  ? theme.palette.primary.main
+                  : theme.palette.primary.contrastText,
+            })}
+          >
+            Sea Temperature
           </Typography>
         </Box>
       </ToggleButtonGroup>

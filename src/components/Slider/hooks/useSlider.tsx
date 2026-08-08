@@ -37,8 +37,6 @@ export const useSlider = (): useSliderReturn => {
 
     const animate = (time: number) => {
       if (!isPlay) return;
-      console.log(lastTime, time);
-
       if (time - lastTime >= 2000) {
         setCurrentIndex((prevIndex) => {
           if (prevIndex >= sliderData.length - 1) {
