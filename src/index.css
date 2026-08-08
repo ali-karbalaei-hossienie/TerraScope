@@ -1,3 +1,8 @@
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #e5a913 transparent;
+}
+
 .mapboxgl-ctrl-group,
 .mapboxgl-ctrl-group {
   border: none !important;

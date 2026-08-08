@@ -7,11 +7,12 @@ import Map from "../Map";
 import Weather from "../Weather/Weather";
 import SideBarItem from "./components/SidebarItem/SideBarItem";
 import { useSideBarStyles } from "./styles/useSideBarStyles";
+import Discover from "../Discover/Discover";
 
 type ActiveMenuType = "discover" | "weather" | "timeLaps" | null;
 
 const SideBar = () => {
-  const [activeMenu, setActiveMenu] = useState<ActiveMenuType>("discover");
+  const [activeMenu, setActiveMenu] = useState<ActiveMenuType>(null);
 
   const handleMenuClick = (menu: ActiveMenuType) => {
     setActiveMenu((prev) => (prev === menu ? null : menu));
@@ -49,7 +50,10 @@ const SideBar = () => {
             {activeMenu ? `${activeMenu} Panel` : ""}
           </Typography>
           <Box sx={{ flexGrow: 1 }}>
-            {activeMenu === "weather" && <Weather />}
+            <>
+              <>{activeMenu === "weather" && <Weather />}</>
+              <>{activeMenu === "discover" && <Discover />}</>
+            </>
           </Box>
         </Box>
       </Box>
