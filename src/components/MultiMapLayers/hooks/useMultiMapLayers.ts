@@ -7,14 +7,12 @@ import { useCallback, useEffect, useRef, type RefObject } from "react";
 import { useMap } from "react-map-gl/mapbox";
 import { useSelector } from "react-redux";
 import type { RootState } from "../../../app/store";
-import type { UseMultiMapLayers } from "../types/mapLayerType";
+import type { layerTpe, UseMultiMapLayers } from "../types/mapLayerType";
 
 const BASE_SOURCE_LEFT_ID = "base-source-left";
 const BASE_SOURCE_RIGHT_ID = "base-source-right";
-
 const BASE_LAYER_LEFT_ID = "base-layer-left";
 const BASE_LAYER_RIGHT_ID = "base-layer-right";
-
 const BASE_SOURCE_ID = "base-source";
 const BASE_LAYER_ID = "base-layer";
 
@@ -35,8 +33,8 @@ interface UseMultiMapLayersReturn {
 }
 
 export const useMultiMapLayers = ({
-  extraLeftLayers,
-  extraRightLayers,
+  extraLeftLayers = [],
+  extraRightLayers = [],
 }: UseMultiMapLayers = {}): UseMultiMapLayersReturn => {
   const {
     selectedBaseLayers,
@@ -83,27 +81,26 @@ export const useMultiMapLayers = ({
     [removeLayerIfExists, removeSourceIfExists],
   );
 
-  const safeAddLayer = useCallback(
-    (mapBox: MapboxMap, layer: LayerSpecification | CustomLayerInterface) => {
-      if (mapBox.getLayer(layer.id)) return;
+  const safeAddLayer = useCallback((mapBox: MapboxMap, layer: layerTpe) => {
+    if (mapBox.getLayer(layer.id)) return;
+    if (mapBox.getLayer(GEOMAN_REFERENCE_LAYER)) {
+      mapBox.addLayer(layer as LayerSpecification, GEOMAN_REFERENCE_LAYER);
+    } else {
+      mapBox.addLayer(layer as LayerSpecification);
+    }
+  }, []);
 
-      if (mapBox.getLayer(GEOMAN_REFERENCE_LAYER)) {
-        mapBox.addLayer(layer as LayerSpecification, GEOMAN_REFERENCE_LAYER);
-      } else {
-        mapBox.addLayer(layer as LayerSpecification);
-      }
-    },
-    [],
-  );
   const ensureBaseLayer = useCallback(
     (mapBox: MapboxMap, tile: string) => {
-      const existingSource = mapBox.getSource(BASE_SOURCE_ID);
+      if (!tile) {
+        removeLayerIfExists(mapBox, BASE_LAYER_ID);
+        return;
+      }
 
-      if (existingSource) {
-        if ("setTiles" in existingSource) {
-          existingSource.setTiles([tile]);
-        }
-      } else {
+      const existingSource = mapBox.getSource(BASE_SOURCE_ID);
+      if (existingSource && "setTiles" in existingSource) {
+        existingSource.setTiles([tile]);
+      } else if (!existingSource) {
         mapBox.addSource(BASE_SOURCE_ID, {
           type: "raster",
           tiles: [tile],
@@ -119,7 +116,7 @@ export const useMultiMapLayers = ({
         } satisfies LayerSpecification);
       }
     },
-    [safeAddLayer],
+    [safeAddLayer, removeLayerIfExists],
   );
 
   const getSwipePosition = useCallback((mapBox: MapboxMap) => {
@@ -134,32 +131,43 @@ export const useMultiMapLayers = ({
       const leftTile = selectedLeftLayers[0]?.tile ?? "";
       const rightTile = selectedRightLayers[0]?.tile ?? "";
 
-      const leftSource = mapBox.getSource(BASE_SOURCE_LEFT_ID);
-      if (leftSource) {
-        if ("setTiles" in leftSource) {
+      // --- 1. Manage and Create Sources ---
+      if (leftTile) {
+        const leftSource = mapBox.getSource(BASE_SOURCE_LEFT_ID);
+        if (leftSource && "setTiles" in leftSource) {
           leftSource.setTiles([leftTile]);
+        } else if (!leftSource) {
+          mapBox.addSource(BASE_SOURCE_LEFT_ID, {
+            type: "raster",
+            tiles: [leftTile],
+            tileSize: 256,
+          });
         }
-      } else {
-        mapBox.addSource(BASE_SOURCE_LEFT_ID, {
-          type: "raster",
-          tiles: [leftTile],
-          tileSize: 256,
-        });
       }
 
-      const rightSource = mapBox.getSource(BASE_SOURCE_RIGHT_ID);
-      if (rightSource) {
-        if ("setTiles" in rightSource) {
+      if (rightTile) {
+        const rightSource = mapBox.getSource(BASE_SOURCE_RIGHT_ID);
+        if (rightSource && "setTiles" in rightSource) {
           rightSource.setTiles([rightTile]);
+        } else if (!rightSource) {
+          mapBox.addSource(BASE_SOURCE_RIGHT_ID, {
+            type: "raster",
+            tiles: [rightTile],
+            tileSize: 256,
+          });
         }
-      } else {
-        mapBox.addSource(BASE_SOURCE_RIGHT_ID, {
-          type: "raster",
-          tiles: [rightTile],
-          tileSize: 256,
-        });
       }
 
+      extraLeftLayers.forEach((item) => {
+        if (!mapBox.getSource(item.sourceId))
+          mapBox.addSource(item.sourceId, item.source);
+      });
+      extraRightLayers.forEach((item) => {
+        if (!mapBox.getSource(item.sourceId))
+          mapBox.addSource(item.sourceId, item.source);
+      });
+
+      // --- 2. Define Scissor Layers ---
       const leftScissorLayer: ScissorLayer = {
         id: LEFT_SCISSOR_LAYER_ID,
         type: "custom",
@@ -170,7 +178,6 @@ export const useMultiMapLayers = ({
         render(gl) {
           const canvas = this.map?.getCanvas();
           if (!canvas) return;
-
           gl.enable(gl.SCISSOR_TEST);
           gl.scissor(0, 0, getSwipePosition(mapBox), canvas.height);
         },
@@ -186,7 +193,6 @@ export const useMultiMapLayers = ({
         render(gl) {
           const canvas = this.map?.getCanvas();
           if (!canvas) return;
-
           const position = getSwipePosition(mapBox);
           gl.enable(gl.SCISSOR_TEST);
           gl.scissor(position, 0, canvas.width - position, canvas.height);
@@ -202,40 +208,65 @@ export const useMultiMapLayers = ({
         },
       };
 
+      // --- 3. Add Layers (Order of addition doesn't matter here as we will sort them later) ---
       safeAddLayer(mapBox, leftScissorLayer);
-      if (extraLeftLayers) {
-        extraLeftLayers.forEach((item) => {
-          if (!mapBox.getSource(item.sourceId)) {
-            mapBox.addSource(item.sourceId, item.source);
-          }
-          safeAddLayer(mapBox, item.layer);
-        });
-      }
 
-      safeAddLayer(mapBox, {
-        id: BASE_LAYER_LEFT_ID,
-        type: "raster",
-        source: BASE_SOURCE_LEFT_ID,
-      } satisfies LayerSpecification);
+      // Prevent crash: Add the layer only if the tile exists
+      if (leftTile) {
+        safeAddLayer(mapBox, {
+          id: BASE_LAYER_LEFT_ID,
+          type: "raster",
+          source: BASE_SOURCE_LEFT_ID,
+        } satisfies LayerSpecification);
+      } else {
+        removeLayerIfExists(mapBox, BASE_LAYER_LEFT_ID);
+      }
+      extraLeftLayers.forEach((item) => safeAddLayer(mapBox, item.layer));
 
       safeAddLayer(mapBox, rightScissorLayer);
-
-      if (extraRightLayers) {
-        extraRightLayers.forEach((item) => {
-          if (!mapBox.getSource(item.sourceId)) {
-            mapBox.addSource(item.sourceId, item.source);
-          }
-          safeAddLayer(mapBox, item.layer);
-        });
+      if (rightTile) {
+        safeAddLayer(mapBox, {
+          id: BASE_LAYER_RIGHT_ID,
+          type: "raster",
+          source: BASE_SOURCE_RIGHT_ID,
+        } satisfies LayerSpecification);
+      } else {
+        removeLayerIfExists(mapBox, BASE_LAYER_RIGHT_ID);
       }
-
-      safeAddLayer(mapBox, {
-        id: BASE_LAYER_RIGHT_ID,
-        type: "raster",
-        source: BASE_SOURCE_RIGHT_ID,
-      } satisfies LayerSpecification);
+      extraRightLayers.forEach((item) => safeAddLayer(mapBox, item.layer));
 
       safeAddLayer(mapBox, disableScissorLayer);
+
+      // --- 4. Magic Operation: Apply precise Z-INDEX ---
+      // This array specifies the correct layer order from Bottom to Top
+      const orderedLayerIds = [
+        LEFT_SCISSOR_LAYER_ID,
+        BASE_LAYER_LEFT_ID,
+        ...extraLeftLayers.map((item) => item.layer.id),
+        RIGHT_SCISSOR_LAYER_ID,
+        BASE_LAYER_RIGHT_ID,
+        ...extraRightLayers.map((item) => item.layer.id),
+        DISABLE_SCISSOR_LAYER_ID,
+      ];
+
+      // // Geoman must always be the topmost layer
+      let beforeId = mapBox.getLayer(GEOMAN_REFERENCE_LAYER)
+        ? GEOMAN_REFERENCE_LAYER
+        : undefined;
+
+      // Using a reverse loop, we stack the layers exactly one under the other
+      for (let i = orderedLayerIds.length - 1; i >= 0; i--) {
+        const layerId = orderedLayerIds[i];
+        if (mapBox.getLayer(layerId)) {
+          if (beforeId) {
+            mapBox.moveLayer(layerId, beforeId);
+          } else {
+            mapBox.moveLayer(layerId);
+          }
+          beforeId = layerId;
+        }
+      }
+      mapBox.triggerRepaint();
     },
     [
       cleanupBaseLayer,
@@ -243,6 +274,7 @@ export const useMultiMapLayers = ({
       selectedLeftLayers,
       selectedRightLayers,
       safeAddLayer,
+      removeLayerIfExists,
       extraLeftLayers,
       extraRightLayers,
     ],
@@ -253,6 +285,8 @@ export const useMultiMapLayers = ({
     const mapBox = map.getMap();
 
     const updateMapLayers = () => {
+      if (!mapBox.getStyle()) return;
+
       if (isSplitMode) {
         setupSplitModeLayers(mapBox);
       } else {
@@ -268,8 +302,6 @@ export const useMultiMapLayers = ({
     }
 
     return () => {
-      cleanupSplitModeLayers(mapBox);
-      cleanupBaseLayer(mapBox);
       mapBox.off("style.load", updateMapLayers);
     };
   }, [
@@ -278,19 +310,21 @@ export const useMultiMapLayers = ({
     selectedBaseLayers,
     selectedLeftLayers,
     selectedRightLayers,
+    extraRightLayers,
+    extraLeftLayers,
     cleanupBaseLayer,
     cleanupSplitModeLayers,
     ensureBaseLayer,
     setupSplitModeLayers,
   ]);
 
-  const startDragging = () => {
+  const startDragging = useCallback(() => {
     isDraggingRef.current = true;
-  };
+  }, []);
 
-  const stopDragging = () => {
+  const stopDragging = useCallback(() => {
     isDraggingRef.current = false;
-  };
+  }, []);
 
   useEffect(() => {
     if (!map || !isSplitMode) return;
@@ -305,7 +339,6 @@ export const useMultiMapLayers = ({
       if (clientX === undefined) return;
 
       const rect = mapBox.getContainer().getBoundingClientRect();
-
       const position = Math.max(0, Math.min(rect.width, clientX - rect.left));
 
       swipeRatio.current = position / rect.width;
@@ -319,7 +352,7 @@ export const useMultiMapLayers = ({
 
     document.addEventListener("mousemove", handleMove);
     document.addEventListener("mouseup", stopDragging);
-    document.addEventListener("touchmove", handleMove);
+    document.addEventListener("touchmove", handleMove, { passive: true });
     document.addEventListener("touchend", stopDragging);
 
     return () => {
@@ -328,7 +361,7 @@ export const useMultiMapLayers = ({
       document.removeEventListener("touchmove", handleMove);
       document.removeEventListener("touchend", stopDragging);
     };
-  }, [map, isSplitMode]);
+  }, [map, isSplitMode, stopDragging]);
 
   return { swipeRef, isSplitMode, startDragging };
 };

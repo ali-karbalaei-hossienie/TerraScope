@@ -9,7 +9,6 @@ import MultiMapLayers from "./MultiMapLayers/MultiMapLayers";
 import MapNavigation from "./zoomBox/ZoomBox";
 // import Weather from "./_Weather/Weather";
 import type { StyleSpecification } from "mapbox-gl";
-import { MapControl } from "./MapControl/MapControl";
 import Slider from "./Slider/Slider";
 
 const blankStyle: StyleSpecification = {

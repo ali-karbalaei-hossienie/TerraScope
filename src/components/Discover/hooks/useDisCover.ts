@@ -17,10 +17,7 @@ export const useDisCover = (): useDisCoverReturn => {
     if (!mapbox) return;
     const { borderLayerId, borderSourceId, imageLayerId, imageSourceId } =
       initSourceImage(data);
-    console.log("aliu");
-
     if (mapbox.getSource(imageSourceId)) {
-      alert("This image has already been added to the map!");
       return;
     }
 
