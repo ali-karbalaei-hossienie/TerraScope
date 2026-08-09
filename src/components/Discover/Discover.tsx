@@ -1,22 +1,31 @@
-import {
-  Box,
-  Button,
-  Divider,
-  IconButton,
-  Switch,
-  Typography,
-} from "@mui/material";
-import { useDiscoverStyles } from "./styles/useDiscoverStyles";
+import { Box, Button, Typography } from "@mui/material";
+import MoreDiscover from "./components/MoreDiscover/MoreDiscover";
 import { discoverData } from "./constants";
+import { useDisCover } from "./hooks/useDisCover";
+import { useDiscoverStyles } from "./styles/useDiscoverStyles";
+
 const Discover = () => {
-  const { classes } = useDiscoverStyles();
+  const { classes, cx } = useDiscoverStyles();
+  const { handleImageOnMap, addedIds, handleDeleteIds } = useDisCover();
 
   return (
     <>
       {discoverData.map((data) => {
+        const isOnMap = addedIds.includes(data.id);
+
         return (
-          <Box className={classes.discoverContainer}>
-            <Button disableRipple className={classes.discoverButton}>
+          <Box
+            key={data.id}
+            className={cx(
+              classes.discoverContainer,
+              isOnMap && classes.activeContainer,
+            )}
+          >
+            <Button
+              onClick={() => handleImageOnMap(data)}
+              disableRipple
+              className={classes.discoverButton}
+            >
               <Box className={classes.discoverImageWrapper}>
                 <img
                   src={data.image}
@@ -27,7 +36,7 @@ const Discover = () => {
               <Box className={classes.discoverContent}>
                 <Typography
                   className={classes.discoverTitle}
-                  component="div"
+                  component="span"
                   variant="body2"
                 >
                   {data.title}
@@ -36,23 +45,18 @@ const Discover = () => {
                   <Typography component="div" variant="caption">
                     {data.description}
                   </Typography>
-                  <IconButton className={classes.addTimelaps}>+</IconButton>
+                  <MoreDiscover
+                    onDeleteIds={handleDeleteIds}
+                    discoverData={data}
+                  />
                 </Box>
               </Box>
             </Button>
-            <Box className={classes.discoverFooter}>
-              <Divider />
-              <Box className={classes.discoverSplitModeToggle}>
-                <Typography sx={{ padding: "0 8px" }} variant="subtitle2">
-                  Split Mode
-                </Typography>
-                <Switch />
-              </Box>
-            </Box>
           </Box>
         );
       })}
     </>
   );
 };
+
 export default Discover;

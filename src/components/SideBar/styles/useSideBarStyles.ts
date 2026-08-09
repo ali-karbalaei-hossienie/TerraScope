@@ -51,7 +51,7 @@ export const useSideBarStyles = makeStyles<SideBarStyleProps>()(
       display: "flex",
       flexDirection: "column",
       height: "100%",
-      padding: theme.spacing(2),
+      padding: `${theme.spacing(2)} ${theme.spacing(3)} ${theme.spacing(2)} ${theme.spacing(2)} `,
     },
     panelTitle: {
       marginBottom: 16,

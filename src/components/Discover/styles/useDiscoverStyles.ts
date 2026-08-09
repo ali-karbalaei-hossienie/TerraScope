@@ -1,13 +1,19 @@
 import { makeStyles } from "tss-react/mui";
 
-export const useDiscoverStyles = makeStyles({ name: "Discover" })((theme) => ({
+export const useDiscoverStyles = makeStyles()((theme) => ({
   discoverContainer: {
-    border: `1px solid ${theme.palette.divider}`,
+    border: `2px solid ${theme.palette.divider}`,
     marginBottom: theme.spacing(2),
+    transition: "all 0.3s ease-in-out",
+    transform: "scale(1)",
+  },
+  activeContainer: {
+    borderColor: theme.palette.primary.dark,
+    transform: "scale(1.04)",
   },
   discoverButton: {
     width: "100%",
-    gap: theme.spacing(1),
+    gap: theme.spacing(2),
     padding: theme.spacing(1),
     overflow: "hidden",
     display: "flex",
@@ -38,6 +44,7 @@ export const useDiscoverStyles = makeStyles({ name: "Discover" })((theme) => ({
     overflow: "hidden",
     whiteSpace: "nowrap",
     color: theme.palette.primary.light,
+    textAlign: "left",
   },
   discoverAuthorRow: {
     display: "flex",
