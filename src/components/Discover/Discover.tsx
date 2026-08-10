@@ -4,6 +4,7 @@ import SplitDiscover from "./components/SplitDiscover/SplitDiscover";
 import { discoverData } from "./constants";
 import { useDisCover } from "./hooks/useDisCover";
 import { useDiscoverStyles } from "./styles/useDiscoverStyles";
+import SideBySide from "./components/SideBySide/SideBySide";
 
 const Discover = () => {
   const { classes, cx } = useDiscoverStyles();
@@ -11,15 +12,27 @@ const Discover = () => {
     handleImageOnMap,
     activeCard,
     handleDeleteIds,
-    handleVisibleSplitMode,
-    activeSplit,
+    mapMode,
+    handleMapMode,
   } = useDisCover();
 
   return (
     <>
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          marginBottom: "16px",
+        }}
+      >
+        <Typography variant="h6" className={classes.panelTitle}>
+          DisCover Panel
+        </Typography>
+        <SplitDiscover mapMode={mapMode} handleMapMode={handleMapMode} />
+      </Box>
       {discoverData.map((data) => {
         const isOnMap = activeCard.includes(data.id);
-        const isActiveSplitMode = activeSplit.includes(data.id);
         return (
           <Box
             key={data.id}
@@ -63,17 +76,18 @@ const Discover = () => {
                     <MoreDiscover
                       onDeleteIds={handleDeleteIds}
                       discoverData={data}
-                      onVisibleSplitMode={handleVisibleSplitMode}
                     />
                   </Box>
 
                   <Box
                     className={cx(
                       classes.splitModeWrapper,
-                      isActiveSplitMode && classes.splitModeWrapperActive,
+                      mapMode === "split" && classes.splitModeWrapperActive,
                     )}
                   >
-                    <SplitDiscover />
+                    <Box sx={{ overflow: "hidden" }}>
+                      <SideBySide />
+                    </Box>
                   </Box>
                 </Box>
               </Box>

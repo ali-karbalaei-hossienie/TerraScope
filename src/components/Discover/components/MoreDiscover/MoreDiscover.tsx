@@ -2,23 +2,12 @@ import AddIcon from "@mui/icons-material/Add";
 import { IconButton, Menu, MenuItem } from "@mui/material";
 import { useDiscoverStyles } from "../../styles/useDiscoverStyles";
 import { useMoreDiscover } from "./hooks/useMoreDiscover";
-import type { MoreDiscoverProps } from "./types";
+import type { MoreDiscoverProps } from "../../types";
 
-const MoreDiscover = ({
-  discoverData,
-  onDeleteIds,
-  onVisibleSplitMode,
-}: MoreDiscoverProps) => {
+const MoreDiscover = ({ discoverData, onDeleteIds }: MoreDiscoverProps) => {
   const { classes } = useDiscoverStyles();
-  const {
-    open,
-    handleClick,
-    handleClose,
-    handleRemoveImage,
-    anchorEl,
-    handleSplitMode,
-    isSplitMode,
-  } = useMoreDiscover({ onDeleteIds, onVisibleSplitMode });
+  const { open, handleClick, handleClose, handleRemoveImage, anchorEl } =
+    useMoreDiscover({ onDeleteIds });
 
   return (
     <div>
@@ -43,9 +32,6 @@ const MoreDiscover = ({
           Remove Image
         </MenuItem>
         <MenuItem onClick={handleClose}>Add to Timelapse</MenuItem>
-        <MenuItem onClick={(e) => handleSplitMode(e, discoverData)}>
-          {isSplitMode ? "Single Side" : "Side by Side"}
-        </MenuItem>
       </Menu>
     </div>
   );

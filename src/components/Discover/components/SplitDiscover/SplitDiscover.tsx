@@ -1,36 +1,34 @@
-import FormatAlignCenterIcon from "@mui/icons-material/FormatAlignCenter";
-import FormatAlignLeftIcon from "@mui/icons-material/FormatAlignLeft";
-import FormatAlignRightIcon from "@mui/icons-material/FormatAlignRight";
+import SingleBedIcon from "@mui/icons-material/SingleBed";
+import VerticalSplitIcon from "@mui/icons-material/VerticalSplit";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
-import * as React from "react";
+import type { SplitDiscoverProps } from "../../types";
 
-export default function SplitDiscover() {
-  const [alignment, setAlignment] = React.useState<string | null>("left");
-
-  const handleAlignment = (
-    event: React.MouseEvent<HTMLElement>,
-    newAlignment: string | null,
-  ) => {
-    setAlignment(newAlignment);
-  };
-
+export default function SplitDiscover({
+  mapMode,
+  handleMapMode,
+}: SplitDiscoverProps) {
   return (
     <ToggleButtonGroup
-      value={alignment}
+      value={mapMode}
       exclusive
-      onChange={handleAlignment}
+      onChange={handleMapMode}
       aria-label="text alignment"
-      sx={{ overflow: "hidden" }}
+      color="primary"
     >
-      <ToggleButton value="left" aria-label="left aligned">
-        <FormatAlignLeftIcon />
+      <ToggleButton
+        sx={{ padding: "8px" }}
+        value="single"
+        aria-label="left aligned"
+      >
+        <SingleBedIcon />
       </ToggleButton>
-      <ToggleButton value="center" aria-label="centered">
-        <FormatAlignCenterIcon />
-      </ToggleButton>
-      <ToggleButton value="right" aria-label="right aligned">
-        <FormatAlignRightIcon />
+      <ToggleButton
+        sx={{ padding: "8px" }}
+        value="split"
+        aria-label="right aligned"
+      >
+        <VerticalSplitIcon />
       </ToggleButton>
     </ToggleButtonGroup>
   );

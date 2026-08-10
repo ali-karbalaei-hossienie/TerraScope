@@ -1,10 +1,30 @@
 export type StringOrNumber = string | number;
+
+export type MapModeType = "single" | "split";
 export interface useDisCoverReturn {
   handleImageOnMap: (id: DiscoverItemType) => void;
   activeCard: StringOrNumber[];
   handleDeleteIds: (id: string | number) => void;
-  handleVisibleSplitMode: (id: string | number) => void;
-  activeSplit: StringOrNumber[];
+  mapMode: MapModeType;
+  handleMapMode: (
+    event: React.MouseEvent<HTMLElement>,
+    newAlignment: "single" | "split",
+  ) => void;
+}
+
+export interface MoreDiscoverProps {
+  discoverData: DiscoverItemType;
+  onDeleteIds: (id: string | number) => void;
+}
+
+export type UseMoreDiscoverProps = Omit<MoreDiscoverProps, "discoverData">;
+
+export interface SplitDiscoverProps {
+  mapMode: MapModeType;
+  handleMapMode: (
+    event: React.MouseEvent<HTMLElement>,
+    newAlignment: MapModeType,
+  ) => void;
 }
 
 export interface DiscoverItemType {

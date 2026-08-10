@@ -1,13 +1,13 @@
 import PublicIcon from "@mui/icons-material/Public";
 import ThunderstormIcon from "@mui/icons-material/Thunderstorm";
 import TimelapseIcon from "@mui/icons-material/Timelapse";
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import { useState } from "react";
+import Discover from "../Discover/Discover";
 import Map from "../Map";
 import Weather from "../Weather/Weather";
 import SideBarItem from "./components/SidebarItem/SideBarItem";
 import { useSideBarStyles } from "./styles/useSideBarStyles";
-import Discover from "../Discover/Discover";
 
 type ActiveMenuType = "discover" | "weather" | "timeLaps" | null;
 
@@ -46,9 +46,6 @@ const SideBar = () => {
 
       <Box className={classes.menuPanel}>
         <Box className={classes.menuPanelContent}>
-          <Typography variant="h6" className={classes.panelTitle}>
-            {activeMenu ? `${activeMenu} Panel` : ""}
-          </Typography>
           <Box sx={{ flexGrow: 1 }}>
             <>
               <>{activeMenu === "weather" && <Weather />}</>

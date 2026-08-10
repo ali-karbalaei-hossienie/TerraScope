@@ -1,30 +1,21 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useMap } from "react-map-gl/mapbox";
+import { useDispatch } from "react-redux";
 import type {
   DiscoverItemType,
   StringOrNumber,
   useDisCoverReturn,
 } from "../types";
 import { initSourceImage } from "../utils";
-import { useDispatch } from "react-redux";
 import { setIsSplitMode } from "../../../features/multiMapLayers/multiMapLayersSlice";
 
 export const useDisCover = (): useDisCoverReturn => {
   const { map } = useMap();
   const mapbox = map?.getMap();
+  const [mapMode, setMapMode] = useState<"single" | "split">("single");
 
   const [activeCard, setActiveCard] = useState<StringOrNumber[]>([]);
-  const [activeSplit, setActiveSplit] = useState<StringOrNumber[]>([]);
   const dispatch = useDispatch();
-  const isSplitActive = activeSplit.length > 0;
-
-  useEffect(() => {
-    if (isSplitActive) {
-      dispatch(setIsSplitMode(true));
-    } else {
-      dispatch(setIsSplitMode(false));
-    }
-  }, [isSplitActive]);
 
   const handleImageOnMap = (data: DiscoverItemType) => {
     if (!mapbox) return;
@@ -97,11 +88,14 @@ export const useDisCover = (): useDisCoverReturn => {
     setActiveCard((data) => data.filter((idx) => idx !== id));
   };
 
-  const handleVisibleSplitMode = (id: string | number) => {
-    if (!activeSplit.includes(id)) {
-      setActiveSplit((prev) => [...prev, id]);
-    } else {
-      setActiveSplit((prev) => prev.filter((data) => data !== id));
+  const handleMapMode = (
+    event: React.MouseEvent<HTMLElement>,
+    newAlignment: "single" | "split",
+  ) => {
+    event.stopPropagation();
+    if (newAlignment !== null && newAlignment !== mapMode) {
+      setMapMode(newAlignment);
+      dispatch(setIsSplitMode(newAlignment === "split"));
     }
   };
 
@@ -109,7 +103,7 @@ export const useDisCover = (): useDisCoverReturn => {
     handleImageOnMap,
     activeCard,
     handleDeleteIds,
-    activeSplit,
-    handleVisibleSplitMode,
+    mapMode,
+    handleMapMode,
   };
 };

@@ -1,6 +1,11 @@
 import { makeStyles } from "tss-react/mui";
 
 export const useDiscoverStyles = makeStyles()((theme) => ({
+  panelTitle: {
+    textTransform: "capitalize",
+    fontWeight: "bold",
+    color: theme.palette.primary.main,
+  },
   discoverContainer: {
     border: `2px solid ${theme.palette.divider}`,
     marginBottom: theme.spacing(2),
@@ -65,8 +70,5 @@ export const useDiscoverStyles = makeStyles()((theme) => ({
   splitModeWrapperActive: {
     gridTemplateRows: "1fr",
     opacity: 1,
-  },
-  customComponentContent: {
-    overflow: "hidden",
   },
 }));

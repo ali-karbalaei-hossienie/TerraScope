@@ -1,11 +1,10 @@
 import { ThemeProvider } from "@emotion/react";
-import { MapProvider } from "react-map-gl/mapbox";
-import { customTheme } from "./theme/theme";
-import Map from "./components/Map";
 import { CssBaseline } from "@mui/material";
+import { MapProvider } from "react-map-gl/mapbox";
 import { Provider } from "react-redux";
 import { store } from "./app/store";
 import SideBar from "./components/SideBar/SideBar";
+import { customTheme } from "./theme/theme";
 
 function App() {
   return (

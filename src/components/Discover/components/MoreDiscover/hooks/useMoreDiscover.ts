@@ -2,14 +2,10 @@ import { useState } from "react";
 import { useMap } from "react-map-gl/mapbox";
 import { useSelector } from "react-redux";
 import type { RootState } from "../../../../../app/store";
-import type { DiscoverItemType } from "../../../types";
+import type { DiscoverItemType, UseMoreDiscoverProps } from "../../../types";
 import { initSourceImage } from "../../../utils";
-import type { useMoreDiscoverProps } from "../types";
 
-export const useMoreDiscover = ({
-  onDeleteIds,
-  onVisibleSplitMode,
-}: useMoreDiscoverProps) => {
+export const useMoreDiscover = ({ onDeleteIds }: UseMoreDiscoverProps) => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const { map } = useMap();
   const mapBox = map?.getMap();
@@ -54,22 +50,12 @@ export const useMoreDiscover = ({
     setAnchorEl(null);
   };
 
-  const handleSplitMode = (
-    event: React.MouseEvent<HTMLLIElement>,
-    data: DiscoverItemType,
-  ) => {
-    event.stopPropagation();
-    onVisibleSplitMode(data.id);
-    setAnchorEl(null);
-  };
-
   return {
     open,
     handleClick,
     handleRemoveImage,
     handleClose,
     anchorEl,
-    handleSplitMode,
     isSplitMode,
   };
 };

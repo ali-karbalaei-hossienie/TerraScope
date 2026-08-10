@@ -27,7 +27,7 @@ const MapLayers = () => {
         </Typography>
         <Switch
           checked={isSplitMode}
-          onChange={() => dispatch(setIsSplitMode())}
+          onChange={() => dispatch(setIsSplitMode(!isSplitMode))}
         />
       </Box>
       <AnimatePresence mode="wait">
