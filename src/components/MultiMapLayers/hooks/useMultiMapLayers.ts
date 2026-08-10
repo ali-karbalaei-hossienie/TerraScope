@@ -7,7 +7,7 @@ import { useCallback, useEffect, useRef, type RefObject } from "react";
 import { useMap } from "react-map-gl/mapbox";
 import { useSelector } from "react-redux";
 import type { RootState } from "../../../app/store";
-import type { layerTpe, UseMultiMapLayers } from "../types/mapLayerType";
+import type { layerTpe } from "../types/mapLayerType";
 
 const BASE_SOURCE_LEFT_ID = "base-source-left";
 const BASE_SOURCE_RIGHT_ID = "base-source-right";
@@ -32,15 +32,14 @@ interface UseMultiMapLayersReturn {
   startDragging: () => void;
 }
 
-export const useMultiMapLayers = ({
-  extraLeftLayers = [],
-  extraRightLayers = [],
-}: UseMultiMapLayers = {}): UseMultiMapLayersReturn => {
+export const useMultiMapLayers = (): UseMultiMapLayersReturn => {
   const {
     selectedBaseLayers,
     selectedLeftLayers,
     selectedRightLayers,
     isSplitMode,
+    extraLeftLayers,
+    extraRightLayers,
   } = useSelector((state: RootState) => state.multiMapLayer);
 
   const { current: map } = useMap();

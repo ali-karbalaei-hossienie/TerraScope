@@ -1,34 +1,52 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import { LAYERS } from "../../components/MultiMapLayers/constants/layers";
-import type { MultiMapLayer } from "./types";
+import type { ExtraLayer, MultiMapLayer, LayerType } from "./types";
 
 const initialState: MultiMapLayer = {
   selectedBaseLayers: [LAYERS[0]],
   selectedRightLayers: [LAYERS[0]],
   selectedLeftLayers: [LAYERS[0]],
   isSplitMode: false,
+  extraLeftLayers: [],
+  extraRightLayers: [],
 };
 
 const multiMapLayersSlice = createSlice({
   name: "multiMapLayers",
-  initialState: initialState,
+  initialState,
   reducers: {
-    setSelectedBaseLayers: (state, action) => {
+    setSelectedBaseLayers: (state, action: PayloadAction<LayerType>) => {
       state.selectedBaseLayers = [action.payload];
     },
-    setSelectedLeftLayers: (state, action) => {
+    setSelectedLeftLayers: (state, action: PayloadAction<LayerType>) => {
       state.selectedLeftLayers = [action.payload];
     },
-    setSelectedRightLayers: (state, action) => {
+    setSelectedRightLayers: (state, action: PayloadAction<LayerType>) => {
       state.selectedRightLayers = [action.payload];
     },
-    setIsSplitMode: (state, action) => {
+    setIsSplitMode: (state, action: PayloadAction<boolean>) => {
       state.isSplitMode = action.payload;
     },
     setSwapLayers: (state) => {
       const temp = state.selectedLeftLayers;
       state.selectedLeftLayers = state.selectedRightLayers;
       state.selectedRightLayers = temp;
+    },
+    addExtraLeftLayers: (state, action: PayloadAction<ExtraLayer>) => {
+      state.extraLeftLayers.push(action.payload);
+    },
+    removeExtraLeftLayer: (state, action: PayloadAction<number | string>) => {
+      state.extraLeftLayers = state.extraLeftLayers.filter(
+        (layer) => layer.id !== action.payload,
+      );
+    },
+    addExtraRightLayers: (state, action: PayloadAction<ExtraLayer>) => {
+      state.extraRightLayers.push(action.payload);
+    },
+    removeExtraRightLayer: (state, action: PayloadAction<number | string>) => {
+      state.extraRightLayers = state.extraLeftLayers.filter(
+        (layer) => layer.id !== action.payload,
+      );
     },
   },
 });
@@ -39,5 +57,10 @@ export const {
   setSelectedRightLayers,
   setIsSplitMode,
   setSwapLayers,
+  addExtraLeftLayers,
+  addExtraRightLayers,
+  removeExtraLeftLayer,
+  removeExtraRightLayer,
 } = multiMapLayersSlice.actions;
+
 export default multiMapLayersSlice.reducer;

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useMap } from "react-map-gl/mapbox";
 import type {
   DiscoverItemType,
@@ -6,12 +6,25 @@ import type {
   useDisCoverReturn,
 } from "../types";
 import { initSourceImage } from "../utils";
+import { useDispatch } from "react-redux";
+import { setIsSplitMode } from "../../../features/multiMapLayers/multiMapLayersSlice";
 
 export const useDisCover = (): useDisCoverReturn => {
   const { map } = useMap();
   const mapbox = map?.getMap();
 
-  const [addedIds, setAddedIds] = useState<StringOrNumber[]>([]);
+  const [activeCard, setActiveCard] = useState<StringOrNumber[]>([]);
+  const [activeSplit, setActiveSplit] = useState<StringOrNumber[]>([]);
+  const dispatch = useDispatch();
+  const isSplitActive = activeSplit.length > 0;
+
+  useEffect(() => {
+    if (isSplitActive) {
+      dispatch(setIsSplitMode(true));
+    } else {
+      dispatch(setIsSplitMode(false));
+    }
+  }, [isSplitActive]);
 
   const handleImageOnMap = (data: DiscoverItemType) => {
     if (!mapbox) return;
@@ -21,7 +34,7 @@ export const useDisCover = (): useDisCoverReturn => {
       return;
     }
 
-    setAddedIds((prev) => [...prev, data.id]);
+    setActiveCard((prev) => [...prev, data.id]);
 
     mapbox.addSource(imageSourceId, {
       type: "image",
@@ -81,12 +94,22 @@ export const useDisCover = (): useDisCoverReturn => {
   };
 
   const handleDeleteIds = (id: StringOrNumber) => {
-    setAddedIds((data) => data.filter((idx) => idx !== id));
+    setActiveCard((data) => data.filter((idx) => idx !== id));
+  };
+
+  const handleVisibleSplitMode = (id: string | number) => {
+    if (!activeSplit.includes(id)) {
+      setActiveSplit((prev) => [...prev, id]);
+    } else {
+      setActiveSplit((prev) => prev.filter((data) => data !== id));
+    }
   };
 
   return {
     handleImageOnMap,
-    addedIds,
+    activeCard,
     handleDeleteIds,
+    activeSplit,
+    handleVisibleSplitMode,
   };
 };

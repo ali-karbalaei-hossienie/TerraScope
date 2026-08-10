@@ -1,16 +1,22 @@
 import { useState } from "react";
 import { useMap } from "react-map-gl/mapbox";
+import { useSelector } from "react-redux";
+import type { RootState } from "../../../../../app/store";
 import type { DiscoverItemType } from "../../../types";
 import { initSourceImage } from "../../../utils";
-interface useMoreDiscoverProps {
-  onDeleteIds: (id: string | number) => void;
-}
-export const useMoreDiscover = ({ onDeleteIds }: useMoreDiscoverProps) => {
+import type { useMoreDiscoverProps } from "../types";
+
+export const useMoreDiscover = ({
+  onDeleteIds,
+  onVisibleSplitMode,
+}: useMoreDiscoverProps) => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const { map } = useMap();
   const mapBox = map?.getMap();
   const open = Boolean(anchorEl);
-
+  const { isSplitMode } = useSelector(
+    (state: RootState) => state.multiMapLayer,
+  );
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
     setAnchorEl(event.currentTarget);
@@ -48,11 +54,22 @@ export const useMoreDiscover = ({ onDeleteIds }: useMoreDiscoverProps) => {
     setAnchorEl(null);
   };
 
+  const handleSplitMode = (
+    event: React.MouseEvent<HTMLLIElement>,
+    data: DiscoverItemType,
+  ) => {
+    event.stopPropagation();
+    onVisibleSplitMode(data.id);
+    setAnchorEl(null);
+  };
+
   return {
     open,
     handleClick,
     handleRemoveImage,
     handleClose,
     anchorEl,
+    handleSplitMode,
+    isSplitMode,
   };
 };

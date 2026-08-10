@@ -14,7 +14,7 @@ export const useDiscoverStyles = makeStyles()((theme) => ({
   discoverButton: {
     width: "100%",
     gap: theme.spacing(2),
-    padding: theme.spacing(1),
+    padding: 0,
     overflow: "hidden",
     display: "flex",
     "&:hover": {
@@ -24,7 +24,7 @@ export const useDiscoverStyles = makeStyles()((theme) => ({
   discoverImageWrapper: {
     objectFit: "cover",
     padding: 0,
-    flexBasis: "70px",
+    flexBasis: "90px",
     height: "100%",
     lineHeight: 0,
     aspectRatio: "1/1",
@@ -47,22 +47,26 @@ export const useDiscoverStyles = makeStyles()((theme) => ({
     textAlign: "left",
   },
   discoverAuthorRow: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-    color: theme.palette.grey[400],
+    color: theme.palette.text.primary,
   },
   addTimelaps: {
     "&:hover": {
       backgroundColor: "inherit !important",
     },
   },
-  discoverFooter: {
-    marginTop: theme.spacing(1),
+
+  splitModeWrapper: {
+    display: "grid",
+    gridTemplateRows: "0fr",
+    opacity: 0,
+    transition: "all 0.3s ease-in-out",
+    justifyContent: "flex-start",
   },
-  discoverSplitModeToggle: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
+  splitModeWrapperActive: {
+    gridTemplateRows: "1fr",
+    opacity: 1,
+  },
+  customComponentContent: {
+    overflow: "hidden",
   },
 }));

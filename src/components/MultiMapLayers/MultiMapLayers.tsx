@@ -1,25 +1,12 @@
+import LayersIcon from "@mui/icons-material/Layers";
+import { memo } from "react";
 import MapButton from "../MapButton/MapButton";
 import { MapControl } from "../MapControl/MapControl";
-import LayersIcon from "@mui/icons-material/Layers";
 import MapLayers from "./components/MapLayers/MapLayers";
-import type { FC } from "react";
-import type { ItemLayer } from "./types/mapLayerType";
 import { useMultiMapLayers } from "./hooks/useMultiMapLayers";
-import { memo } from "react";
 
-interface MultiMapLayersProps {
-  extraLeftLayers?: ItemLayer[];
-  extraRightLayers?: ItemLayer[];
-}
-
-const MultiMapLayers: FC<MultiMapLayersProps> = ({
-  extraLeftLayers,
-  extraRightLayers,
-}) => {
-  const { swipeRef, isSplitMode, startDragging } = useMultiMapLayers({
-    extraLeftLayers,
-    extraRightLayers,
-  });
+const MultiMapLayers = () => {
+  const { swipeRef, isSplitMode, startDragging } = useMultiMapLayers();
 
   return (
     <div>

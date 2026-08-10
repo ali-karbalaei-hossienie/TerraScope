@@ -1,18 +1,25 @@
 import { Box, Button, Typography } from "@mui/material";
 import MoreDiscover from "./components/MoreDiscover/MoreDiscover";
+import SplitDiscover from "./components/SplitDiscover/SplitDiscover";
 import { discoverData } from "./constants";
 import { useDisCover } from "./hooks/useDisCover";
 import { useDiscoverStyles } from "./styles/useDiscoverStyles";
 
 const Discover = () => {
   const { classes, cx } = useDiscoverStyles();
-  const { handleImageOnMap, addedIds, handleDeleteIds } = useDisCover();
+  const {
+    handleImageOnMap,
+    activeCard,
+    handleDeleteIds,
+    handleVisibleSplitMode,
+    activeSplit,
+  } = useDisCover();
 
   return (
     <>
       {discoverData.map((data) => {
-        const isOnMap = addedIds.includes(data.id);
-
+        const isOnMap = activeCard.includes(data.id);
+        const isActiveSplitMode = activeSplit.includes(data.id);
         return (
           <Box
             key={data.id}
@@ -42,13 +49,32 @@ const Discover = () => {
                   {data.title}
                 </Typography>
                 <Box className={classes.discoverAuthorRow}>
-                  <Typography component="div" variant="caption">
-                    {data.description}
-                  </Typography>
-                  <MoreDiscover
-                    onDeleteIds={handleDeleteIds}
-                    discoverData={data}
-                  />
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      width: "100%",
+                    }}
+                  >
+                    <Typography component="div" variant="caption">
+                      {data.description}
+                    </Typography>
+                    <MoreDiscover
+                      onDeleteIds={handleDeleteIds}
+                      discoverData={data}
+                      onVisibleSplitMode={handleVisibleSplitMode}
+                    />
+                  </Box>
+
+                  <Box
+                    className={cx(
+                      classes.splitModeWrapper,
+                      isActiveSplitMode && classes.splitModeWrapperActive,
+                    )}
+                  >
+                    <SplitDiscover />
+                  </Box>
                 </Box>
               </Box>
             </Button>

@@ -1,8 +1,10 @@
 export type StringOrNumber = string | number;
 export interface useDisCoverReturn {
   handleImageOnMap: (id: DiscoverItemType) => void;
-  addedIds: StringOrNumber[];
+  activeCard: StringOrNumber[];
   handleDeleteIds: (id: string | number) => void;
+  handleVisibleSplitMode: (id: string | number) => void;
+  activeSplit: StringOrNumber[];
 }
 
 export interface DiscoverItemType {
