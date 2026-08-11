@@ -6,7 +6,8 @@ import MapLayers from "./components/MapLayers/MapLayers";
 import { useMultiMapLayers } from "./hooks/useMultiMapLayers";
 
 const MultiMapLayers = () => {
-  const { swipeRef, isSplitMode, startDragging } = useMultiMapLayers();
+  const { swipeRef, isSplitMode, startDragging, swipeRatio } =
+    useMultiMapLayers();
 
   return (
     <div>
@@ -27,7 +28,7 @@ const MultiMapLayers = () => {
           style={{
             position: "absolute",
             top: 0,
-            left: "50%",
+            left: `${swipeRatio.current * 100}%`,
             width: "4px",
             height: "100%",
             background: "#000",

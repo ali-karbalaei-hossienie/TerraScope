@@ -362,6 +362,26 @@ export const useMultiMapLayers = (): UseMultiMapLayersReturn => {
       document.removeEventListener("touchend", stopDragging);
     };
   }, [map, isSplitMode, stopDragging]);
+  // useEffect(() => {
+  //   if (!map) return;
 
-  return { swipeRef, isSplitMode, startDragging };
+  //   const container = map.getMap().getContainer();
+  //   if (!container) return;
+
+  //   const resizeObserver = new ResizeObserver(() => {
+  //     // 1. به مپ‌باکس می‌گوید سایز کانتینر عوض شده است
+  //     map.resize();
+
+  //     // 2. وب‌جی‌ال (WebGL) را مجبور می‌کند تا Scissor Test را با ابعاد جدید دوباره محاسبه و رسم کند
+  //     map.triggerRepaint();
+  //   });
+
+  //   resizeObserver.observe(container);
+
+  //   return () => {
+  //     resizeObserver.disconnect();
+  //   };
+  // }, [map]);
+
+  return { swipeRef, isSplitMode, startDragging, swipeRatio };
 };
