@@ -65,7 +65,7 @@ const SideBySide: FC<SideBySideProps> = ({ discoverData }) => {
       // Remove from Redux
       dispatch(removeAction(imgId));
       dispatch(removeAction(borderId));
-      removeMapResources(mapboxMap!, [imgId, borderId], [imgId]);
+      removeMapResources(mapboxMap!, [imgId, borderId], [imgId, borderId]);
     };
 
     // Helper function to create and add layers and sources
