@@ -27,9 +27,11 @@ export const useSlider = (): useSliderReturn => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const currentSelectedItem = sliderData[currentIndex];
-    dispatch(setTime(currentSelectedItem.fullFormatted));
-  }, [currentIndex]);
+    if (isVisible) {
+      const currentSelectedItem = sliderData[currentIndex];
+      dispatch(setTime(currentSelectedItem.fullFormatted));
+    }
+  }, [currentIndex, isVisible]);
 
   useEffect(() => {
     let animationFrameId: number;
