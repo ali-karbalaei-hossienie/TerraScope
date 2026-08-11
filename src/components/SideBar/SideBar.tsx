@@ -3,12 +3,14 @@ import ThunderstormIcon from "@mui/icons-material/Thunderstorm";
 import TimelapseIcon from "@mui/icons-material/Timelapse";
 import { Box } from "@mui/material";
 import { useEffect, useState } from "react";
+import { useMap } from "react-map-gl/mapbox";
 import Discover from "../Discover/Discover";
 import Map from "../Map";
+import Timelapse from "../Timelapse/Timelapse";
+import TimelapseSlider from "../TimelapseSlider/TimeLapseSlider";
 import Weather from "../Weather/Weather";
 import SideBarItem from "./components/SidebarItem/SideBarItem";
 import { useSideBarStyles } from "./styles/useSideBarStyles";
-import { useMap } from "react-map-gl/mapbox";
 
 type ActiveMenuType = "discover" | "weather" | "timeLaps" | null;
 
@@ -63,6 +65,7 @@ const SideBar = () => {
             <>
               <>{activeMenu === "weather" && <Weather />}</>
               <>{activeMenu === "discover" && <Discover />}</>
+              <>{activeMenu === "timeLaps" && <Timelapse />}</>
             </>
           </Box>
         </Box>
@@ -71,13 +74,33 @@ const SideBar = () => {
       <Box
         sx={{
           position: "relative",
-          width: "100%",
-          height: "100%",
-          minWidth: 0,
           overflow: "hidden",
+          display: "flex",
+          flexDirection: "column",
+          height: "100vh",
+          width: "100%",
         }}
       >
-        <Map />
+        <Box sx={{ flex: 1, width: "100%", height: "100%" }}>
+          <Map />
+        </Box>
+
+        <Box
+          sx={{
+            position: "absolute",
+            bottom: 0,
+            left: 0,
+            right: 0,
+            height: 140,
+            transform:
+              activeMenu === "timeLaps" ? "translateY(0)" : "translateY(100%)",
+            transition: "transform 0.3s ease-in-out",
+            zIndex: 10,
+            backgroundColor: "background.paper",
+          }}
+        >
+          <TimelapseSlider />
+        </Box>
       </Box>
     </Box>
   );
