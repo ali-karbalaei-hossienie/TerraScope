@@ -125,14 +125,15 @@ const SideBySide: FC<SideBySideProps> = ({ discoverData }) => {
         }),
       );
     };
-
-    cleanupSide("left");
-    cleanupSide("right");
+    if (!alignment) {
+      return;
+    }
 
     // 2. If alignment is set (left or right), create the layers for that side
-    if (alignment) {
-      setupSide(alignment);
-    }
+    setupSide(alignment);
+    return () => {
+      cleanupSide(alignment);
+    };
   }, [alignment, map, dispatch, discoverData]);
 
   return (
