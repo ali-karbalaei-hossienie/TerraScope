@@ -30,6 +30,7 @@ interface UseMultiMapLayersReturn {
   swipeRef: RefObject<HTMLDivElement | null>;
   isSplitMode: boolean;
   startDragging: () => void;
+  swipeRatio: RefObject<number>;
 }
 
 export const useMultiMapLayers = (): UseMultiMapLayersReturn => {
