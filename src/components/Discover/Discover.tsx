@@ -86,7 +86,7 @@ const Discover = () => {
                     )}
                   >
                     <Box sx={{ overflow: "hidden" }}>
-                      <SideBySide />
+                      <SideBySide discoverData={data} />
                     </Box>
                   </Box>
                 </Box>

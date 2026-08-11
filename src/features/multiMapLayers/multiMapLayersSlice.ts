@@ -37,15 +37,15 @@ const multiMapLayersSlice = createSlice({
     },
     removeExtraLeftLayer: (state, action: PayloadAction<number | string>) => {
       state.extraLeftLayers = state.extraLeftLayers.filter(
-        (layer) => layer.id !== action.payload,
+        (layer) => layer.sourceId !== action.payload,
       );
     },
     addExtraRightLayers: (state, action: PayloadAction<ExtraLayer>) => {
       state.extraRightLayers.push(action.payload);
     },
     removeExtraRightLayer: (state, action: PayloadAction<number | string>) => {
-      state.extraRightLayers = state.extraLeftLayers.filter(
-        (layer) => layer.id !== action.payload,
+      state.extraRightLayers = state.extraRightLayers.filter(
+        (layer) => layer.sourceId !== action.payload,
       );
     },
   },

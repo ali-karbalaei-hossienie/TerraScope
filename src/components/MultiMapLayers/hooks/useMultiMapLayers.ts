@@ -338,6 +338,7 @@ export const useMultiMapLayers = (): UseMultiMapLayersReturn => {
       if (clientX === undefined) return;
 
       const rect = mapBox.getContainer().getBoundingClientRect();
+
       const position = Math.max(0, Math.min(rect.width, clientX - rect.left));
 
       swipeRatio.current = position / rect.width;

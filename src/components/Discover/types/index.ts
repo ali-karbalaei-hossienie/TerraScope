@@ -1,3 +1,10 @@
+import type {
+  AnyLayer,
+  CanvasSourceSpecification,
+  CustomSourceInterface,
+  SourceSpecification,
+} from "mapbox-gl";
+
 export type StringOrNumber = string | number;
 
 export type MapModeType = "single" | "split";
@@ -38,4 +45,14 @@ export interface DiscoverItemType {
     [number, number],
     [number, number],
   ];
+}
+
+export interface MapboxLayerConfig {
+  id: string;
+  sourceProps:
+    | SourceSpecification
+    | CanvasSourceSpecification
+    | CustomSourceInterface<unknown>;
+
+  layer: AnyLayer;
 }

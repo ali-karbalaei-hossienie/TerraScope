@@ -6,8 +6,8 @@ import type {
   StringOrNumber,
   useDisCoverReturn,
 } from "../types";
-import { initSourceImage } from "../utils";
 import { setIsSplitMode } from "../../../features/multiMapLayers/multiMapLayersSlice";
+import { addSourceAndLayer, generateSourceIds } from "../utils";
 
 export const useDisCover = (): useDisCoverReturn => {
   const { map } = useMap();
@@ -19,48 +19,51 @@ export const useDisCover = (): useDisCoverReturn => {
 
   const handleImageOnMap = (data: DiscoverItemType) => {
     if (!mapbox) return;
-    const { borderLayerId, borderSourceId, imageLayerId, imageSourceId } =
-      initSourceImage(data);
+    const { borderSourceId, imageSourceId } = generateSourceIds(data);
     if (mapbox.getSource(imageSourceId)) {
       return;
     }
 
     setActiveCard((prev) => [...prev, data.id]);
 
-    mapbox.addSource(imageSourceId, {
-      type: "image",
-      url: data.image,
-      coordinates: data.coordinates,
-    });
-
-    mapbox.addLayer({
-      id: imageLayerId,
-      type: "raster",
-      source: imageSourceId,
-      paint: {
-        "raster-fade-duration": 300,
+    addSourceAndLayer(mapbox, {
+      id: imageSourceId,
+      sourceProps: {
+        type: "image",
+        coordinates: data.coordinates,
+        url: data.image,
       },
-    });
-
-    mapbox.addSource(borderSourceId, {
-      type: "geojson",
-      data: {
-        type: "Feature",
-        geometry: {
-          type: "Polygon",
-          coordinates: [[...data.coordinates, data.coordinates[0]]],
+      layer: {
+        id: imageSourceId,
+        type: "raster",
+        source: imageSourceId,
+        paint: {
+          "raster-fade-duration": 300,
         },
-        properties: {},
       },
     });
 
-    mapbox.addLayer({
-      id: borderLayerId,
-      type: "line",
-      source: borderSourceId,
-      paint: {
-        "line-color": "#FF0000",
-        "line-width": 3,
+    addSourceAndLayer(mapbox, {
+      id: borderSourceId,
+      sourceProps: {
+        type: "geojson",
+        data: {
+          type: "Feature",
+          geometry: {
+            type: "Polygon",
+            coordinates: [[...data.coordinates, data.coordinates[0]]],
+          },
+          properties: {},
+        },
+      },
+      layer: {
+        id: borderSourceId,
+        type: "line",
+        source: borderSourceId,
+        paint: {
+          "line-color": "#FF0000",
+          "line-width": 3,
+        },
       },
     });
 

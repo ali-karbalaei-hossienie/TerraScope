@@ -3,7 +3,7 @@ import { useMap } from "react-map-gl/mapbox";
 import { useSelector } from "react-redux";
 import type { RootState } from "../../../../../app/store";
 import type { DiscoverItemType, UseMoreDiscoverProps } from "../../../types";
-import { initSourceImage } from "../../../utils";
+import { generateSourceIds, removeMapResources } from "../../../utils";
 
 export const useMoreDiscover = ({ onDeleteIds }: UseMoreDiscoverProps) => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
@@ -30,22 +30,13 @@ export const useMoreDiscover = ({ onDeleteIds }: UseMoreDiscoverProps) => {
   ) => {
     event.stopPropagation();
 
-    const { borderLayerId, borderSourceId, imageLayerId, imageSourceId } =
-      initSourceImage(data);
-    if (mapBox?.getLayer(imageLayerId)) {
-      mapBox.removeLayer(imageLayerId);
-    }
+    const { borderSourceId, imageSourceId } = generateSourceIds(data);
+    removeMapResources(
+      mapBox!,
+      [imageSourceId, borderSourceId],
+      [imageSourceId, borderSourceId],
+    );
 
-    if (mapBox?.getSource(imageSourceId)) {
-      mapBox.removeSource(imageSourceId);
-    }
-    if (mapBox?.getLayer(borderLayerId)) {
-      mapBox.removeLayer(borderLayerId);
-    }
-
-    if (mapBox?.getSource(borderSourceId)) {
-      mapBox.removeSource(borderSourceId);
-    }
     onDeleteIds(data.id);
     setAnchorEl(null);
   };
