@@ -1,6 +1,6 @@
 import { makeStyles } from "tss-react/mui";
 
-export const useTimeLapseSliderStyles = makeStyles()((theme, { isSplit }) => ({
+export const useTimeLapseSliderStyles = makeStyles()((theme) => ({
   timeLapseSlider: {
     position: "relative",
     "& .MuiSlider-rail": {

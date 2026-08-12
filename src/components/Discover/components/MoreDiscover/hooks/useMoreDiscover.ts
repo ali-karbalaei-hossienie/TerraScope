@@ -3,7 +3,8 @@ import { useMap } from "react-map-gl/mapbox";
 import { useSelector } from "react-redux";
 import type { RootState } from "../../../../../app/store";
 import type { DiscoverItemType, UseMoreDiscoverProps } from "../../../types";
-import { generateSourceIds, removeMapResources } from "../../../utils";
+import { generateSourceIds } from "../../../utils";
+import { removeMapResources } from "../../../../utils";
 
 export const useMoreDiscover = ({ onDeleteIds }: UseMoreDiscoverProps) => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);

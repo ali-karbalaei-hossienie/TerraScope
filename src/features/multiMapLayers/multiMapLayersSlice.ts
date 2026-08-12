@@ -48,6 +48,10 @@ const multiMapLayersSlice = createSlice({
         (layer) => layer.sourceId !== action.payload,
       );
     },
+    removeAllExtraLayers: (state) => {
+      state.extraLeftLayers = [];
+      state.extraRightLayers = [];
+    },
   },
 });
 
@@ -61,6 +65,7 @@ export const {
   addExtraRightLayers,
   removeExtraLeftLayer,
   removeExtraRightLayer,
+  removeAllExtraLayers,
 } = multiMapLayersSlice.actions;
 
 export default multiMapLayersSlice.reducer;

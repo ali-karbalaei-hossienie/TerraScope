@@ -7,7 +7,8 @@ import type {
   useDisCoverReturn,
 } from "../types";
 import { setIsSplitMode } from "../../../features/multiMapLayers/multiMapLayersSlice";
-import { addSourceAndLayer, generateSourceIds } from "../utils";
+import { generateSourceIds } from "../utils";
+import { addSourceAndLayer } from "../../utils";
 
 export const useDisCover = (): useDisCoverReturn => {
   const { map } = useMap();

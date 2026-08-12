@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useMap } from "react-map-gl/mapbox";
 import { useDispatch } from "react-redux";
-import { generateSourceIds, removeMapResources } from "../../../utils";
 import {
   addExtraLeftLayers,
   addExtraRightLayers,
@@ -9,6 +8,8 @@ import {
   removeExtraRightLayer,
 } from "../../../../../features/multiMapLayers/multiMapLayersSlice";
 import type { DiscoverItemType } from "../../../types";
+import { generateSourceIds } from "../../../utils";
+import { removeMapResources } from "../../../../utils";
 interface UseSideBySideDiscover {
   discoverData: DiscoverItemType;
 }

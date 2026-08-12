@@ -160,11 +160,11 @@ export const useMultiMapLayers = (): UseMultiMapLayersReturn => {
 
       extraLeftLayers.forEach((item) => {
         if (!mapBox.getSource(item.sourceId))
-          mapBox.addSource(item.sourceId, item.source);
+          mapBox.addSource(item.sourceId, structuredClone(item.source));
       });
       extraRightLayers.forEach((item) => {
         if (!mapBox.getSource(item.sourceId))
-          mapBox.addSource(item.sourceId, item.source);
+          mapBox.addSource(item.sourceId, structuredClone(item.source));
       });
 
       // --- 2. Define Scissor Layers ---
@@ -221,7 +221,9 @@ export const useMultiMapLayers = (): UseMultiMapLayersReturn => {
       } else {
         removeLayerIfExists(mapBox, BASE_LAYER_LEFT_ID);
       }
-      extraLeftLayers.forEach((item) => safeAddLayer(mapBox, item.layer));
+      extraLeftLayers.forEach((item) =>
+        safeAddLayer(mapBox, structuredClone(item.layer)),
+      );
 
       safeAddLayer(mapBox, rightScissorLayer);
       if (rightTile) {
@@ -233,7 +235,9 @@ export const useMultiMapLayers = (): UseMultiMapLayersReturn => {
       } else {
         removeLayerIfExists(mapBox, BASE_LAYER_RIGHT_ID);
       }
-      extraRightLayers.forEach((item) => safeAddLayer(mapBox, item.layer));
+      extraRightLayers.forEach((item) =>
+        safeAddLayer(mapBox, structuredClone(item.layer)),
+      );
 
       safeAddLayer(mapBox, disableScissorLayer);
 

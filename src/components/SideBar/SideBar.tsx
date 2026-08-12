@@ -91,7 +91,7 @@ const SideBar = () => {
             bottom: 0,
             left: 0,
             right: 0,
-            height: 140,
+            height: 180,
             transform:
               activeMenu === "timeLaps" ? "translateY(0)" : "translateY(100%)",
             transition: "transform 0.3s ease-in-out",
@@ -99,7 +99,7 @@ const SideBar = () => {
             backgroundColor: "background.paper",
           }}
         >
-          <TimelapseSlider />
+          {activeMenu === "timeLaps" && <TimelapseSlider />}
         </Box>
       </Box>
     </Box>
