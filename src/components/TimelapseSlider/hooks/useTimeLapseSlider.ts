@@ -165,7 +165,7 @@ const syncImageOverlay = (
           id: layerId,
           type: "raster",
           source: sourceId,
-          paint: { "raster-fade-duration": 300 },
+          paint: { "raster-fade-duration": 0 },
         },
       }),
     );
@@ -237,6 +237,52 @@ export const useTimeLapseSlider = () => {
     }
   }, [value, mapbox, isSplit, dispatch]);
 
+  useEffect(() => {
+    let animationFrameId: number;
+    let lastTime = performance.now();
+
+    const animate = (time: number) => {
+      if (!isPlay) return;
+
+      if (time - lastTime >= 1000) {
+        setValue((prevValue) => {
+          if (!isSplit && typeof prevValue === "number") {
+            if (prevValue >= marks.length - 1) {
+              setIsPlay(false);
+              return 0;
+            }
+            return prevValue + 1;
+          }
+
+          if (isSplit && Array.isArray(prevValue)) {
+            const [leftVal, rightVal] = prevValue;
+
+            if (leftVal >= marks.length - 1 || rightVal >= marks.length - 1) {
+              setIsPlay(false);
+              return [0, 1];
+            }
+
+            return [leftVal + 1, rightVal + 1];
+          }
+
+          return prevValue;
+        });
+
+        lastTime = time;
+      }
+
+      animationFrameId = requestAnimationFrame(animate);
+    };
+
+    if (isPlay) {
+      animationFrameId = requestAnimationFrame(animate);
+    }
+
+    // Cleanup
+    return () => {
+      if (animationFrameId) cancelAnimationFrame(animationFrameId);
+    };
+  }, [isPlay, isSplit]);
   const handleChange = (_: Event, newValue: number | number[]) => {
     setValue(newValue);
   };
