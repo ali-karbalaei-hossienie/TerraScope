@@ -1,8 +1,9 @@
-import SingleBedIcon from "@mui/icons-material/SingleBed";
-import VerticalSplitIcon from "@mui/icons-material/VerticalSplit";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
+import Tooltip from "@mui/material/Tooltip";
 import type { SplitDiscoverProps } from "../../types";
+import SingleLayoutIcon from "../../../../../public/assets/SingleLayoutIcon";
+import SplitLayoutIcon from "../../../../../public/assets/SplitIcon";
 
 export default function SplitDiscover({
   mapMode,
@@ -13,23 +14,28 @@ export default function SplitDiscover({
       value={mapMode}
       exclusive
       onChange={handleMapMode}
-      aria-label="text alignment"
+      aria-label="view mode selection"
       color="primary"
     >
-      <ToggleButton
-        sx={{ padding: "8px" }}
-        value="single"
-        aria-label="left aligned"
-      >
-        <SingleBedIcon />
-      </ToggleButton>
-      <ToggleButton
-        sx={{ padding: "8px" }}
-        value="split"
-        aria-label="right aligned"
-      >
-        <VerticalSplitIcon />
-      </ToggleButton>
+      <Tooltip title="Single Mode" arrow placement="top">
+        <ToggleButton
+          sx={{ padding: "4px 8px" }}
+          value="single"
+          aria-label="single view"
+        >
+          <SingleLayoutIcon />
+        </ToggleButton>
+      </Tooltip>
+
+      <Tooltip title="Split Mode" arrow placement="top">
+        <ToggleButton
+          sx={{ padding: "4px 8px" }}
+          value="split"
+          aria-label="split view"
+        >
+          <SplitLayoutIcon />
+        </ToggleButton>
+      </Tooltip>
     </ToggleButtonGroup>
   );
 }

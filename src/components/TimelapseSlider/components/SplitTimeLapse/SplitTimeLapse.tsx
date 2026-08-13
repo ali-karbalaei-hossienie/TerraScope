@@ -1,10 +1,22 @@
-import React from "react";
-import SingleBedIcon from "@mui/icons-material/SingleBed";
-import VerticalSplitIcon from "@mui/icons-material/VerticalSplit";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
+import SingleLayoutIcon from "../../../../../public/assets/SingleLayoutIcon";
+import SplitLayoutIcon from "../../../../../public/assets/SplitIcon";
+import { Tooltip } from "@mui/material";
+import type { FC } from "react";
 
-const SplitTimeLapse = ({ mapMode, handleMapMode }) => {
+interface SplitTimeLapseProps {
+  mapMode: "single" | "split";
+  handleMapMode: (
+    event: React.MouseEvent<HTMLElement>,
+    newAlignment: "single" | "split",
+  ) => void;
+}
+
+const SplitTimeLapse: FC<SplitTimeLapseProps> = ({
+  mapMode,
+  handleMapMode,
+}) => {
   return (
     <ToggleButtonGroup
       value={mapMode}
@@ -15,20 +27,24 @@ const SplitTimeLapse = ({ mapMode, handleMapMode }) => {
       size="small"
       sx={{ marginTop: 2 }}
     >
-      <ToggleButton
-        sx={{ padding: "5px" }}
-        value="single"
-        aria-label="left aligned"
-      >
-        <SingleBedIcon />
-      </ToggleButton>
-      <ToggleButton
-        sx={{ padding: "8px" }}
-        value="split"
-        aria-label="right aligned"
-      >
-        <VerticalSplitIcon />
-      </ToggleButton>
+      <Tooltip title="Single Mode" arrow placement="top">
+        <ToggleButton
+          sx={{ padding: "4px 8px" }}
+          value="single"
+          aria-label="single view"
+        >
+          <SingleLayoutIcon />
+        </ToggleButton>
+      </Tooltip>
+      <Tooltip title="Split Mode" arrow placement="top">
+        <ToggleButton
+          sx={{ padding: "4px 8px" }}
+          value="split"
+          aria-label="split view"
+        >
+          <SplitLayoutIcon />
+        </ToggleButton>
+      </Tooltip>
     </ToggleButtonGroup>
   );
 };

@@ -1,8 +1,10 @@
+import JoinLeftIcon from "@mui/icons-material/JoinLeft";
+import JoinRightIcon from "@mui/icons-material/JoinRight";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import { type FC } from "react";
-import { useSideBySideDiscover } from "./hooks/useSideBySideDiscover";
 import type { DiscoverItemType } from "../../types";
+import { useSideBySideDiscover } from "./hooks/useSideBySideDiscover";
 interface SideBySideProps {
   discoverData: DiscoverItemType;
 }
@@ -23,14 +25,14 @@ const SideBySide: FC<SideBySideProps> = ({ discoverData }) => {
         value="left"
         aria-label="left aligned"
       >
-        left
+        <JoinLeftIcon />
       </ToggleButton>
       <ToggleButton
         sx={{ padding: "0 8px" }}
         value="right"
         aria-label="right aligned"
       >
-        right
+        <JoinRightIcon />
       </ToggleButton>
     </ToggleButtonGroup>
   );
