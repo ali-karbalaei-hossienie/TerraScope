@@ -5,19 +5,14 @@ import { useCardStyles } from "../styles/useCardStyles";
 import type { CardInnerContentProps } from "../types";
 import MoreCard from "./MoreCard/MoreCard";
 
-const CardInnerContent = ({
-  data,
-  mode,
-  mapMode,
-  handleDeleteIds,
-}: CardInnerContentProps) => {
+const CardInnerContent = (props: CardInnerContentProps) => {
   const { classes, cx } = useCardStyles();
 
   return (
     <>
       <Box className={classes.cardImageWrapper}>
         <img
-          src={data.image}
+          src={props.data.image}
           className={classes.cardImage}
           alt="Satellite Image"
         />
@@ -36,14 +31,14 @@ const CardInnerContent = ({
             component="span"
             variant="body2"
           >
-            {data.title}
+            {props.data.title}
           </Typography>
           <Typography
             className={classes.cardCreatedAt}
             component="span"
             variant="caption"
           >
-            {convertedFormatDate(data.createdAt)}
+            {convertedFormatDate(props.data.createdAt)}
           </Typography>
         </Box>
         <Box className={classes.discoverAuthorRow}>
@@ -56,24 +51,20 @@ const CardInnerContent = ({
             }}
           >
             <Typography component="div" variant="caption">
-              {data.description}
+              {props.data.description}
             </Typography>
-            <MoreCard
-              mode={mode}
-              onDeleteIds={handleDeleteIds}
-              discoverData={data}
-            />
+            <MoreCard mode={props.mode} discoverData={props.data} />
           </Box>
 
-          {mode === "discover" && (
+          {props.mode === "discover" && (
             <Box
               className={cx(
                 classes.splitModeWrapper,
-                mapMode === "split" && classes.splitModeWrapperActive,
+                props.mapMode === "split" && classes.splitModeWrapperActive,
               )}
             >
               <Box sx={{ overflow: "hidden" }}>
-                <SideBySide discoverData={data} />
+                <SideBySide discoverData={props.data} />
               </Box>
             </Box>
           )}

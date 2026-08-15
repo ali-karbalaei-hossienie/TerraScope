@@ -3,42 +3,32 @@ import { type FC } from "react";
 import CardInnerContent from "./components/CardInnerContent";
 import { useCardStyles } from "./styles/useCardStyles";
 import type { CardProps } from "./types";
-const Card: FC<CardProps> = ({
-  data,
-  handleImageOnMap,
-  mode,
-  activeCard,
-  handleDeleteIds,
-  mapMode,
-}) => {
+const Card: FC<CardProps> = (props) => {
   const { classes, cx } = useCardStyles();
 
-  const isOnMap = activeCard && activeCard.includes(data.id);
+  const isOnMap =
+    props.mode === "discover" &&
+    props.activeCard &&
+    props.activeCard.includes(props.data.id);
   return (
     <Box
       className={cx(classes.cardContainer, isOnMap && classes.activeContainer)}
     >
-      {mode === "discover" ? (
+      {props.mode === "discover" ? (
         <Button
-          onClick={() => handleImageOnMap(data)}
+          onClick={() => props.handleImageOnMap(props.data)}
           disableRipple
           className={classes.cardButton}
         >
           <CardInnerContent
-            data={data}
-            handleDeleteIds={handleDeleteIds}
-            mapMode={mapMode}
-            mode={mode}
+            data={props.data}
+            mapMode={props.mapMode}
+            mode={props.mode}
           />
         </Button>
       ) : (
         <Box className={classes.cardButton}>
-          <CardInnerContent
-            data={data}
-            handleDeleteIds={handleDeleteIds}
-            mapMode={mapMode}
-            mode={mode}
-          />
+          <CardInnerContent data={props.data} mode={props.mode} />
         </Box>
       )}
     </Box>

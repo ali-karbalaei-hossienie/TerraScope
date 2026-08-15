@@ -1,8 +1,7 @@
-import { Box, Button, Typography } from "@mui/material";
-import { useTimeLapse } from "./hooks/useTimeLapse";
-import { convertedFormatDate } from "../Discover/utils";
-import { useTimeLapseStyle } from "./styles/useTimeLapseStyle";
+import { Box, Typography } from "@mui/material";
 import Card from "../Card/Card";
+import { useTimeLapse } from "./hooks/useTimeLapse";
+import { useTimeLapseStyle } from "./styles/useTimeLapseStyle";
 
 const Timelapse = () => {
   const { timeLapseData } = useTimeLapse();

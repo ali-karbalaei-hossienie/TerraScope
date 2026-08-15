@@ -1,14 +1,11 @@
 import { useState } from "react";
 import { useMap } from "react-map-gl/mapbox";
 import { useDispatch } from "react-redux";
-import type {
-  DiscoverItemType,
-  StringOrNumber,
-  useDisCoverReturn,
-} from "../types";
+import type { useDisCoverReturn } from "../types";
 import { setIsSplitMode } from "../../../features/multiMapLayers/multiMapLayersSlice";
 import { generateSourceIds } from "../utils";
-import { addSourceAndLayer } from "../../utils";
+import { addSourceAndLayer, removeMapResources } from "../../utils";
+import type { CardItemType, StringOrNumber } from "../../Card/types";
 
 export const useDisCover = (): useDisCoverReturn => {
   const { map } = useMap();
@@ -18,10 +15,16 @@ export const useDisCover = (): useDisCoverReturn => {
   const [activeCard, setActiveCard] = useState<StringOrNumber[]>([]);
   const dispatch = useDispatch();
 
-  const handleImageOnMap = (data: DiscoverItemType) => {
-    if (!mapbox) return;
+  const handleImageOnMap = (data: CardItemType) => {
     const { borderSourceId, imageSourceId } = generateSourceIds(data);
-    if (mapbox.getSource(imageSourceId)) {
+    if (!mapbox) return;
+    if (activeCard.some((item) => item === data.id)) {
+      setActiveCard((item) => item.filter((idx) => idx !== data.id));
+      removeMapResources(
+        mapbox,
+        [imageSourceId, borderSourceId],
+        [imageSourceId, borderSourceId],
+      );
       return;
     }
 

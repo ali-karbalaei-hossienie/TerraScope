@@ -1,6 +1,6 @@
-import type { DiscoverItemType } from "../types";
+import type { CardItemType } from "../../Card/types";
 
-export const discoverData: DiscoverItemType[] = [
+export const discoverData: CardItemType[] = [
   {
     id: 1,
     createdAt: "2026-08-15T14:30:00.000Z",

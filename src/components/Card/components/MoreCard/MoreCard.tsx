@@ -4,17 +4,16 @@ import { useCardStyles } from "../../styles/useCardStyles";
 import type { MoreCardProps } from "../../types";
 import { useMoreCard } from "./hooks/useMoreCard";
 
-const MoreCard = ({ discoverData, onDeleteIds, mode }: MoreCardProps) => {
+const MoreCard = ({ discoverData, mode }: MoreCardProps) => {
   const { classes } = useCardStyles();
   const {
     open,
     handleClick,
     handleClose,
-    handleRemoveImage,
     anchorEl,
     handleTimeLapse,
     isAlreadyInTimeLapse,
-  } = useMoreCard({ onDeleteIds, mode });
+  } = useMoreCard({ mode });
 
   return (
     <div>
@@ -35,11 +34,6 @@ const MoreCard = ({ discoverData, onDeleteIds, mode }: MoreCardProps) => {
         open={open}
         onClose={handleClose}
       >
-        {mode === "discover" && (
-          <MenuItem onClick={(e) => handleRemoveImage(e, discoverData)}>
-            Remove Image
-          </MenuItem>
-        )}
         <MenuItem
           disabled={isAlreadyInTimeLapse(discoverData)}
           onClick={(e) => handleTimeLapse(e, discoverData)}

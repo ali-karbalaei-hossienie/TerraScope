@@ -37,7 +37,7 @@ export const useSideBarStyles = makeStyles<SideBarStyleProps>()(
       "&:hover": { color: theme.palette.secondary.main },
     },
     menuPanel: {
-      width: isMenuOpen ? "340px" : "0px",
+      width: isMenuOpen ? "400px" : "0px",
       transition: "width 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
       overflowX: "hidden",
       overflowY: "auto",
@@ -47,7 +47,7 @@ export const useSideBarStyles = makeStyles<SideBarStyleProps>()(
       zIndex: 9,
     },
     menuPanelContent: {
-      width: 340,
+      width: 400,
       display: "flex",
       flexDirection: "column",
       height: "100%",
