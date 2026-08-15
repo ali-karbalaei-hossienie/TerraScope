@@ -12,7 +12,7 @@ const MoreCard = ({ discoverData, onDeleteIds, mode }: MoreCardProps) => {
     handleClose,
     handleRemoveImage,
     anchorEl,
-    addTimeLapse,
+    handleTimeLapse,
     isAlreadyInTimeLapse,
   } = useMoreCard({ onDeleteIds, mode });
 
@@ -42,7 +42,7 @@ const MoreCard = ({ discoverData, onDeleteIds, mode }: MoreCardProps) => {
         )}
         <MenuItem
           disabled={isAlreadyInTimeLapse(discoverData)}
-          onClick={(e) => addTimeLapse(e, discoverData)}
+          onClick={(e) => handleTimeLapse(e, discoverData)}
         >
           {mode === "discover" ? " Add to TimeLapse" : "Remove from TimeLapse"}
         </MenuItem>

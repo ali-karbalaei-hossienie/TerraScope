@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 interface TimeLapseType {
   id: string | number;
   title: string;
@@ -21,8 +21,15 @@ const TimeLapseSlice = createSlice({
     addTimeLapseAction: (state, action) => {
       return [...state, action.payload];
     },
+    removeTimeLapseAction: (
+      state,
+      action: PayloadAction<{ id: string | number }>,
+    ) => {
+      return state.filter((item) => item.id !== action.payload.id);
+    },
   },
 });
 
-export const { addTimeLapseAction } = TimeLapseSlice.actions;
+export const { addTimeLapseAction, removeTimeLapseAction } =
+  TimeLapseSlice.actions;
 export default TimeLapseSlice.reducer;

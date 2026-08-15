@@ -2,7 +2,10 @@ import { useState } from "react";
 import { useMap } from "react-map-gl/mapbox";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../../../../../app/store";
-import { addTimeLapseAction } from "../../../../../features/TimeLapse/TimeLapseSlice";
+import {
+  addTimeLapseAction,
+  removeTimeLapseAction,
+} from "../../../../../features/TimeLapse/TimeLapseSlice";
 import { generateSourceIds } from "../../../../Discover/utils";
 import { removeMapResources } from "../../../../utils";
 import type { CardItemType, UseMoreDiscoverProps } from "../../../types";
@@ -47,12 +50,16 @@ export const useMoreCard = ({ onDeleteIds, mode }: UseMoreDiscoverProps) => {
     setAnchorEl(null);
   };
 
-  const addTimeLapse = (
+  const handleTimeLapse = (
     event: React.MouseEvent<HTMLLIElement>,
     data: CardItemType,
   ) => {
     event.stopPropagation();
-    dispatch(addTimeLapseAction(data));
+    if (mode === "discover") {
+      dispatch(addTimeLapseAction(data));
+    } else {
+      dispatch(removeTimeLapseAction({ id: data.id }));
+    }
     setAnchorEl(null);
   };
 
@@ -67,7 +74,7 @@ export const useMoreCard = ({ onDeleteIds, mode }: UseMoreDiscoverProps) => {
     handleClose,
     anchorEl,
     isSplitMode,
-    addTimeLapse,
+    handleTimeLapse,
     isAlreadyInTimeLapse,
   };
 };
