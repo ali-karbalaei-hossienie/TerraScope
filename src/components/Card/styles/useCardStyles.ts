@@ -22,6 +22,7 @@ export const useCardStyles = makeStyles()((theme) => ({
     padding: 0,
     overflow: "hidden",
     display: "flex",
+    alignItems: "center",
     "&:hover": {
       backgroundColor: "inherit",
     },
