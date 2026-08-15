@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { useMap } from "react-map-gl/mapbox";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../../../app/store";
-import { setVisibleSlider } from "../../../features/slider/slider";
+import { setVisibleSlider } from "../../../features/slider/sliderSlice";
 
 const WEATHER_URLS: Record<string, (time: string) => string> = {
   clouds: (time) =>

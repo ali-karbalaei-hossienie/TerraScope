@@ -15,6 +15,7 @@ export interface useDisCoverReturn {
 export interface MoreDiscoverProps {
   discoverData: DiscoverItemType;
   onDeleteIds: (id: string | number) => void;
+  mode: "discover" | "timeLapse";
 }
 
 export type UseMoreDiscoverProps = Omit<MoreDiscoverProps, "discoverData">;
@@ -32,6 +33,7 @@ export interface DiscoverItemType {
   title: string;
   image: string;
   description: string;
+  createdAt: string;
   coordinates: [
     [number, number],
     [number, number],

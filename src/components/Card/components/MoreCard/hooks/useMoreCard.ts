@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { useMap } from "react-map-gl/mapbox";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../../../../../app/store";
-import type { DiscoverItemType, UseMoreDiscoverProps } from "../../../types";
-import { generateSourceIds } from "../../../utils";
+import { addTimeLapseAction } from "../../../../../features/TimeLapse/TimeLapseSlice";
+import { generateSourceIds } from "../../../../Discover/utils";
 import { removeMapResources } from "../../../../utils";
+import type { CardItemType, UseMoreDiscoverProps } from "../../../types";
 
-export const useMoreDiscover = ({ onDeleteIds }: UseMoreDiscoverProps) => {
+export const useMoreCard = ({ onDeleteIds, mode }: UseMoreDiscoverProps) => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const { map } = useMap();
   const mapBox = map?.getMap();
@@ -14,6 +15,10 @@ export const useMoreDiscover = ({ onDeleteIds }: UseMoreDiscoverProps) => {
   const { isSplitMode } = useSelector(
     (state: RootState) => state.multiMapLayer,
   );
+  const timeLaps = useSelector((state: RootState) => state.timeLapse);
+
+  const dispatch = useDispatch();
+
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
     setAnchorEl(event.currentTarget);
@@ -27,7 +32,7 @@ export const useMoreDiscover = ({ onDeleteIds }: UseMoreDiscoverProps) => {
 
   const handleRemoveImage = (
     event: React.MouseEvent<HTMLLIElement>,
-    data: DiscoverItemType,
+    data: CardItemType,
   ) => {
     event.stopPropagation();
 
@@ -42,6 +47,19 @@ export const useMoreDiscover = ({ onDeleteIds }: UseMoreDiscoverProps) => {
     setAnchorEl(null);
   };
 
+  const addTimeLapse = (
+    event: React.MouseEvent<HTMLLIElement>,
+    data: CardItemType,
+  ) => {
+    event.stopPropagation();
+    dispatch(addTimeLapseAction(data));
+    setAnchorEl(null);
+  };
+
+  const isAlreadyInTimeLapse = (data: CardItemType) => {
+    return mode === "discover" && timeLaps.some((item) => item.id === data.id);
+  };
+
   return {
     open,
     handleClick,
@@ -49,5 +67,7 @@ export const useMoreDiscover = ({ onDeleteIds }: UseMoreDiscoverProps) => {
     handleClose,
     anchorEl,
     isSplitMode,
+    addTimeLapse,
+    isAlreadyInTimeLapse,
   };
 };

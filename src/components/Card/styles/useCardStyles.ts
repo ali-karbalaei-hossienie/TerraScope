@@ -1,12 +1,12 @@
 import { makeStyles } from "tss-react/mui";
 
-export const useDiscoverStyles = makeStyles()((theme) => ({
+export const useCardStyles = makeStyles()((theme) => ({
   panelTitle: {
     textTransform: "capitalize",
     fontWeight: "bold",
     color: theme.palette.primary.main,
   },
-  discoverContainer: {
+  cardContainer: {
     border: `2px solid ${theme.palette.divider}`,
     marginBottom: theme.spacing(2),
     transition: "all 0.3s ease-in-out",
@@ -16,9 +16,9 @@ export const useDiscoverStyles = makeStyles()((theme) => ({
     borderColor: theme.palette.primary.dark,
     transform: "scale(1.04)",
   },
-  discoverButton: {
+  cardButton: {
     width: "100%",
-    gap: theme.spacing(2),
+    gap: theme.spacing(1),
     padding: 0,
     overflow: "hidden",
     display: "flex",
@@ -26,34 +26,35 @@ export const useDiscoverStyles = makeStyles()((theme) => ({
       backgroundColor: "inherit",
     },
   },
-  discoverImageWrapper: {
+  cardImageWrapper: {
     objectFit: "cover",
     padding: 0,
     flexBasis: "90px",
-    height: "100%",
+    height: "100px",
     lineHeight: 0,
     aspectRatio: "1/1",
   },
-  discoverImage: {
+  cardImage: {
     width: "100%",
     height: "100%",
   },
-  discoverContent: {
+  cardContent: {
     display: "flex",
     flexDirection: "column",
     overflow: "hidden",
     flex: 1,
   },
-  discoverTitle: {
+  cardTitle: {
     textOverflow: "ellipsis",
     overflow: "hidden",
     whiteSpace: "nowrap",
     color: theme.palette.primary.light,
     textAlign: "left",
   },
-  createdAt: {
+  cardCreatedAt: {
     color: theme.palette.text.disabled,
     marginRight: theme.spacing(1),
+    fontSize: "smaller",
   },
   discoverAuthorRow: {
     color: theme.palette.text.primary,
