@@ -19,8 +19,16 @@ const SideBarItem: FC<SideBarItemProps> = ({
 
   return (
     <Box onClick={onClick} className={classes.sidebarItem}>
-      <IconButton sx={{ color: "inherit" }}>{icon}</IconButton>
-      <Typography variant="button">{label}</Typography>
+      <IconButton
+        sx={{ color: "inherit" }}
+        className={classes.sidebarButton}
+        size="small"
+      >
+        {icon}
+      </IconButton>
+      <Typography sx={{ listStyle: "none" }} variant="caption" component="li">
+        {label}
+      </Typography>
     </Box>
   );
 };

@@ -33,8 +33,13 @@ export const useSideBarStyles = makeStyles<SideBarStyleProps>()(
       color: isActive
         ? theme.palette.primary.main
         : theme.palette.text.secondary,
-      transition: "color 0.2s",
+      transition: "all  0.3s ease-in-out",
       "&:hover": { color: theme.palette.secondary.main },
+    },
+    sidebarButton: {
+      "&:hover": {
+        backgroundColor: "inherit !important",
+      },
     },
     menuPanel: {
       width: isMenuOpen ? "400px" : "0px",
