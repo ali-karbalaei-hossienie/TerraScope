@@ -40,13 +40,12 @@ export const useTimeLapseSliderStyles = makeStyles()((theme) => ({
     },
     "& .MuiSlider-mark": {
       height: 10,
-      top: "80%",
+      top: "74%",
       color: theme.palette.text.primary,
     },
     "& .MuiSlider-markLabel": {
       position: "absolute",
-      marginLeft: "16px",
-      // top: 5,
+      marginLeft: "-10px",
       height: 35,
       transform: "none",
       display: "flex",
@@ -55,6 +54,9 @@ export const useTimeLapseSliderStyles = makeStyles()((theme) => ({
       color: theme.palette.text.primary,
       fontSize: "0.7rem",
       boxSizing: "border-box",
+      "&[data-index='0']": {
+        marginLeft: "10px",
+      },
     },
     "& .MuiSlider-valueLabel": {
       backgroundColor: theme.palette.primary.main,
@@ -82,7 +84,6 @@ export const useTimeLapseSliderStyles = makeStyles()((theme) => ({
         height: "20px",
         transform: "translateX(-10px)",
 
-        // اضافه کردن استایل نیم‌دایره چپ
         borderRadius: "10px 0 0 10px",
         "& .MuiSlider-valueLabelLabel": {
           display: "none",
@@ -104,7 +105,6 @@ export const useTimeLapseSliderStyles = makeStyles()((theme) => ({
         height: "20px",
         transform: "translateX(10px)",
 
-        // اضافه کردن استایل نیم‌دایره چپ
         borderRadius: "0 10px 10px 0",
         "& .MuiSlider-valueLabelLabel": {
           display: "none",

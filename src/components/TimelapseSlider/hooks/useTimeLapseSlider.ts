@@ -1,10 +1,9 @@
-import { useEffect, useRef, useState, useCallback } from "react";
-import { useDispatch } from "react-redux";
+import { useEffect, useRef, useState, useCallback, useMemo } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useMap } from "react-map-gl/mapbox";
 import type { Dispatch } from "@reduxjs/toolkit";
 import type { GeoJSONSource, ImageSource, Map as MapboxMap } from "mapbox-gl";
 
-import { marks } from "../constants";
 import { addSourceAndLayer } from "../../utils";
 import {
   addExtraLeftLayers,
@@ -12,6 +11,8 @@ import {
   removeAllExtraLayers,
   setIsSplitMode,
 } from "../../../features/multiMapLayers/multiMapLayersSlice";
+import type { RootState } from "../../../app/store";
+import { convertedFormatDate } from "../../Discover/utils";
 
 // --- Types ---
 export type Coordinate = [number, number];
@@ -197,10 +198,18 @@ export const useTimeLapseSlider = () => {
   const [isPlay, setIsPlay] = useState<boolean>(false);
   const [mapMode, setMapMode] = useState<"single" | "split">("single");
   const isSplit = mapMode === "split";
+  const timeLapseData = useSelector((state: RootState) => state.timeLapse);
 
-  const [value, setValue] = useState<number | number[]>(
-    isSplit ? [marks[0].value, marks[1].value] : marks[0].value,
-  );
+  const marks = useMemo(() => {
+    return timeLapseData.map((item, index) => ({
+      label: convertedFormatDate(item.createdAt),
+      value: index,
+      coordinates: item.coordinates,
+      url: item.image,
+    }));
+  }, [timeLapseData]);
+
+  const [value, setValue] = useState<number | number[]>(isSplit ? [0, 1] : 0);
 
   const hasFlown = useRef(false);
 
@@ -283,6 +292,7 @@ export const useTimeLapseSlider = () => {
       if (animationFrameId) cancelAnimationFrame(animationFrameId);
     };
   }, [isPlay, isSplit]);
+
   const handleChange = (_: Event, newValue: number | number[]) => {
     setValue(newValue);
   };
@@ -305,6 +315,14 @@ export const useTimeLapseSlider = () => {
     }
   };
 
+  const valueLabelFormat = (id: number) => {
+    if (marks.length) {
+      const item = marks[id];
+      const date = convertedFormatDate(item.label);
+      return date;
+    }
+  };
+
   return {
     isSplit,
     isPlay,
@@ -313,6 +331,8 @@ export const useTimeLapseSlider = () => {
     value,
     setValue,
     mapMode,
+    marks,
     handleMapMode,
+    valueLabelFormat,
   };
 };

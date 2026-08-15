@@ -3,11 +3,18 @@ import { useTimeLapseSlider } from "./hooks/useTimeLapseSlider";
 import Player from "./components/Player/Player";
 import { useTimeLapseSliderStyles } from "./styles/useTimeLapseSliderStyles";
 import SplitTimeLapse from "./components/SplitTimeLapse/SplitTimeLapse";
-import { marks } from "./constants";
 
 const TimeLapseSlider = () => {
-  const { isPlay, setIsPlay, handleChange, value, mapMode, handleMapMode } =
-    useTimeLapseSlider();
+  const {
+    isPlay,
+    setIsPlay,
+    handleChange,
+    value,
+    mapMode,
+    handleMapMode,
+    marks,
+    valueLabelFormat,
+  } = useTimeLapseSlider();
 
   const { classes, cx } = useTimeLapseSliderStyles();
   return (
@@ -46,13 +53,16 @@ const TimeLapseSlider = () => {
               max={marks.length - 1}
               step={null}
               value={value}
-              marks={marks}
+              marks={marks.map((mark) => ({
+                ...mark,
+                label: mark?.label ? mark.label.substring(0, 4) : "",
+              }))}
               valueLabelDisplay="auto"
               className={cx(
                 classes.timeLapseSlider,
                 mapMode === "split" && classes.splitTimeLapsSlider,
               )}
-              valueLabelFormat={(idx) => marks[idx]?.label || ""}
+              valueLabelFormat={valueLabelFormat}
               onChange={handleChange}
             />
           </Box>
