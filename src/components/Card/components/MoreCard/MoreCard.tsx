@@ -38,7 +38,7 @@ const MoreCard = ({ discoverData, mode }: MoreCardProps) => {
           disabled={isAlreadyInTimeLapse(discoverData)}
           onClick={(e) => handleTimeLapse(e, discoverData)}
         >
-          {mode === "discover" ? " Add to TimeLapse" : "Remove from TimeLapse"}
+          {mode === "discover" ? " Add to TimeLapse" : "Remove"}
         </MenuItem>
       </Menu>
     </div>

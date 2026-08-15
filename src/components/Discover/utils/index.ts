@@ -1,6 +1,6 @@
-import type { DiscoverItemType } from "../types";
+import type { CardItemType } from "../../Card/types";
 
-export const generateSourceIds = (data: DiscoverItemType) => {
+export const generateSourceIds = (data: CardItemType) => {
   const imageSourceId = `discover-source-${data.id}`;
   const borderSourceId = `discover-border-source-${data.id}`;
   return {
