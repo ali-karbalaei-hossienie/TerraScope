@@ -3,10 +3,10 @@ import JoinRightIcon from "@mui/icons-material/JoinRight";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import { type FC } from "react";
-import type { DiscoverItemType } from "../../types";
 import { useSideBySideDiscover } from "./hooks/useSideBySideDiscover";
+import type { CardItemType } from "../../../Card/types";
 interface SideBySideProps {
-  discoverData: DiscoverItemType;
+  discoverData: CardItemType;
 }
 const SideBySide: FC<SideBySideProps> = ({ discoverData }) => {
   const { handleAlignment, alignment } = useSideBySideDiscover({

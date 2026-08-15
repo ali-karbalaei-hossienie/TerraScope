@@ -7,11 +7,11 @@ import {
   removeExtraLeftLayer,
   removeExtraRightLayer,
 } from "../../../../../features/multiMapLayers/multiMapLayersSlice";
-import type { DiscoverItemType } from "../../../types";
 import { generateSourceIds } from "../../../utils";
 import { removeMapResources } from "../../../../utils";
+import type { CardItemType } from "../../../../Card/types";
 interface UseSideBySideDiscover {
-  discoverData: DiscoverItemType;
+  discoverData: CardItemType;
 }
 
 type Side = "left" | "right";
