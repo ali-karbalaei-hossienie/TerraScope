@@ -1,16 +1,22 @@
 import { useState } from "react";
 import { useMap } from "react-map-gl/mapbox";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import type { useDisCoverReturn } from "../types";
 import { setIsSplitMode } from "../../../features/multiMapLayers/multiMapLayersSlice";
 import { generateSourceIds } from "../utils";
 import { addSourceAndLayer, removeMapResources } from "../../utils";
 import type { CardItemType, StringOrNumber } from "../../Card/types";
+import type { RootState } from "../../../app/store";
 
 export const useDisCover = (): useDisCoverReturn => {
   const { map } = useMap();
   const mapbox = map?.getMap();
-  const [mapMode, setMapMode] = useState<"single" | "split">("single");
+  const isSplitMode = useSelector(
+    (state: RootState) => state.multiMapLayer.isSplitMode,
+  );
+  const [mapMode, setMapMode] = useState<"single" | "split">(
+    isSplitMode ? "split" : "single",
+  );
 
   const [activeCard, setActiveCard] = useState<StringOrNumber[]>([]);
   const dispatch = useDispatch();

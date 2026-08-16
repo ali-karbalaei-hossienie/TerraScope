@@ -17,6 +17,8 @@ import type {
   SidebarProviderProps,
 } from "./types";
 
+const SidebarContext = createContext<SidebarContextType | null>(null);
+
 export const useSidebar = () => {
   const context = useContext(SidebarContext);
   if (!context) {
@@ -25,12 +27,11 @@ export const useSidebar = () => {
   return context;
 };
 
-const SidebarContext = createContext<SidebarContextType | null>(null);
-
 export const SidebarProvider = ({ config, children }: SidebarProviderProps) => {
   const [activeMenu, setActiveMenu] = useState<ActiveMenuType | null>(null);
   const { map } = useMap();
   const mapBox = map?.getMap();
+
   const isMenuOpen = Boolean(activeMenu);
   const activeItem = config.find((i) => i.id === activeMenu);
 
@@ -51,31 +52,28 @@ export const SidebarProvider = ({ config, children }: SidebarProviderProps) => {
     return () => clearTimeout(timeoutId);
   }, [isMenuOpen, mapBox]);
 
-  const handleMenuClick = (menu: ActiveMenuType) => {
+  // بهینه‌سازی با useCallback
+  const handleMenuClick = useCallback((menu: ActiveMenuType) => {
     setActiveMenu((prev) => (prev === menu ? null : menu));
-  };
+  }, []);
 
   const renderList = useCallback(
     (items: ConfigType[]) => {
-      return (
-        <>
-          {items.map((item) => {
-            return (
-              <SideBarItem
-                icon={item.icon}
-                label={item.textButton}
-                isActive={activeMenu === item.id}
-                onClick={() => handleMenuClick(item.id)}
-              />
-            );
-          })}
-        </>
-      );
+      return items.map((item) => (
+        <SideBarItem
+          key={item.id} // <-- پراپ کلیدی که جا افتاده بود
+          icon={item.icon}
+          label={item.textButton}
+          isActive={activeMenu === item.id}
+          onClick={() => handleMenuClick(item.id)}
+        />
+      ));
     },
-    [activeMenu],
+    [activeMenu, handleMenuClick], // <-- اضافه شدن handleMenuClick
   );
 
   const { classes } = useSideBarStyles({ isMenuOpen });
+
   const contextValue = useMemo(
     () => ({
       activeMenu,
@@ -91,13 +89,13 @@ export const SidebarProvider = ({ config, children }: SidebarProviderProps) => {
           <Box>{renderList(topItems)}</Box>
           <Box>{renderList(bottomItems)}</Box>
         </Box>
+
         <Box className={classes.menuPanel}>
           <Box className={classes.menuPanelContent}>
-            <Box sx={{ flexGrow: 1 }}>
-              <>{activeItem && activeItem.component}</>
-            </Box>
+            <Box sx={{ flexGrow: 1 }}>{activeItem && activeItem.component}</Box>
           </Box>
         </Box>
+
         <Box
           sx={{
             position: "relative",

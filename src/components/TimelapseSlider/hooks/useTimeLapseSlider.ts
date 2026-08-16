@@ -196,7 +196,12 @@ export const useTimeLapseSlider = () => {
   const mapbox = map?.getMap();
 
   const [isPlay, setIsPlay] = useState<boolean>(false);
-  const [mapMode, setMapMode] = useState<"single" | "split">("single");
+  const isSplitMode = useSelector(
+    (state: RootState) => state.multiMapLayer.isSplitMode,
+  );
+  const [mapMode, setMapMode] = useState<"single" | "split">(
+    isSplitMode ? "split" : "single",
+  );
   const isSplit = mapMode === "split";
   const timeLapseData = useSelector((state: RootState) => state.timeLapse);
 

@@ -1,9 +1,10 @@
 import type { MapSourceDataEvent } from "mapbox-gl";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { useMap } from "react-map-gl/mapbox";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../../../app/store";
 import { setVisibleSlider } from "../../../features/slider/sliderSlice";
+import { setIsSplitMode } from "../../../features/multiMapLayers/multiMapLayersSlice";
 
 const WEATHER_URLS: Record<string, (time: string) => string> = {
   clouds: (time) =>
@@ -26,14 +27,14 @@ export const useWeather = () => {
   const [weather, setWeather] = useState<string | null>(null);
   const timeSlider = useSelector((state: RootState) => state.slider.timeSlider);
   const dispatch = useDispatch();
+  const isSplitMode = useSelector(
+    (state: RootState) => state.multiMapLayer.isSplitMode,
+  );
 
   const mapInstance = map!.getMap();
-
-  // Reference to detect weather type changes (e.g., from clouds to rain)
   const activeWeatherRef = useRef<string | null>(null);
 
-  // Helper function to completely remove all weather layers and sources from the map
-  const removeAllWeatherLayers = () => {
+  const removeAllWeatherLayers = useCallback(() => {
     if (!mapInstance) return;
     const style = mapInstance.getStyle();
     if (!style) return;
@@ -49,7 +50,14 @@ export const useWeather = () => {
         if (mapInstance.getSource(sourceId)) mapInstance.removeSource(sourceId);
       }
     });
-  };
+  }, [mapInstance]);
+
+  useEffect(() => {
+    return () => {
+      removeAllWeatherLayers();
+      dispatch(setVisibleSlider(false));
+    };
+  }, [removeAllWeatherLayers, dispatch]);
 
   useEffect(() => {
     if (!mapInstance || !timeSlider) return;
@@ -64,7 +72,7 @@ export const useWeather = () => {
       return;
     }
 
-    // 2. If the weather type changes (e.g., clouds off and rain on), clear memory
+    // 2. If the weather type changes
     if (activeWeatherRef.current !== weather) {
       removeAllWeatherLayers();
       activeWeatherRef.current = weather;
@@ -73,7 +81,6 @@ export const useWeather = () => {
     const sourceId = `${weather}-source-${timeSlider}`;
     const layerId = `${weather}-layer-${timeSlider}`;
 
-    // Helper function to hide other layers
     const hideOtherLayers = (targetLayerId: string) => {
       const style = mapInstance.getStyle();
       style?.layers?.forEach((layer) => {
@@ -83,14 +90,14 @@ export const useWeather = () => {
       });
     };
 
-    // 3. Cache Hit: If this layer has already been downloaded and exists on the map
+    // 3. Cache Hit
     if (mapInstance.getSource(sourceId)) {
       mapInstance.setPaintProperty(layerId, "raster-opacity", 1);
       hideOtherLayers(layerId);
       return;
     }
 
-    // 4. If it's a new layer, add it with zero opacity
+    // 4. Add new layer
     mapInstance.addSource(sourceId, {
       type: "raster",
       tiles: [tileUrl],
@@ -107,7 +114,7 @@ export const useWeather = () => {
       },
     });
 
-    // 5. Wait for complete download from NASA
+    // 5. Wait for download
     const handleSourceLoaded = (e: MapSourceDataEvent) => {
       if (
         e.sourceId === sourceId &&
@@ -127,7 +134,13 @@ export const useWeather = () => {
     return () => {
       mapInstance.off("sourcedata", handleSourceLoaded);
     };
-  }, [timeSlider, weather, mapInstance]);
+  }, [timeSlider, weather, mapInstance, dispatch, removeAllWeatherLayers]);
+
+  useEffect(() => {
+    if (isSplitMode) {
+      dispatch(setIsSplitMode(false));
+    }
+  }, [isSplitMode, dispatch]);
 
   const handleWeather = (
     _event: React.MouseEvent<HTMLElement>,
