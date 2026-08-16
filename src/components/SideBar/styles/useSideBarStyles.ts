@@ -34,7 +34,9 @@ export const useSideBarStyles = makeStyles<SideBarStyleProps>()(
       padding: "8px 6px 8px 6px",
       borderRadius: "10px",
 
-      backgroundColor: isActive ? "rgba(25, 118, 210, 0.15)" : "transparent",
+      backgroundColor: isActive
+        ? `${theme.palette.background.paper}`
+        : "transparent",
       border: "1px solid",
       borderColor: isActive ? `${theme.palette.primary.main}` : "transparent",
       color: isActive

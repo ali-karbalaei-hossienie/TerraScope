@@ -55,22 +55,25 @@ export const SidebarProvider = ({ config, children }: SidebarProviderProps) => {
     setActiveMenu((prev) => (prev === menu ? null : menu));
   };
 
-  const renderList = useCallback((items: ConfigType[]) => {
-    return (
-      <>
-        {items.map((item) => {
-          return (
-            <SideBarItem
-              icon={item.icon}
-              label={item.textButton}
-              isActive={activeMenu === item.id}
-              onClick={() => handleMenuClick(item.id)}
-            />
-          );
-        })}
-      </>
-    );
-  }, []);
+  const renderList = useCallback(
+    (items: ConfigType[]) => {
+      return (
+        <>
+          {items.map((item) => {
+            return (
+              <SideBarItem
+                icon={item.icon}
+                label={item.textButton}
+                isActive={activeMenu === item.id}
+                onClick={() => handleMenuClick(item.id)}
+              />
+            );
+          })}
+        </>
+      );
+    },
+    [activeMenu],
+  );
 
   const { classes } = useSideBarStyles({ isMenuOpen });
   const contextValue = useMemo(

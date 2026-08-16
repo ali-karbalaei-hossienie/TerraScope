@@ -1,6 +1,7 @@
 import { ThemeProvider } from "@emotion/react";
 import PublicIcon from "@mui/icons-material/Public";
 import ThunderstormIcon from "@mui/icons-material/Thunderstorm";
+import TimelapseIcon from "@mui/icons-material/Timelapse";
 import { Box, CssBaseline } from "@mui/material";
 import { MapProvider } from "react-map-gl/mapbox";
 import { Provider } from "react-redux";
@@ -32,7 +33,7 @@ const sidebarConfig: ConfigType[] = [
     id: "timeLapse",
     position: "top",
     textButton: "TimeLapse",
-    icon: <ThunderstormIcon />,
+    icon: <TimelapseIcon />,
     component: <Timelapse />,
   },
 ];

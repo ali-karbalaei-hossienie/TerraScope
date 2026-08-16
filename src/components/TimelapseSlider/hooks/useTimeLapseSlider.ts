@@ -1,18 +1,18 @@
-import { useEffect, useRef, useState, useCallback, useMemo } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useMap } from "react-map-gl/mapbox";
 import type { Dispatch } from "@reduxjs/toolkit";
 import type { GeoJSONSource, ImageSource, Map as MapboxMap } from "mapbox-gl";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useMap } from "react-map-gl/mapbox";
+import { useDispatch, useSelector } from "react-redux";
 
-import { addSourceAndLayer } from "../../utils";
+import type { RootState } from "../../../app/store";
 import {
   addExtraLeftLayers,
   addExtraRightLayers,
   removeAllExtraLayers,
   setIsSplitMode,
 } from "../../../features/multiMapLayers/multiMapLayersSlice";
-import type { RootState } from "../../../app/store";
 import { convertedFormatDate } from "../../Discover/utils";
+import { addSourceAndLayer } from "../../utils";
 
 // --- Types ---
 export type Coordinate = [number, number];
@@ -26,7 +26,7 @@ export interface Mark {
 
 type OverlayKey = "main" | "left" | "right";
 
-const ALL_SLIDER_LAYERS = [
+export const ALL_SLIDER_LAYERS = [
   "slider-image-layer-main",
   "slider-image-layer-left",
   "slider-image-layer-right",
@@ -35,7 +35,7 @@ const ALL_SLIDER_LAYERS = [
   "slider-border-layer-right",
 ];
 
-const ALL_SLIDER_SOURCES = [
+export const ALL_SLIDER_SOURCES = [
   "slider-image-source-main",
   "slider-image-source-left",
   "slider-image-source-right",
@@ -299,20 +299,22 @@ export const useTimeLapseSlider = () => {
 
   const handleMapMode = (
     event: React.MouseEvent<HTMLElement>,
-    newAlignment: "single" | "split",
+    newAlignment: "single" | "split" | null,
   ) => {
     event.stopPropagation();
 
-    if (newAlignment && newAlignment !== mapMode) {
-      cleanupResources();
-      setMapMode(newAlignment);
-      setValue(
-        newAlignment === "split"
-          ? [marks[0].value, marks[1].value]
-          : marks[0].value,
-      );
-      dispatch(setIsSplitMode(newAlignment === "split"));
-    }
+    if (!newAlignment || newAlignment === mapMode) return;
+
+    const isSplit = newAlignment === "split";
+
+    cleanupResources();
+    setMapMode(newAlignment);
+    dispatch(setIsSplitMode(isSplit));
+
+    const val1 = marks[0]?.value ?? 0;
+    const val2 = marks[1]?.value ?? 0;
+
+    setValue(isSplit ? [val1, val2] : val1);
   };
 
   const valueLabelFormat = (id: number) => {
