@@ -21,22 +21,42 @@ export const useSideBarStyles = makeStyles<SideBarStyleProps>()(
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
-      padding: theme.spacing(1, 0),
       zIndex: 10,
+      paddingTop: 16,
+      justifyContent: "space-between",
+      paddingBottom: 32,
     },
-    sidebarItem: {
+    sidebarListItem: {
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
-      margin: theme.spacing(1, 0),
       cursor: "pointer",
+      padding: "8px 6px 8px 6px",
+      borderRadius: "10px",
+
+      backgroundColor: isActive ? "rgba(25, 118, 210, 0.15)" : "transparent",
+      border: "1px solid",
+      borderColor: isActive ? `${theme.palette.primary.main}` : "transparent",
       color: isActive
         ? theme.palette.primary.main
         : theme.palette.text.secondary,
-      transition: "all  0.3s ease-in-out",
+      transition: "all 0.3s ease",
       "&:hover": { color: theme.palette.secondary.main },
     },
+    sidebarItem: {
+      margin: 0,
+      padding: 0,
+    },
     sidebarButton: {
+      display: "flex",
+      flexDirection: "column",
+      padding: 0,
+      margin: 0,
+      "& .MuiSvgIcon-root": {
+        fontSize: 22,
+        marginBottom: 2,
+        transition: "color 0.2s ease",
+      },
       "&:hover": {
         backgroundColor: "inherit !important",
       },

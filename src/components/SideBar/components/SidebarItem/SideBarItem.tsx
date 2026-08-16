@@ -1,4 +1,4 @@
-import { Box, IconButton, Typography } from "@mui/material";
+import { List, ListItem, ListItemButton, ListItemText } from "@mui/material";
 import { type FC, type ReactNode } from "react";
 import { useSideBarStyles } from "../../styles/useSideBarStyles";
 
@@ -18,18 +18,21 @@ const SideBarItem: FC<SideBarItemProps> = ({
   const { classes } = useSideBarStyles({ isActive });
 
   return (
-    <Box onClick={onClick} className={classes.sidebarItem}>
-      <IconButton
-        sx={{ color: "inherit" }}
-        className={classes.sidebarButton}
-        size="small"
-      >
-        {icon}
-      </IconButton>
-      <Typography sx={{ listStyle: "none" }} variant="caption" component="li">
-        {label}
-      </Typography>
-    </Box>
+    <List className={classes.sidebarListItem}>
+      <ListItem className={classes.sidebarItem}>
+        <ListItemButton
+          disableRipple
+          className={classes.sidebarButton}
+          onClick={onClick}
+        >
+          {icon}
+          <ListItemText
+            slotProps={{ primary: { sx: { fontSize: "0.8rem" } } }}
+            primary={label}
+          />
+        </ListItemButton>
+      </ListItem>
+    </List>
   );
 };
 

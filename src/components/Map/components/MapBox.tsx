@@ -1,15 +1,14 @@
 import { Geoman } from "@geoman-io/mapbox-geoman-free";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { useEffect, useRef } from "react";
-import { Map as MapBox, useMap } from "react-map-gl/mapbox";
-import { registerGeoman, unregisterGeoman } from "../map/drawStore";
-import Draw from "./Draw/Draw";
-import Edit from "./Edit/Edit";
-import MultiMapLayers from "./MultiMapLayers/MultiMapLayers";
-import MapNavigation from "./zoomBox/ZoomBox";
-// import Weather from "./_Weather/Weather";
+import { Map, useMap } from "react-map-gl/mapbox";
 import type { StyleSpecification } from "mapbox-gl";
-import Slider from "./Slider/Slider";
+import { registerGeoman, unregisterGeoman } from "../../../map/drawStore";
+import MapNavigation from "../../zoomBox/ZoomBox";
+import Draw from "../../Draw/Draw";
+import Edit from "../../Edit/Edit";
+import MultiMapLayers from "../../MultiMapLayers/MultiMapLayers";
+import Slider from "../../Slider/Slider";
 
 const blankStyle: StyleSpecification = {
   version: 8,
@@ -17,7 +16,7 @@ const blankStyle: StyleSpecification = {
   sources: {},
   layers: [],
 };
-const Map = () => {
+const MapBox = () => {
   const { map } = useMap();
   const geomanRef = useRef<Geoman | null>(null);
 
@@ -39,7 +38,7 @@ const Map = () => {
   }, [map]);
 
   return (
-    <MapBox
+    <Map
       mapboxAccessToken="OSQvmkeEjIl23WjHmrjA"
       initialViewState={{
         longitude: 51.389,
@@ -55,8 +54,8 @@ const Map = () => {
       <Edit />
       <MultiMapLayers />
       <Slider />
-    </MapBox>
+    </Map>
   );
 };
 
-export default Map;
+export default MapBox;
