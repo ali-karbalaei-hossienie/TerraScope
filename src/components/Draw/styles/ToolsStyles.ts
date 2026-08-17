@@ -14,6 +14,7 @@ export const useStyles = makeStyles()((theme) => ({
     border: 0,
     margin: 0,
     boxShadow: theme.shadows[1],
+    borderRadius: "50% !important",
     "&:hover": {
       backgroundColor: `${theme.palette.primary.main} !important`,
     },

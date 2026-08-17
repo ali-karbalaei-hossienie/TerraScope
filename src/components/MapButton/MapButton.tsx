@@ -74,6 +74,7 @@ const MapButton = ({ children, icon, newPlacement, style }: MapButtonProps) => {
           border: `1px solid ${theme.palette.background.paper}`,
           gap: 0.5,
           width: "fit-content",
+          p: 0.5,
         })}
       >
         <IconButton

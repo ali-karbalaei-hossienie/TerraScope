@@ -69,32 +69,55 @@ const MapNavigation: FC = () => {
           backgroundColor: "background.paper",
           border: `1px solid ${theme.palette.background.paper}`,
           gap: 0.5,
+          p: 0.5,
           width: "fit-content",
         })}
       >
-        <IconButton onClick={flyToHome}>
+        <IconButton
+          sx={(theme) => ({
+            boxShadow: theme.shadows[1],
+          })}
+          onClick={flyToHome}
+        >
           <HomeOutlinedIcon fontSize="small" />
         </IconButton>
-        <IconButton onClick={handleZoomIn}>
+        <IconButton
+          sx={(theme) => ({
+            boxShadow: theme.shadows[1],
+          })}
+          onClick={handleZoomIn}
+        >
           <AddOutlinedIcon fontSize="small" />
         </IconButton>
 
         <Box ref={zoomTextRef}> {map ? Math.round(map.getZoom()) : 5}</Box>
 
-        <IconButton onClick={handleZoomOut}>
+        <IconButton
+          sx={(theme) => ({
+            boxShadow: theme.shadows[1],
+          })}
+          onClick={handleZoomOut}
+        >
           <RemoveOutlinedIcon fontSize="small" />
         </IconButton>
         <IconButton
-          sx={{
-            display: "flex !important",
-            alignItems: "center !important",
-            justifyContent: "center !important",
-          }}
+          sx={(theme) => ({
+            boxShadow: theme.shadows[1],
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          })}
           onClick={handleCompass}
         >
           <Box
             component="span"
             ref={compassRef}
+            sx={(theme) => ({
+              boxShadow: theme.shadows[1],
+              display: "flex",
+              transition: "transform 100ms linear",
+              transformOrigin: "center",
+            })}
             style={{
               display: "flex",
               transition: "transform 100ms linear",
