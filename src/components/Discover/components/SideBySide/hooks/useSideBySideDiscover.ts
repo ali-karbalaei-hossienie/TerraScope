@@ -7,7 +7,7 @@ import {
   removeExtraLeftLayer,
   removeExtraRightLayer,
 } from "../../../../../features/multiMapLayers/multiMapLayersSlice";
-import { generateSourceIds } from "../../../utils";
+import { fitBounds, generateSourceIds } from "../../../utils";
 import { removeMapResources } from "../../../../utils";
 import type { CardItemType } from "../../../../Card/types";
 interface UseSideBySideDiscover {
@@ -27,27 +27,11 @@ export const useSideBySideDiscover = ({
     event: React.MouseEvent<HTMLElement>,
     newAlignment: Side | null,
   ) => {
+    if (!map) return;
     event.stopPropagation();
     setAlignment(newAlignment);
 
-    const lngs = discoverData.coordinates.map((coord) => coord[0]);
-    const lats = discoverData.coordinates.map((coord) => coord[1]);
-
-    const minLng = Math.min(...lngs);
-    const maxLng = Math.max(...lngs);
-    const minLat = Math.min(...lats);
-    const maxLat = Math.max(...lats);
-
-    map?.fitBounds(
-      [
-        [minLng, minLat],
-        [maxLng, maxLat],
-      ],
-      {
-        duration: 3000,
-        maxZoom: 11,
-      },
-    );
+    fitBounds(discoverData, map.getMap());
   };
 
   useEffect(() => {

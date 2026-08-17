@@ -6,7 +6,7 @@ import { setIsSplitMode } from "../../../features/multiMapLayers/multiMapLayersS
 import type { CardItemType, StringOrNumber } from "../../Card/types";
 import { addSourceAndLayer, removeMapResources } from "../../utils";
 import type { useDisCoverReturn } from "../types";
-import { generateSourceIds } from "../utils";
+import { fitBounds, generateSourceIds } from "../utils";
 
 export const useDisCover = (): useDisCoverReturn => {
   const { map } = useMap();
@@ -98,24 +98,7 @@ export const useDisCover = (): useDisCoverReturn => {
       },
     });
 
-    const lngs = data.coordinates.map((coord) => coord[0]);
-    const lats = data.coordinates.map((coord) => coord[1]);
-
-    const minLng = Math.min(...lngs);
-    const maxLng = Math.max(...lngs);
-    const minLat = Math.min(...lats);
-    const maxLat = Math.max(...lats);
-
-    mapbox.fitBounds(
-      [
-        [minLng, minLat],
-        [maxLng, maxLat],
-      ],
-      {
-        duration: 3000,
-        maxZoom: 11,
-      },
-    );
+    fitBounds(data, mapbox);
   };
 
   const handleDeleteIds = (id: StringOrNumber) => {
