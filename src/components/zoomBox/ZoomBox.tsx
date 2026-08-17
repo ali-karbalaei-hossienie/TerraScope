@@ -5,8 +5,8 @@ import RemoveOutlinedIcon from "@mui/icons-material/RemoveOutlined";
 import { Box, IconButton } from "@mui/material";
 import { useCallback, useEffect, useRef, type FC } from "react";
 import { useMap } from "react-map-gl/mapbox";
-import { MapControl } from "../MapControl/MapControl";
 import { NavigationContainer } from "./style/zoomStyle";
+import MapControl from "../MapControl/MapControl";
 
 const MapNavigation: FC = () => {
   const { map } = useMap();

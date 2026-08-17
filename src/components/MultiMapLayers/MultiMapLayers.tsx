@@ -1,9 +1,9 @@
 import LayersIcon from "@mui/icons-material/Layers";
 import { memo } from "react";
 import MapButton from "../MapButton/MapButton";
-import { MapControl } from "../MapControl/MapControl";
 import MapLayers from "./components/MapLayers/MapLayers";
 import { useMultiMapLayers } from "./hooks/useMultiMapLayers";
+import MapControl from "../MapControl/MapControl";
 
 const MultiMapLayers = () => {
   const { swipeRef, isSplitMode, startDragging, swipeRatio } =

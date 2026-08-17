@@ -1,8 +1,8 @@
 import { Box, Slider as SliderMui } from "@mui/material";
-import { MapControl } from "../MapControl/MapControl";
 import Player from "./components/player/Player";
 import { useSlider } from "./hooks/useSlider";
 import { useSliderStyle } from "./style/useSliderStyle";
+import MapControl from "../MapControl/MapControl";
 
 const Slider = () => {
   const {

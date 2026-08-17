@@ -1,77 +1,96 @@
-import React, { useState, type ReactNode } from "react";
-import { createPortal } from "react-dom";
-import type { ControlPosition } from "react-map-gl/mapbox";
+// src/components/MapControlBox.jsx
 import { useControl } from "react-map-gl/mapbox";
+import { createPortal } from "react-dom";
+import { useRef, useState, useEffect } from "react";
 
-interface MapControlProps {
-  position?: ControlPosition; //  'top-left' | 'top' | 'top-right' | 'right' | 'bottom-right' | 'bottom' | 'bottom-left' | 'left';
-  children?: ReactNode;
-}
-
-class CustomControlContainer {
-  private onMount: (el: HTMLDivElement) => void;
-  private onUnmount: () => void;
-  private container: HTMLDivElement | null = null;
-
-  constructor(onMount: (el: HTMLDivElement) => void, onUnmount: () => void) {
-    this.onMount = onMount;
-    this.onUnmount = onUnmount;
-    this.preventMapEvents = this.preventMapEvents.bind(this);
+class ControlBoxHandler {
+  constructor(
+    position: string,
+    margin: { top: number; bottom: number; left: number; right: number },
+  ) {
+    (this as any)._position = position;
+    (this as any)._margin = margin;
+    (this as any)._container = null;
   }
 
-  private preventMapEvents(e: Event): void {
-    e.stopPropagation();
+  onAdd(map: any) {
+    (this as any)._map = map;
+    (this as any)._container = document.createElement("div");
+    (this as any)._container.className = "mapboxgl-ctrl";
+
+    const { top, bottom, left, right } = (this as any)._margin;
+    const pos = (this as any)._position;
+
+    const marginStyles: Record<string, string> = {
+      "top-left": `margin: ${top}px 0 0 ${left}px;`,
+      "top-right": `margin: ${top}px ${right}px 0 0;`,
+      "bottom-left": `margin: 0 0 ${bottom}px ${left}px;`,
+      "bottom-right": `margin: 0 ${right}px ${bottom}px 0;`,
+    };
+
+    (this as any)._container.style.cssText = `
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      padding: 0;
+      ${marginStyles[pos as string] ?? "margin: 10px;"}
+    `;
+
+    return (this as any)._container;
   }
 
-  public onAdd(): HTMLDivElement {
-    this.container = document.createElement("div");
-    this.container.className = "mapboxgl-ctrl mapboxgl-ctrl-group";
-
-    this.container.addEventListener("mousedown", this.preventMapEvents);
-    this.container.addEventListener("click", this.preventMapEvents);
-    this.container.addEventListener("dblclick", this.preventMapEvents);
-    this.container.addEventListener("wheel", this.preventMapEvents);
-    this.container.addEventListener("touchstart", this.preventMapEvents);
-
-    this.onMount(this.container);
-
-    return this.container;
-  }
-
-  public onRemove(): void {
-    if (this.container) {
-      this.container.removeEventListener("mousedown", this.preventMapEvents);
-      this.container.removeEventListener("click", this.preventMapEvents);
-      this.container.removeEventListener("dblclick", this.preventMapEvents);
-      this.container.removeEventListener("wheel", this.preventMapEvents);
-      this.container.removeEventListener("touchstart", this.preventMapEvents);
-
-      if (this.container.parentNode) {
-        this.container.parentNode.removeChild(this.container);
-      }
+  onRemove() {
+    if ((this as any)._container && (this as any)._container.parentNode) {
+      (this as any)._container.parentNode.removeChild((this as any)._container);
     }
+    (this as any)._map = undefined;
+  }
 
-    this.onUnmount();
+  getDefaultPosition() {
+    return (this as any)._position;
+  }
+
+  getContainer() {
+    return (this as any)._container;
   }
 }
 
-export const MapControl: React.FC<MapControlProps> = ({
-  position = "top-left",
-  children,
-}) => {
-  const [controlContainer, setControlContainer] =
-    useState<HTMLDivElement | null>(null);
+// ✅ Import the type and define a strict prop type
+import type { ControlPosition } from "react-map-gl/mapbox";
 
+const MapControl = ({
+  position = "top-right",
+  margin = { top: 10, bottom: 10, left: 10, right: 10 },
+  children,
+}: {
+  position?: ControlPosition;
+  margin?: { top: number; bottom: number; left: number; right: number };
+  children?: React.ReactNode;
+}) => {
+  const controlRef = useRef<ControlBoxHandler | null>(null);
+  const [container, setContainer] = useState<HTMLDivElement | null>(null);
+
+  // ✅ position is now typed as ControlPosition — no more error
   useControl(
-    () =>
-      new CustomControlContainer(
-        (el) => setControlContainer(el),
-        () => setControlContainer(null),
-      ),
+    () => {
+      if (controlRef.current == null) {
+        controlRef.current = new ControlBoxHandler(position, margin);
+      }
+      return controlRef.current;
+    },
     { position },
   );
 
-  if (!controlContainer) return null;
+  useEffect(() => {
+    const ctrl = controlRef.current;
+    if (ctrl) {
+      setContainer(ctrl.getContainer());
+    }
+  }, [position, margin]);
 
-  return createPortal(children, controlContainer);
+  if (!container) return null;
+
+  return createPortal(children, container);
 };
+
+export default MapControl;

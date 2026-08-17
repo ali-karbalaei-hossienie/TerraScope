@@ -3,13 +3,14 @@ import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import { useEffect, useState } from "react";
 import { useMap } from "react-map-gl/mapbox";
 import { getGeoman } from "../../map/drawStore";
-import AccordionButton from "../AccordionButton/AccordionButton";
 import DeleteIcon from "../assets/DeleteIcon";
 import DragIcon from "../assets/DragIcon";
 import EditIcon from "../assets/EditIcon";
 import RotateIcon from "../assets/RotateIcon";
 import { useStyles } from "../Draw/styles/ToolsStyles";
-import { MapControl } from "../MapControl/MapControl";
+import ExpandableBox from "../ExpandableBox/ExpandableBox";
+import MapControl from "../MapControl/MapControl";
+import ModeEditIcon from "@mui/icons-material/ModeEdit";
 
 type EditMode = "edit" | "change" | "delete" | "drag" | "rotate" | null;
 
@@ -73,8 +74,18 @@ const Edit = () => {
 
   return (
     <div>
-      <MapControl position="right">
-        <AccordionButton title="edit">
+      <MapControl position="top-right">
+        <ExpandableBox
+          accordionIcon={
+            <ModeEditIcon
+              sx={{
+                fontSize: 20,
+                color: "text.secondary",
+              }}
+            />
+          }
+          accordionText="Edit"
+        >
           <ToggleButtonGroup
             color="primary"
             value={activeMode}
@@ -83,19 +94,19 @@ const Edit = () => {
             className={classes["toggle-button-group"]}
           >
             <ToggleButton className={classes["draw-button"]} value="drag">
-              <DragIcon />
+              <DragIcon fontSize="small" />
             </ToggleButton>
             <ToggleButton className={classes["draw-button"]} value="edit">
-              <EditIcon />
+              <EditIcon fontSize="small" />
             </ToggleButton>
             <ToggleButton className={classes["draw-button"]} value="rotate">
-              <RotateIcon />
+              <RotateIcon fontSize="small" />
             </ToggleButton>
             <ToggleButton className={classes["draw-button"]} value="delete">
-              <DeleteIcon />
+              <DeleteIcon fontSize="small" />
             </ToggleButton>
           </ToggleButtonGroup>
-        </AccordionButton>
+        </ExpandableBox>
       </MapControl>
     </div>
   );

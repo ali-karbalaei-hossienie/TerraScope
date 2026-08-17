@@ -1,4 +1,5 @@
 import CircleIcon from "@mui/icons-material/Circle";
+import GestureIcon from "@mui/icons-material/Gesture";
 import PolylineIcon from "@mui/icons-material/Polyline";
 import RoomIcon from "@mui/icons-material/Room";
 import ToggleButton from "@mui/material/ToggleButton";
@@ -7,9 +8,9 @@ import { useEffect, useState } from "react";
 import { useMap } from "react-map-gl/mapbox";
 import { getGeoman } from "../../map/drawStore";
 import PolygonIcon from "../assets/PolygonIcon";
-import { MapControl } from "../MapControl/MapControl";
+import ExpandableBox from "../ExpandableBox/ExpandableBox";
+import MapControl from "../MapControl/MapControl";
 import { useStyles } from "./styles/ToolsStyles";
-import AccordionButton from "../AccordionButton/AccordionButton";
 
 type ModeType = "marker" | "circle" | "polygon" | "line" | null;
 
@@ -41,29 +42,40 @@ const Draw = () => {
 
   return (
     <div>
-      <MapControl position="right">
-        <AccordionButton title="draw">
+      <MapControl position="top-right">
+        <ExpandableBox
+          accordionText="Draw"
+          accordionIcon={
+            <GestureIcon
+              sx={{
+                fontSize: 20,
+                color: "text.secondary",
+              }}
+            />
+          }
+        >
           <ToggleButtonGroup
             color="primary"
             value={activeMode}
             exclusive
             onChange={handleChange}
             className={classes["toggle-button-group"]}
+            size="small"
           >
             <ToggleButton className={classes["draw-button"]} value="marker">
-              <RoomIcon />
+              <RoomIcon fontSize="small" />
             </ToggleButton>
             <ToggleButton className={classes["draw-button"]} value="circle">
-              <CircleIcon />
+              <CircleIcon fontSize="small" />
             </ToggleButton>
             <ToggleButton className={classes["draw-button"]} value="polygon">
-              <PolygonIcon />
+              <PolygonIcon fontSize="small" />
             </ToggleButton>
             <ToggleButton className={classes["draw-button"]} value="line">
-              <PolylineIcon />
+              <PolylineIcon fontSize="small" />
             </ToggleButton>
           </ToggleButtonGroup>
-        </AccordionButton>
+        </ExpandableBox>
       </MapControl>
     </div>
   );

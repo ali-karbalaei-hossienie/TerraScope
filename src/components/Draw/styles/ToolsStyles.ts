@@ -2,24 +2,18 @@ import { makeStyles } from "tss-react/mui";
 
 export const useStyles = makeStyles()((theme) => ({
   "toggle-button-group": {
-    display: "flex !important",
+    display: "flex ",
     flexDirection: "column",
-    width: "100% !important",
-    alignItems: "center",
-    minWidth: "auto",
-    padding: `${theme.spacing(2.5)} !important`,
+    gap: 8,
+    border: 0,
     "& svg": {
       fill: theme.palette.primary.contrastText,
     },
   },
   "draw-button": {
-    borderBottom: `1px solid ${theme.palette.primary.contrastText} !important`,
-    margin: "0 !important",
-    width: "50px !important",
-    display: "flex !important",
-    alignItems: "center !important",
-    justifyContent: "center",
-    padding: "20px !important",
+    border: 0,
+    margin: 0,
+    boxShadow: theme.shadows[1],
     "&:hover": {
       backgroundColor: `${theme.palette.primary.main} !important`,
     },
