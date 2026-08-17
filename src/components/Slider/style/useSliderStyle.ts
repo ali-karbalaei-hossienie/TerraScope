@@ -5,8 +5,8 @@ export const useSliderStyle = makeStyles()((theme) => ({
     position: "relative",
     width: "50vw",
     margin: "0 10px",
-    display: "grid",
-    gridTemplateColumns: "50px 1fr",
+    display: "flex",
+    gap: 8,
     "& .MuiSlider-root": {
       padding: 0,
       margin: 0,

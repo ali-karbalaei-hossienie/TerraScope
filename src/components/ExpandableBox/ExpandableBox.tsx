@@ -46,7 +46,11 @@ const ExpandableBox: FC<ExpandableBoxProps> = ({
       }}
     >
       {/* Main Toggle Button (Always visible) */}
-      <Tooltip title="Draw Tools" placement="left" disableInteractive>
+      <Tooltip
+        title={`${accordionText} Tools`}
+        placement="left"
+        disableInteractive
+      >
         <IconButton
           onClick={() => setExpanded(!expanded)}
           sx={{

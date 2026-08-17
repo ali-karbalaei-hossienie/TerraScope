@@ -1,3 +1,5 @@
+import ModeEditIcon from "@mui/icons-material/ModeEdit";
+import { Tooltip } from "@mui/material";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import { useEffect, useState } from "react";
@@ -10,9 +12,15 @@ import RotateIcon from "../assets/RotateIcon";
 import { useStyles } from "../Draw/styles/ToolsStyles";
 import ExpandableBox from "../ExpandableBox/ExpandableBox";
 import MapControl from "../MapControl/MapControl";
-import ModeEditIcon from "@mui/icons-material/ModeEdit";
 
 type EditMode = "edit" | "change" | "delete" | "drag" | "rotate" | null;
+
+const EDIT_MODES = [
+  { value: "drag", title: "Drag", icon: <DragIcon fontSize="small" /> },
+  { value: "edit", title: "Edit", icon: <EditIcon fontSize="small" /> },
+  { value: "rotate", title: "Rotate", icon: <RotateIcon fontSize="small" /> },
+  { value: "delete", title: "Delete", icon: <DeleteIcon fontSize="small" /> },
+] as const;
 
 const Edit = () => {
   const [activeMode, setActiveMode] = useState<EditMode>(null);
@@ -93,18 +101,21 @@ const Edit = () => {
             onChange={handleChange}
             className={classes["toggle-button-group"]}
           >
-            <ToggleButton className={classes["draw-button"]} value="drag">
-              <DragIcon fontSize="small" />
-            </ToggleButton>
-            <ToggleButton className={classes["draw-button"]} value="edit">
-              <EditIcon fontSize="small" />
-            </ToggleButton>
-            <ToggleButton className={classes["draw-button"]} value="rotate">
-              <RotateIcon fontSize="small" />
-            </ToggleButton>
-            <ToggleButton className={classes["draw-button"]} value="delete">
-              <DeleteIcon fontSize="small" />
-            </ToggleButton>
+            {EDIT_MODES.map((mode) => (
+              <Tooltip
+                key={mode.value}
+                title={mode.title}
+                placement="left"
+                disableInteractive
+              >
+                <ToggleButton
+                  className={classes["draw-button"]}
+                  value={mode.value}
+                >
+                  {mode.icon}
+                </ToggleButton>
+              </Tooltip>
+            ))}
           </ToggleButtonGroup>
         </ExpandableBox>
       </MapControl>
