@@ -1,10 +1,10 @@
-import type { ReactNode } from "react";
+import type { ComponentType, ReactNode } from "react";
 
 export interface ConfigType {
   id: ActiveMenuType;
   textButton: string;
   position: "top" | "bottom";
-  component: ReactNode;
+  component: ComponentType;
   icon: ReactNode;
 }
 

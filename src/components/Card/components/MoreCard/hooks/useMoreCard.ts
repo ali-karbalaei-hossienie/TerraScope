@@ -1,4 +1,4 @@
-import { isEqual } from "lodash";
+import isEqual from "lodash/isEqual";
 import { useState } from "react";
 import { useMap } from "react-map-gl/mapbox";
 import { useDispatch, useSelector } from "react-redux";

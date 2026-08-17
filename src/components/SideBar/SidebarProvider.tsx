@@ -6,6 +6,7 @@ import {
   useEffect,
   useMemo,
   useState,
+  Suspense,
 } from "react";
 import { useMap } from "react-map-gl/mapbox";
 import SideBarItem from "./components/SidebarItem/SideBarItem";
@@ -52,7 +53,6 @@ export const SidebarProvider = ({ config, children }: SidebarProviderProps) => {
     return () => clearTimeout(timeoutId);
   }, [isMenuOpen, mapBox]);
 
-  // بهینه‌سازی با useCallback
   const handleMenuClick = useCallback((menu: ActiveMenuType) => {
     setActiveMenu((prev) => (prev === menu ? null : menu));
   }, []);
@@ -61,7 +61,7 @@ export const SidebarProvider = ({ config, children }: SidebarProviderProps) => {
     (items: ConfigType[]) => {
       return items.map((item) => (
         <SideBarItem
-          key={item.id} // <-- پراپ کلیدی که جا افتاده بود
+          key={item.id}
           icon={item.icon}
           label={item.textButton}
           isActive={activeMenu === item.id}
@@ -69,7 +69,7 @@ export const SidebarProvider = ({ config, children }: SidebarProviderProps) => {
         />
       ));
     },
-    [activeMenu, handleMenuClick], // <-- اضافه شدن handleMenuClick
+    [activeMenu, handleMenuClick],
   );
 
   const { classes } = useSideBarStyles({ isMenuOpen });
@@ -82,6 +82,8 @@ export const SidebarProvider = ({ config, children }: SidebarProviderProps) => {
     [activeMenu, isMenuOpen],
   );
 
+  const ActiveComponent = activeItem?.component;
+
   return (
     <SidebarContext.Provider value={contextValue}>
       <Box className={classes.root}>
@@ -92,7 +94,11 @@ export const SidebarProvider = ({ config, children }: SidebarProviderProps) => {
 
         <Box className={classes.menuPanel}>
           <Box className={classes.menuPanelContent}>
-            <Box sx={{ flexGrow: 1 }}>{activeItem && activeItem.component}</Box>
+            <Box sx={{ flexGrow: 1 }}>
+              <Suspense fallback={<div>Loading...</div>}>
+                {ActiveComponent ? <ActiveComponent /> : null}
+              </Suspense>
+            </Box>
           </Box>
         </Box>
 
