@@ -2,10 +2,9 @@ import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import NavigationOutlinedIcon from "@mui/icons-material/NavigationOutlined";
 import RemoveOutlinedIcon from "@mui/icons-material/RemoveOutlined";
-import { Box, IconButton } from "@mui/material";
+import { Box, IconButton, Paper } from "@mui/material";
 import { useCallback, useEffect, useRef, type FC } from "react";
 import { useMap } from "react-map-gl/mapbox";
-import { NavigationContainer } from "./style/zoomStyle";
 import MapControl from "../MapControl/MapControl";
 
 const MapNavigation: FC = () => {
@@ -58,41 +57,54 @@ const MapNavigation: FC = () => {
 
   return (
     <MapControl position="top-left">
-      <NavigationContainer>
+      <Paper
+        elevation={4}
+        sx={(theme) => ({
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          borderRadius: "12px",
+          overflow: "hidden",
+          backdropFilter: "blur(10px)",
+          backgroundColor: "background.paper",
+          border: `1px solid ${theme.palette.background.paper}`,
+          gap: 0.5,
+          width: "fit-content",
+        })}
+      >
         <IconButton onClick={flyToHome}>
-          <HomeOutlinedIcon />
+          <HomeOutlinedIcon fontSize="small" />
         </IconButton>
-        <Box className="zoomBox">
-          <IconButton onClick={handleZoomIn}>
-            <AddOutlinedIcon />
-          </IconButton>
+        <IconButton onClick={handleZoomIn}>
+          <AddOutlinedIcon fontSize="small" />
+        </IconButton>
 
-          <Box ref={zoomTextRef}> {map ? Math.round(map.getZoom()) : 5}</Box>
+        <Box ref={zoomTextRef}> {map ? Math.round(map.getZoom()) : 5}</Box>
 
-          <IconButton onClick={handleZoomOut}>
-            <RemoveOutlinedIcon />
-          </IconButton>
-          <IconButton
-            sx={{
-              display: "flex !important",
-              alignItems: "center !important",
-              justifyContent: "center !important",
+        <IconButton onClick={handleZoomOut}>
+          <RemoveOutlinedIcon fontSize="small" />
+        </IconButton>
+        <IconButton
+          sx={{
+            display: "flex !important",
+            alignItems: "center !important",
+            justifyContent: "center !important",
+          }}
+          onClick={handleCompass}
+        >
+          <Box
+            component="span"
+            ref={compassRef}
+            style={{
+              display: "flex",
+              transition: "transform 100ms linear",
+              transformOrigin: "center",
             }}
-            onClick={handleCompass}
           >
-            <span
-              ref={compassRef}
-              style={{
-                display: "flex",
-                transition: "transform 100ms linear",
-                transformOrigin: "center",
-              }}
-            >
-              <NavigationOutlinedIcon />
-            </span>
-          </IconButton>
-        </Box>
-      </NavigationContainer>
+            <NavigationOutlinedIcon fontSize="small" />
+          </Box>
+        </IconButton>
+      </Paper>
     </MapControl>
   );
 };

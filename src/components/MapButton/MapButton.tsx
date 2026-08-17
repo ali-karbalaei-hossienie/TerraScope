@@ -1,5 +1,4 @@
 import {
-  Box,
   ClickAwayListener,
   Fade,
   IconButton,
@@ -8,8 +7,8 @@ import {
   Typography,
   type PopperPlacementType,
 } from "@mui/material";
-import React, { useState } from "react";
 import type { CSSProperties } from "@mui/material/styles";
+import React, { useState } from "react";
 import { useMapButtonStyles } from "./styles/useMapButtonStyles";
 
 interface MapButtonProps {
@@ -62,14 +61,29 @@ const MapButton = ({ children, icon, newPlacement, style }: MapButtonProps) => {
           </Fade>
         )}
       </Popper>
-      <Box className={classes["mapLayers-button-container"]}>
+      <Paper
+        elevation={4}
+        sx={(theme) => ({
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          borderRadius: "12px",
+          overflow: "hidden",
+          backdropFilter: "blur(10px)",
+          backgroundColor: "background.paper",
+          border: `1px solid ${theme.palette.background.paper}`,
+          gap: 0.5,
+          width: "fit-content",
+        })}
+      >
         <IconButton
+          disableRipple
           className={classes["mapLayers-button"]}
           onClick={handleClick(newPlacement)}
         >
           {icon}
         </IconButton>
-      </Box>
+      </Paper>
     </div>
   );
 };

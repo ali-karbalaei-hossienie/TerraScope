@@ -1,24 +1,14 @@
 import { makeStyles } from "tss-react/mui";
 
-export const useMapButtonStyles = makeStyles()((theme) => ({
-  "mapLayers-button-container": {
-    backgroundColor: theme.palette.background.paper,
-    borderRadius: theme.shape.borderRadius,
-    "&:hover": {
-      backgroundColor: theme.palette.primary.main,
-    },
-  },
+export const useMapButtonStyles = makeStyles()(() => ({
   "mapLayers-button": {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    width: "100% !important",
-    height: "100% !important",
-    padding: `${theme.spacing(1)} !important`,
-
+    width: "100%",
+    height: "100%",
+    borderRadius: "inherit",
     zIndex: 1200,
-    "&:hover": {
-      backgroundColor: "inherit !important",
-    },
+    overflow: "hidden",
   },
 }));

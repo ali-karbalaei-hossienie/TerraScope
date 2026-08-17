@@ -13,9 +13,9 @@ const MultiMapLayers = () => {
     <div>
       <MapControl position="top-left">
         <MapButton
-          style={{ width: 400 }}
+          style={{ width: 400, backgroundColor: "background.paper" }}
           newPlacement="right-start"
-          icon={<LayersIcon />}
+          icon={<LayersIcon fontSize="small" />}
         >
           <MapLayers />
         </MapButton>
