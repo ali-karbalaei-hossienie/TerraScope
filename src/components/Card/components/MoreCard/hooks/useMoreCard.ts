@@ -13,6 +13,7 @@ import {
 } from "../../../../TimelapseSlider/hooks/useTimeLapseSlider";
 import { removeMapResources } from "../../../../utils";
 import type { CardItemType, UseMoreDiscoverProps } from "../../../types";
+import { toast } from "sonner";
 
 export const useMoreCard = ({ mode }: UseMoreDiscoverProps) => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
@@ -62,9 +63,11 @@ export const useMoreCard = ({ mode }: UseMoreDiscoverProps) => {
     event.stopPropagation();
     if (mode === "discover") {
       dispatch(addTimeLapseAction(data));
+      toast.success("Item added successfully.");
     } else {
       dispatch(removeTimeLapseAction({ id: data.id }));
       removeImageOnMap(data);
+      toast.success("Item removed successfully.");
     }
     setAnchorEl(null);
   };

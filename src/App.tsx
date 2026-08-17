@@ -13,6 +13,7 @@ import Timelapse from "./components/Timelapse/Timelapse";
 import Weather from "./components/Weather/Weather";
 import { customTheme } from "./theme/theme";
 import Map from "./components/Map/Map";
+import { toast, Toaster } from "sonner";
 
 const sidebarConfig: ConfigType[] = [
   {
@@ -43,6 +44,7 @@ function App() {
     <Provider store={store}>
       <ThemeProvider theme={customTheme}>
         <CssBaseline />
+        <Toaster position="top-right" richColors />
         <MapProvider>
           <SidebarProvider config={sidebarConfig}>
             <>
