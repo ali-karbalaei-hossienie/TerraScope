@@ -1,4 +1,4 @@
-import { Box, CircularProgress } from "@mui/material";
+import { Box, CircularProgress, IconButton, Typography } from "@mui/material";
 import {
   createContext,
   useCallback,
@@ -17,6 +17,7 @@ import type {
   SidebarContextType,
   SidebarProviderProps,
 } from "./types";
+import { Close } from "@mui/icons-material";
 
 const SidebarContext = createContext<SidebarContextType | null>(null);
 
@@ -55,6 +56,10 @@ export const SidebarProvider = ({ config, children }: SidebarProviderProps) => {
 
   const handleMenuClick = useCallback((menu: ActiveMenuType) => {
     setActiveMenu((prev) => (prev === menu ? null : menu));
+  }, []);
+
+  const closeSidebar = useCallback(() => {
+    setActiveMenu(null);
   }, []);
 
   const renderList = useCallback(
@@ -109,6 +114,35 @@ export const SidebarProvider = ({ config, children }: SidebarProviderProps) => {
                   </Box>
                 }
               >
+                {activeItem && (
+                  <Box
+                    sx={(theme) => ({
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      borderBottom: "1px solid",
+                      borderColor: theme.palette.divider,
+                      flexShrink: 0,
+                      marginBottom: 2,
+                      py: 1.5,
+                    })}
+                  >
+                    <Typography variant="h6" className={classes.panelTitle}>
+                      {`${activeItem?.textButton} Panel`}
+                    </Typography>
+                    <IconButton
+                      size="small"
+                      onClick={closeSidebar}
+                      sx={{
+                        color: "text.secondary",
+                        bgcolor: "rgba(255, 255, 255, 0.06)",
+                        "&:hover": { bgcolor: "rgba(255, 255, 255, 0.12)" },
+                      }}
+                    >
+                      <Close fontSize="small" />
+                    </IconButton>
+                  </Box>
+                )}
                 {ActiveComponent ? <ActiveComponent /> : null}
               </Suspense>
             </Box>

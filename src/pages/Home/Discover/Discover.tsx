@@ -3,10 +3,8 @@ import Card from "../../../components/Card/Card";
 import SplitDiscover from "./components/SplitDiscover/SplitDiscover";
 import { discoverData } from "./constants";
 import { useDisCover } from "./hooks/useDisCover";
-import { useDiscoverStyles } from "./styles/useDiscoverStyles";
 
 const Discover = () => {
-  const { classes } = useDiscoverStyles();
   const {
     handleImageOnMap,
     activeCard,
@@ -25,9 +23,7 @@ const Discover = () => {
           marginBottom: "16px",
         }}
       >
-        <Typography variant="h6" className={classes.panelTitle}>
-          DisCover Panel
-        </Typography>
+        <Typography sx={{ fontWeight: "bold" }}>Map Mode</Typography>
         <SplitDiscover mapMode={mapMode} handleMapMode={handleMapMode} />
       </Box>
       {discoverData.map((data) => {

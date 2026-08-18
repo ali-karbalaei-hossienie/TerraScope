@@ -81,7 +81,6 @@ export const useSideBarStyles = makeStyles<SideBarStyleProps>()(
       padding: `${theme.spacing(2)} ${theme.spacing(3)} ${theme.spacing(2)} ${theme.spacing(2)} `,
     },
     panelTitle: {
-      marginBottom: 16,
       textTransform: "capitalize",
       fontWeight: "bold",
       color: theme.palette.primary.main,
