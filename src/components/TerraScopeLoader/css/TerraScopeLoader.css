@@ -1,0 +1,149 @@
+.tscope-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 26px;
+  background: radial-gradient(
+    circle at 50% 40%,
+    #112132 0%,
+    #081018 60%,
+    #05080d 100%
+  );
+  overflow: hidden;
+}
+
+.tscope-loader__orbit {
+  position: relative;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  border: 1px solid rgba(56, 189, 248, 0.28);
+  background: radial-gradient(
+    circle,
+    rgba(14, 165, 233, 0.12) 0%,
+    rgba(14, 165, 233, 0.04) 50%,
+    transparent 75%
+  );
+  box-shadow:
+    0 0 50px rgba(14, 165, 233, 0.18),
+    inset 0 0 35px rgba(14, 165, 233, 0.08);
+}
+
+.tscope-loader__ring {
+  position: absolute;
+  inset: 18px;
+  border-radius: 50%;
+  border: 1px solid rgba(56, 189, 248, 0.18);
+}
+
+.tscope-loader__ring--2 {
+  inset: 42px;
+}
+
+.tscope-loader__ring--3 {
+  inset: 66px;
+  border-color: rgba(56, 189, 248, 0.3);
+}
+
+.tscope-loader__planet {
+  position: absolute;
+  inset: 30px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 35% 30%,
+    #bfefff 0%,
+    #4cc9f0 12%,
+    #0ea5e9 35%,
+    #082032 72%,
+    #041018 100%
+  );
+  box-shadow:
+    inset -16px -18px 24px rgba(0, 0, 0, 0.35),
+    0 0 24px rgba(56, 189, 248, 0.22);
+}
+
+.tscope-loader__satellite {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 22px;
+  height: 22px;
+  margin: -11px 0 0 -11px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #e0f2fe, #38bdf8);
+  box-shadow: 0 0 14px rgba(56, 189, 248, 0.85);
+  animation: sat-orbit 3.5s linear infinite;
+  transform-origin: 0 0;
+}
+
+@keyframes sat-orbit {
+  from {
+    transform: rotate(0deg) translateX(72px) rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg) translateX(72px) rotate(-360deg);
+  }
+}
+
+.tscope-loader__brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.tscope-loader__title {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 8px;
+  margin-right: -8px;
+  text-transform: uppercase;
+  color: #7dd3fc;
+}
+
+.tscope-loader__subtitle {
+  font-size: 10px;
+  letter-spacing: 4px;
+  margin-right: -4px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.42);
+}
+
+.tscope-loader__progress {
+  width: 230px;
+  height: 3px;
+  border-radius: 999px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.tscope-loader__bar {
+  width: 40%;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #0ea5e9, #22d3ee, #38bdf8);
+  animation: progress 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes progress {
+  0% {
+    transform: translateX(-110%);
+  }
+  60% {
+    transform: translateX(160%);
+  }
+  100% {
+    transform: translateX(280%);
+  }
+}
+
+.tscope-loader__status {
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 12px;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+}

@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, CircularProgress } from "@mui/material";
 import {
   createContext,
   useCallback,
@@ -95,7 +95,20 @@ export const SidebarProvider = ({ config, children }: SidebarProviderProps) => {
         <Box className={classes.menuPanel}>
           <Box className={classes.menuPanelContent}>
             <Box sx={{ flexGrow: 1 }}>
-              <Suspense fallback={<div>Loading...</div>}>
+              <Suspense
+                fallback={
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      height: "100%",
+                    }}
+                  >
+                    <CircularProgress aria-label="Loading…" />
+                  </Box>
+                }
+              >
                 {ActiveComponent ? <ActiveComponent /> : null}
               </Suspense>
             </Box>

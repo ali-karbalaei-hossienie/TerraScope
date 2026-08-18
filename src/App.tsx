@@ -3,7 +3,7 @@ import PublicIcon from "@mui/icons-material/Public";
 import ThunderstormIcon from "@mui/icons-material/Thunderstorm";
 import TimelapseIcon from "@mui/icons-material/Timelapse";
 import { Box, CssBaseline } from "@mui/material";
-import { lazy } from "react";
+import { lazy, useEffect, useState } from "react";
 import { MapProvider } from "react-map-gl/mapbox";
 import { Provider } from "react-redux";
 import { Toaster } from "sonner";
@@ -12,6 +12,7 @@ import Map from "./components/Map/Map";
 import { SidebarProvider } from "./components/SideBar/SidebarProvider";
 import type { ConfigType } from "./components/SideBar/types";
 import { customTheme } from "./theme/theme";
+import TerraScopeLoader from "./components/TerraScopeLoader/TerraScopeLoader";
 
 const Discover = lazy(() => import("./components/Discover/Discover"));
 const Weather = lazy(() => import("./components/Weather/Weather"));
@@ -42,12 +43,23 @@ const sidebarConfig: ConfigType[] = [
 ];
 
 function App() {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <Provider store={store}>
       <ThemeProvider theme={customTheme}>
         <CssBaseline />
         <Toaster position="top-right" richColors />
         <MapProvider>
+          <TerraScopeLoader visible={loading} />
           <SidebarProvider config={sidebarConfig}>
             <Box sx={{ flex: 1, width: "100%", height: "100%" }}>
               <Map />
