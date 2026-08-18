@@ -40,13 +40,13 @@ export const useWeather = () => {
     if (!style) return;
 
     style.layers?.forEach((layer) => {
-      if (layer.id.includes("-layer-")) {
+      if (layer.id.includes("-weather-")) {
         if (mapInstance.getLayer(layer.id)) mapInstance.removeLayer(layer.id);
       }
     });
 
     Object.keys(style.sources).forEach((sourceId) => {
-      if (sourceId.includes("-source-")) {
+      if (sourceId.includes("-weather-")) {
         if (mapInstance.getSource(sourceId)) mapInstance.removeSource(sourceId);
       }
     });
@@ -78,13 +78,13 @@ export const useWeather = () => {
       activeWeatherRef.current = weather;
     }
 
-    const sourceId = `${weather}-source-${timeSlider}`;
-    const layerId = `${weather}-layer-${timeSlider}`;
+    const sourceId = `${weather}-weather-source-${timeSlider}`;
+    const layerId = `${weather}-weather-layer-${timeSlider}`;
 
     const hideOtherLayers = (targetLayerId: string) => {
       const style = mapInstance.getStyle();
       style?.layers?.forEach((layer) => {
-        if (layer.id.includes("-layer-") && layer.id !== targetLayerId) {
+        if (layer.id.includes("-weather-") && layer.id !== targetLayerId) {
           mapInstance.setPaintProperty(layer.id, "raster-opacity", 0);
         }
       });
