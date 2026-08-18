@@ -9,6 +9,8 @@ import Draw from "../../Draw/Draw";
 import Edit from "../../Edit/Edit";
 import MultiMapLayers from "../../MultiMapLayers/MultiMapLayers";
 import Slider from "../../Slider/Slider";
+import FullscreenControl from "../../FullScreen/FullScreenControl";
+import CoordinateDisplay from "../../CoordinateDisplay/CoordinateDisplay";
 
 const blankStyle: StyleSpecification = {
   version: 8,
@@ -50,6 +52,8 @@ const MapBox = () => {
       mapStyle={blankStyle}
     >
       <MapNavigation />
+      <FullscreenControl />
+      <CoordinateDisplay />
       <Draw />
       <Edit />
       <MultiMapLayers />
