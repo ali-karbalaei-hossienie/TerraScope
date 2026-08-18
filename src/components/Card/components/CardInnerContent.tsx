@@ -1,6 +1,6 @@
 import { Box, Typography } from "@mui/material";
-import SideBySide from "../../Discover/components/SideBySide/SideBySide";
-import { convertedFormatDate } from "../../Discover/utils";
+import SideBySide from "../../../pages/Home/Discover/components/SideBySide/SideBySide";
+import { convertedFormatDate } from "../../../pages/Home/Discover/utils";
 import { useCardStyles } from "../styles/useCardStyles";
 import type { CardInnerContentProps } from "../types";
 import MoreCard from "./MoreCard/MoreCard";

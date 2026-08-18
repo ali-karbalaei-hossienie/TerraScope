@@ -3,7 +3,10 @@ import React, { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../../../app/store";
 import { setTime } from "../../../features/slider/sliderSlice";
-import { getSliderData, type SliderItem } from "../../Weather/utils";
+import {
+  getSliderData,
+  type SliderItem,
+} from "../../../pages/Home/Weather/utils";
 
 interface useSliderReturn {
   sliderData: SliderItem[];

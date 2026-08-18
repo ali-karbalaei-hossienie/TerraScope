@@ -4,13 +4,13 @@ import TimelapseIcon from "@mui/icons-material/Timelapse";
 import { Box } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useMap } from "react-map-gl/mapbox";
-import Discover from "../Discover/Discover";
-import Timelapse from "../Timelapse/Timelapse";
-import TimelapseSlider from "../TimelapseSlider/TimeLapseSlider";
-import Weather from "../Weather/Weather";
+import Discover from "../../pages/Home/Discover/Discover";
+import Timelapse from "../../pages/Home/Timelapse/Timelapse";
+import Weather from "../../pages/Home/Weather/Weather";
 import SideBarItem from "./components/SidebarItem/SideBarItem";
 import { useSideBarStyles } from "./styles/useSideBarStyles";
-import Map from "../Map/Map";
+import Map from "../../map/Map";
+import TimeLapseSlider from "../../pages/Home/Timelapse/components/TimelapseSlider/TimeLapseSlider";
 
 type ActiveMenuType = "discover" | "weather" | "timeLaps" | null;
 
@@ -99,7 +99,7 @@ const SideBar = () => {
             backgroundColor: "background.paper",
           }}
         >
-          {activeMenu === "timeLaps" && <TimelapseSlider />}
+          {activeMenu === "timeLaps" && <TimeLapseSlider />}
         </Box>
       </Box>
     </Box>

@@ -7,13 +7,14 @@ import {
   addTimeLapseAction,
   removeTimeLapseAction,
 } from "../../../../../features/TimeLapse/TimeLapseSlice";
-import {
-  ALL_SLIDER_LAYERS,
-  ALL_SLIDER_SOURCES,
-} from "../../../../TimelapseSlider/hooks/useTimeLapseSlider";
+
 import { removeMapResources } from "../../../../utils";
 import type { CardItemType, UseMoreDiscoverProps } from "../../../types";
 import { toast } from "sonner";
+import {
+  ALL_SLIDER_LAYERS,
+  ALL_SLIDER_SOURCES,
+} from "../../../../../pages/Home/Timelapse/components/TimelapseSlider/hooks/useTimeLapseSlider";
 
 export const useMoreCard = ({ mode }: UseMoreDiscoverProps) => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);

@@ -1,6 +1,6 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
-import { LAYERS } from "../../components/MultiMapLayers/constants/layers";
 import type { ExtraLayer, MultiMapLayer, LayerType } from "./types";
+import { LAYERS } from "../../map/components/MultiMapLayers/constants/layers";
 
 const initialState: MultiMapLayer = {
   selectedBaseLayers: [LAYERS[0]],

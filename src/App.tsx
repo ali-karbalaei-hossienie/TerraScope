@@ -8,15 +8,15 @@ import { MapProvider } from "react-map-gl/mapbox";
 import { Provider } from "react-redux";
 import { Toaster } from "sonner";
 import { store } from "./app/store";
-import Map from "./components/Map/Map";
+import Map from "./map/Map";
 import { SidebarProvider } from "./components/SideBar/SidebarProvider";
 import type { ConfigType } from "./components/SideBar/types";
 import { customTheme } from "./theme/theme";
 import TerraScopeLoader from "./components/TerraScopeLoader/TerraScopeLoader";
 
-const Discover = lazy(() => import("./components/Discover/Discover"));
-const Weather = lazy(() => import("./components/Weather/Weather"));
-const Timelapse = lazy(() => import("./components/Timelapse/Timelapse"));
+const Discover = lazy(() => import("./pages/Home/Discover/Discover"));
+const Weather = lazy(() => import("./pages/Home/Weather/Weather"));
+const Timelapse = lazy(() => import("./pages/Home/Timelapse/Timelapse"));
 
 const sidebarConfig: ConfigType[] = [
   {
