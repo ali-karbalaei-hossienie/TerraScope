@@ -73,8 +73,12 @@ const MapButton = ({ children, icon, newPlacement, style }: MapButtonProps) => {
           backgroundColor: "background.paper",
           border: `1px solid ${theme.palette.background.paper}`,
           gap: 0.5,
+          transition: "all 0.4s ease-in-out",
           width: "fit-content",
           p: 0.5,
+          "&:hover": {
+            backgroundColor: theme.palette.primary.main,
+          },
         })}
       >
         <IconButton

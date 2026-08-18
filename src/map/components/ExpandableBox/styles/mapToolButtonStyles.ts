@@ -8,7 +8,7 @@ export function getMapToolButtonSx(theme: Theme, active = false) {
     color: active ? "white" : "text.secondary",
     backgroundColor: active ? theme.palette.primary.main : "transparent",
     boxShadow: 1,
-    transition: "all 0.2s ease",
+    transition: "all 0.4s ease-in-out",
     "&:hover": {
       backgroundColor: `${theme.palette.primary.main} !important`,
       color: "white !important",
@@ -27,6 +27,7 @@ export function getMapToolAccordionButtonSx(
     height: size,
     borderRadius: 0,
     color: expanded ? "primary.light" : "text.secondary",
+    transition: "all 0.4s ease-in-out",
     backgroundColor: expanded ? `${theme.palette.primary.dark}` : "transparent",
     "&:hover": {
       backgroundColor: `${theme.palette.primary.main} !important`,

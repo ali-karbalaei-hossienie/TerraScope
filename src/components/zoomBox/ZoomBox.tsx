@@ -14,19 +14,19 @@ const MapNavigation: FC = () => {
 
   const flyToHome = useCallback(() => {
     map?.flyTo({ center: [53.688, 32.4279], zoom: 5, duration: 2000 });
-  }, []);
+  }, [map]);
 
   const handleZoomIn = useCallback(() => {
     map?.zoomIn({ duration: 500 });
-  }, []);
+  }, [map]);
 
   const handleZoomOut = useCallback(() => {
     map?.zoomOut({ duration: 500 });
-  }, []);
+  }, [map]);
 
   const handleCompass = useCallback(() => {
     map?.resetNorth({ duration: 500 });
-  }, []);
+  }, [map]);
 
   useEffect(() => {
     if (!map) return;
@@ -55,6 +55,62 @@ const MapNavigation: FC = () => {
     };
   }, [map]);
 
+  // Data array for mapping over controls
+  const controls = [
+    {
+      id: "home",
+      type: "button",
+      icon: <HomeOutlinedIcon fontSize="small" />,
+      onClick: flyToHome,
+    },
+    {
+      id: "zoom-in",
+      type: "button",
+      icon: <AddOutlinedIcon fontSize="small" />,
+      onClick: handleZoomIn,
+    },
+    {
+      id: "zoom-text",
+      type: "custom",
+      // Custom render for the zoom text which is not an IconButton
+      render: () => (
+        <Box key="zoom-text" ref={zoomTextRef}>
+          {map ? Math.round(map.getZoom()) : 5}
+        </Box>
+      ),
+    },
+    {
+      id: "zoom-out",
+      type: "button",
+      icon: <RemoveOutlinedIcon fontSize="small" />,
+      onClick: handleZoomOut,
+    },
+    {
+      id: "compass",
+      type: "button",
+      icon: (
+        <Box
+          component="span"
+          ref={compassRef}
+          sx={{
+            display: "flex",
+            transition: "transform 100ms linear",
+            transformOrigin: "center",
+          }}
+        >
+          <NavigationOutlinedIcon fontSize="small" />
+        </Box>
+      ),
+      onClick: handleCompass,
+      // Extra styles specific to compass button
+      sx: {
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      },
+    },
+  ];
+
   return (
     <MapControl position="top-left">
       <Paper
@@ -73,60 +129,27 @@ const MapNavigation: FC = () => {
           width: "fit-content",
         })}
       >
-        <IconButton
-          sx={(theme) => ({
-            boxShadow: theme.shadows[1],
-          })}
-          onClick={flyToHome}
-        >
-          <HomeOutlinedIcon fontSize="small" />
-        </IconButton>
-        <IconButton
-          sx={(theme) => ({
-            boxShadow: theme.shadows[1],
-          })}
-          onClick={handleZoomIn}
-        >
-          <AddOutlinedIcon fontSize="small" />
-        </IconButton>
+        {controls.map((control) => {
+          // Render custom elements (like the zoom text Box)
+          if (control.type === "custom" && control.render) {
+            return control.render();
+          }
 
-        <Box ref={zoomTextRef}> {map ? Math.round(map.getZoom()) : 5}</Box>
-
-        <IconButton
-          sx={(theme) => ({
-            boxShadow: theme.shadows[1],
-          })}
-          onClick={handleZoomOut}
-        >
-          <RemoveOutlinedIcon fontSize="small" />
-        </IconButton>
-        <IconButton
-          sx={(theme) => ({
-            boxShadow: theme.shadows[1],
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          })}
-          onClick={handleCompass}
-        >
-          <Box
-            component="span"
-            ref={compassRef}
-            sx={(theme) => ({
-              boxShadow: theme.shadows[1],
-              display: "flex",
-              transition: "transform 100ms linear",
-              transformOrigin: "center",
-            })}
-            style={{
-              display: "flex",
-              transition: "transform 100ms linear",
-              transformOrigin: "center",
-            }}
-          >
-            <NavigationOutlinedIcon fontSize="small" />
-          </Box>
-        </IconButton>
+          // Render normal IconButtons
+          return (
+            <IconButton
+              key={control.id}
+              onClick={control.onClick}
+              sx={(theme) => ({
+                boxShadow: theme.shadows[1],
+                transition: "all 0.4s ease-in-out",
+                ...control.sx, // Merge extra styles if defined
+              })}
+            >
+              {control.icon}
+            </IconButton>
+          );
+        })}
       </Paper>
     </MapControl>
   );

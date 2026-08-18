@@ -15,6 +15,7 @@ export const useStyles = makeStyles()((theme) => ({
     margin: 0,
     boxShadow: theme.shadows[1],
     borderRadius: "50% !important",
+    transition: "all 0.4s ease-in-out",
     "&:hover": {
       backgroundColor: `${theme.palette.primary.main} !important`,
     },

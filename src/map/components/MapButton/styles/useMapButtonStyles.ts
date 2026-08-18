@@ -10,5 +10,8 @@ export const useMapButtonStyles = makeStyles()(() => ({
     borderRadius: "inherit",
     zIndex: 1200,
     overflow: "hidden",
+    "&:hover": {
+      backgroundColor: `initial !important`,
+    },
   },
 }));

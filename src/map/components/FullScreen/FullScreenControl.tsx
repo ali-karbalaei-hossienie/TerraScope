@@ -57,8 +57,12 @@ const FullscreenControl = () => {
           backgroundColor: "background.paper",
           border: `1px solid ${theme.palette.background.paper}`,
           gap: 0.5,
+          transition: "all 0.4s ease-in-out",
           width: "fit-content",
           p: 0.5,
+          "&:hover": {
+            backgroundColor: theme.palette.primary.main,
+          },
         })}
       >
         <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
@@ -67,7 +71,15 @@ const FullscreenControl = () => {
             placement="left"
             arrow
           >
-            <IconButton onClick={toggleFullscreen}>
+            <IconButton
+              disableRipple
+              sx={{
+                "&:hover": {
+                  backgroundColor: "initial !important",
+                },
+              }}
+              onClick={toggleFullscreen}
+            >
               {isFullscreen ? (
                 <FullscreenExitIcon fontSize="small" />
               ) : (
