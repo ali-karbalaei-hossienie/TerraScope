@@ -7,7 +7,7 @@ import enTranslations from "./locales/en";
 import faTranslations from "./locales/fa";
 
 const resources = {
-  // en: { translation: enTranslations },
+  en: { translation: enTranslations },
   fa: { translation: faTranslations },
 };
 
@@ -16,7 +16,7 @@ i18n
   .use(initReactI18next)
   .init({
     resources,
-    fallbackLng: "fa",
+    fallbackLng: "en",
     debug: true,
     interpolation: {
       escapeValue: false,

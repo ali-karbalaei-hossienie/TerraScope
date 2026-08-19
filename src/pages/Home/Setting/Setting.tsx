@@ -1,11 +1,17 @@
 import { Box, MenuItem, Select, Typography } from "@mui/material";
-import React from "react";
-import ThemeSection from "./components/ThemeSection/ThemeSection";
 import { useTranslation } from "react-i18next";
+import ThemeSection from "./components/ThemeSection/ThemeSection";
 
 export default function SettingPanel() {
-  const [lang, setLang] = React.useState("en");
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+
+  const currentLang = i18n.language || "fa";
+
+  const handleLanguageChange = (e: any) => {
+    const newLang = e.target.value;
+
+    i18n.changeLanguage(newLang);
+  };
 
   return (
     <>
@@ -18,8 +24,8 @@ export default function SettingPanel() {
           {t("language")}
         </Typography>
         <Select
-          value={lang}
-          onChange={(e) => setLang(e.target.value)}
+          value={currentLang}
+          onChange={handleLanguageChange}
           fullWidth
           size="small"
           sx={{
