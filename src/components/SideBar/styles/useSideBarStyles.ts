@@ -45,7 +45,7 @@ export const useSideBarStyles = makeStyles<SideBarStyleProps>()(
         ? theme.palette.primary.main
         : theme.palette.text.secondary,
       transition: "all 0.3s ease",
-      "&:hover": { color: theme.palette.secondary.main },
+      "&:hover": { color: theme.palette.primary.main },
     },
     sidebarItem: {
       margin: 0,
@@ -89,10 +89,6 @@ export const useSideBarStyles = makeStyles<SideBarStyleProps>()(
       display: "flex",
       gap: 8,
       flexDirection: "row",
-
-      '[dir="rtl"] &': {
-        flexDirection: "row-reverse",
-      },
     },
   }),
 );

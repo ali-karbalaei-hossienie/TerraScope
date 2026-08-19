@@ -6,10 +6,10 @@ import {
   ToggleButtonGroup,
   Typography,
 } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
-import type { RootState } from "../../../../../app/store";
-import { toggleColorMode } from "../../../../../features/setting/settingSlice";
 import { useTranslation } from "react-i18next";
+import { useDispatch, useSelector } from "react-redux";
+import type { RootState } from "../../../../app/store";
+import { toggleColorMode } from "../../../../features/setting/settingSlice";
 const ThemeSection = () => {
   const mode = useSelector((state: RootState) => state.setting.mode);
   const dispatch = useDispatch();
@@ -33,12 +33,11 @@ const ThemeSection = () => {
           "& .MuiToggleButton-root": {
             color: theme.palette.text.secondary,
             borderColor: theme.palette.divider,
+            transition: "all 0.3s ease-in-out",
 
             "&.Mui-selected": {
               color: theme.palette.primary.main,
-
               bgcolor: theme.palette.action.selected,
-
               "&:hover": {
                 bgcolor: theme.palette.action.hover,
               },

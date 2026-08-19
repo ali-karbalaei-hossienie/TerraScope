@@ -144,11 +144,10 @@ export const SidebarProvider = ({ config, children }: SidebarProviderProps) => {
                     <IconButton
                       size="small"
                       onClick={closeSidebar}
-                      sx={{
+                      sx={(theme) => ({
                         color: "text.secondary",
-                        bgcolor: "rgba(255, 255, 255, 0.06)",
-                        "&:hover": { bgcolor: "rgba(255, 255, 255, 0.12)" },
-                      }}
+                        bgcolor: theme.palette.divider,
+                      })}
                     >
                       <Close fontSize="small" />
                     </IconButton>

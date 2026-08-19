@@ -6,7 +6,7 @@ const translations = {
   discover: "discover",
   language: "Language",
   en: "English",
-  fa: "persion",
+  fa: "Persian",
   mapMode: "Map Mode",
   addTimeLapse: "Add To TimeLapse",
   timeLapse: "TimeLapse",
