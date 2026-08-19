@@ -4,10 +4,11 @@ import { Box, IconButton, Paper, Tooltip } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useMap } from "react-map-gl/mapbox"; // Import useMap
 import MapControl from "../MapControl/MapControl";
+import { useTranslation } from "react-i18next";
 
 const FullscreenControl = () => {
   const [isFullscreen, setIsFullscreen] = useState(false);
-
+  const { t } = useTranslation();
   // Get the current map instance
   const { current: map } = useMap();
 
@@ -67,7 +68,7 @@ const FullscreenControl = () => {
       >
         <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
           <Tooltip
-            title={isFullscreen ? "Exit Fullscreen" : "Enter Fullscreen"}
+            title={isFullscreen ? t("exitFullScreen") : t("enterFullScreen")}
             placement="left"
             arrow
           >

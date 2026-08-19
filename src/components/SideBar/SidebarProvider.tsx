@@ -24,6 +24,7 @@ import type {
   SidebarProviderProps,
 } from "./types";
 import { Close } from "@mui/icons-material";
+import { useTranslation } from "react-i18next";
 
 const SidebarContext = createContext<SidebarContextType | null>(null);
 
@@ -39,6 +40,7 @@ export const SidebarProvider = ({ config, children }: SidebarProviderProps) => {
   const [activeMenu, setActiveMenu] = useState<ActiveMenuType | null>(null);
   const { map } = useMap();
   const mapBox = map?.getMap();
+  const { t } = useTranslation();
 
   const isMenuOpen = Boolean(activeMenu);
   const activeItem = config.find((i) => i.id === activeMenu);
@@ -75,14 +77,14 @@ export const SidebarProvider = ({ config, children }: SidebarProviderProps) => {
           <SideBarItem
             key={item.id}
             icon={item.icon}
-            label={item.textButton}
+            label={t(item.textButton)}
             isActive={activeMenu === item.id}
             onClick={() => handleMenuClick(item.id)}
           />
         </List>
       ));
     },
-    [activeMenu, handleMenuClick],
+    [activeMenu, handleMenuClick, t],
   );
 
   const { classes } = useSideBarStyles({ isMenuOpen });
@@ -136,7 +138,8 @@ export const SidebarProvider = ({ config, children }: SidebarProviderProps) => {
                     })}
                   >
                     <Typography variant="h6" className={classes.panelTitle}>
-                      {`${activeItem?.textButton} Panel`}
+                      <span>{t("panel")}</span>
+                      <span>{t(activeItem?.textButton)}</span>
                     </Typography>
                     <IconButton
                       size="small"

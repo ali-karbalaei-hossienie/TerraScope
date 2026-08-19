@@ -21,7 +21,7 @@ const MapLayers = () => {
   return (
     <div>
       <Typography variant="subtitle1">
-        {isSplitMode ? t("multiMapLayers") : t("Map Layers")}
+        {isSplitMode ? t("multiMapLayers") : t("mapLayers")}
       </Typography>
       <Divider sx={{ mt: 1 }} />
       <Box className={classes["split-mode-toggle"]}>

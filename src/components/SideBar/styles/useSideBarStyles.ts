@@ -86,6 +86,13 @@ export const useSideBarStyles = makeStyles<SideBarStyleProps>()(
       textTransform: "capitalize",
       fontWeight: "bold",
       color: theme.palette.primary.main,
+      display: "flex",
+      gap: 8,
+      flexDirection: "row",
+
+      '[dir="rtl"] &': {
+        flexDirection: "row-reverse",
+      },
     },
   }),
 );

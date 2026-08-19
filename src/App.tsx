@@ -11,7 +11,6 @@ import { Toaster } from "sonner";
 import { type RootState } from "./app/store";
 import { SidebarProvider } from "./components/SideBar/SidebarProvider";
 import type { ConfigType } from "./components/SideBar/types";
-import TerraScopeLoader from "./components/TerraScopeLoader/TerraScopeLoader";
 import Map from "./map/Map";
 import { getDesignTokens } from "./theme/theme";
 
@@ -24,28 +23,28 @@ const sidebarConfig: ConfigType[] = [
   {
     id: "discover",
     position: "top",
-    textButton: "Discover",
+    textButton: "discover",
     icon: <PublicIcon />,
     component: Discover,
   },
   {
     id: "weather",
     position: "top",
-    textButton: "Weather",
+    textButton: "weather",
     icon: <ThunderstormIcon />,
     component: Weather,
   },
   {
     id: "timeLapse",
     position: "top",
-    textButton: "TimeLapse",
+    textButton: "timeLapse",
     icon: <TimelapseIcon />,
     component: Timelapse,
   },
   {
     id: "setting",
     position: "bottom",
-    textButton: "Setting",
+    textButton: "setting",
     icon: <SettingsIcon />,
     component: Setting,
   },
@@ -54,7 +53,6 @@ const sidebarConfig: ConfigType[] = [
 function App() {
   const [loading, setLoading] = useState(true);
   const mode = useSelector((state: RootState) => state.setting.mode);
-
   const theme = useMemo(() => createTheme(getDesignTokens(mode)), [mode]);
 
   useEffect(() => {
