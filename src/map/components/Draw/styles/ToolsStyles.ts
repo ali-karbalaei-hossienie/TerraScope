@@ -7,7 +7,7 @@ export const useStyles = makeStyles()((theme) => ({
     gap: 8,
     border: 0,
     "& svg": {
-      fill: theme.palette.primary.contrastText,
+      fill: theme.palette.text.primary,
     },
   },
   "draw-button": {

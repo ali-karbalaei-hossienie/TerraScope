@@ -1,38 +1,48 @@
-import { List, ListItem, ListItemButton, ListItemText } from "@mui/material";
-import { type FC, type ReactNode } from "react";
+import React from "react";
+import { ListItem, ListItemIcon, ListItemText } from "@mui/material";
 import { useSideBarStyles } from "../../styles/useSideBarStyles";
 
 interface SideBarItemProps {
-  icon: ReactNode;
   label: string;
+  icon: React.ReactNode;
   isActive: boolean;
   onClick: () => void;
 }
 
-const SideBarItem: FC<SideBarItemProps> = ({
-  icon,
+const SideBarItem: React.FC<SideBarItemProps> = ({
   label,
+  icon,
   isActive,
   onClick,
 }) => {
   const { classes } = useSideBarStyles({ isActive });
 
   return (
-    <List className={classes.sidebarListItem}>
-      <ListItem className={classes.sidebarItem}>
-        <ListItemButton
-          disableRipple
-          className={classes.sidebarButton}
-          onClick={onClick}
-        >
-          {icon}
-          <ListItemText
-            slotProps={{ primary: { sx: { fontSize: "0.8rem" } } }}
-            primary={label}
-          />
-        </ListItemButton>
-      </ListItem>
-    </List>
+    <ListItem
+      className={classes.sidebarListItem}
+      onClick={onClick}
+      disablePadding
+    >
+      <ListItemIcon
+        sx={{
+          minWidth: "auto",
+          marginBottom: "4px",
+        }}
+      >
+        {icon}
+      </ListItemIcon>
+      <ListItemText
+        slotProps={{
+          primary: {
+            sx: {
+              fontSize: "0.8rem",
+              textAlign: "center",
+            },
+          },
+        }}
+        primary={label}
+      />
+    </ListItem>
   );
 };
 

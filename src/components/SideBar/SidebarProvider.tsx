@@ -1,4 +1,10 @@
-import { Box, CircularProgress, IconButton, Typography } from "@mui/material";
+import {
+  Box,
+  CircularProgress,
+  IconButton,
+  List,
+  Typography,
+} from "@mui/material";
 import {
   createContext,
   useCallback,
@@ -65,13 +71,15 @@ export const SidebarProvider = ({ config, children }: SidebarProviderProps) => {
   const renderList = useCallback(
     (items: ConfigType[]) => {
       return items.map((item) => (
-        <SideBarItem
-          key={item.id}
-          icon={item.icon}
-          label={item.textButton}
-          isActive={activeMenu === item.id}
-          onClick={() => handleMenuClick(item.id)}
-        />
+        <List className={classes.sidebarListItem}>
+          <SideBarItem
+            key={item.id}
+            icon={item.icon}
+            label={item.textButton}
+            isActive={activeMenu === item.id}
+            onClick={() => handleMenuClick(item.id)}
+          />
+        </List>
       ));
     },
     [activeMenu, handleMenuClick],

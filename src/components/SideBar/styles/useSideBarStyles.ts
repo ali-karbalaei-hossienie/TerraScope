@@ -33,6 +33,8 @@ export const useSideBarStyles = makeStyles<SideBarStyleProps>()(
       cursor: "pointer",
       padding: "8px 6px 8px 6px",
       borderRadius: "10px",
+      width: "76px",
+      boxSizing: "border-box",
 
       backgroundColor: isActive
         ? `${theme.palette.background.paper}`

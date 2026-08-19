@@ -13,7 +13,7 @@ export interface SidebarProviderProps {
   children: ReactNode;
 }
 
-export type ActiveMenuType = "discover" | "weather" | "timeLapse";
+export type ActiveMenuType = "discover" | "weather" | "timeLapse" | "setting";
 
 export interface SidebarContextType {
   activeMenu: ActiveMenuType | null;
