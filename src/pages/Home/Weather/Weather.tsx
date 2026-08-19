@@ -6,36 +6,37 @@ import {
 } from "@mui/material";
 import { useWeather } from "./hooks/useWeather";
 import { useWeatherStyles } from "./styles/useWeatherStyles";
+import { useTranslation } from "react-i18next";
 
 const weatherOptions = [
   {
     value: "clouds",
-    label: "Clouds",
+    label: "clouds",
     src: "/images/clouds.jpg",
     alt: "clouds",
   },
-  { value: "rain", label: "Rain", src: "/images/rain.jpg", alt: "rain" },
+  { value: "rain", label: "rain", src: "/images/rain.jpg", alt: "rain" },
   {
     value: "temperature",
-    label: "Temperature",
+    label: "temperature",
     src: "/images/temp.jpg",
     alt: "temperature map",
   },
   {
     value: "aerosol",
-    label: "Aerosol",
+    label: "aerosol",
     src: "/images/drought40.jpg",
     alt: "aerosol map",
   },
   {
     value: "fires",
-    label: "Fires",
+    label: "fires",
     src: "/images/fires.jpg",
     alt: "fires map",
   },
   {
     value: "seaTemperature",
-    label: "Sea Temperature",
+    label: "seaTemperature",
     src: "/images/seaTemp.jpg",
     alt: "sea temperature map",
   },
@@ -44,6 +45,7 @@ const weatherOptions = [
 const Weather = () => {
   const { handleWeather, weather } = useWeather();
   const { classes } = useWeatherStyles();
+  const { t } = useTranslation();
 
   return (
     <Box className={classes["weather"]}>
@@ -76,7 +78,7 @@ const Weather = () => {
                     : theme.palette.primary.contrastText,
               })}
             >
-              {option.label}
+              {t(option.label)}
             </Typography>
           </Box>
         ))}

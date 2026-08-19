@@ -3,6 +3,7 @@ import Card from "../../../components/Card/Card";
 import SplitDiscover from "./components/SplitDiscover/SplitDiscover";
 import { discoverData } from "./constants";
 import { useDisCover } from "./hooks/useDisCover";
+import { useTranslation } from "react-i18next";
 
 const Discover = () => {
   const {
@@ -12,6 +13,7 @@ const Discover = () => {
     mapMode,
     handleMapMode,
   } = useDisCover();
+  const { t } = useTranslation();
 
   return (
     <>
@@ -23,7 +25,7 @@ const Discover = () => {
           marginBottom: "16px",
         }}
       >
-        <Typography sx={{ fontWeight: "bold" }}>Map Mode</Typography>
+        <Typography sx={{ fontWeight: "bold" }}>{t("mapMode")}</Typography>
         <SplitDiscover mapMode={mapMode} handleMapMode={handleMapMode} />
       </Box>
       {discoverData.map((data) => {

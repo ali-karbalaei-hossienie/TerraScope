@@ -3,6 +3,7 @@ import { IconButton, Menu, MenuItem } from "@mui/material";
 import { useCardStyles } from "../../styles/useCardStyles";
 import type { MoreCardProps } from "../../types";
 import { useMoreCard } from "./hooks/useMoreCard";
+import { useTranslation } from "react-i18next";
 
 const MoreCard = ({ discoverData, mode }: MoreCardProps) => {
   const { classes } = useCardStyles();
@@ -14,6 +15,7 @@ const MoreCard = ({ discoverData, mode }: MoreCardProps) => {
     handleTimeLapse,
     isAlreadyInTimeLapse,
   } = useMoreCard({ mode });
+  const { t } = useTranslation();
 
   return (
     <div>
@@ -38,7 +40,7 @@ const MoreCard = ({ discoverData, mode }: MoreCardProps) => {
           disabled={isAlreadyInTimeLapse(discoverData)}
           onClick={(e) => handleTimeLapse(e, discoverData)}
         >
-          {mode === "discover" ? " Add to TimeLapse" : "Remove"}
+          {mode === "discover" ? t("addTimeLapse") : t("remove")}
         </MenuItem>
       </Menu>
     </div>

@@ -11,6 +11,7 @@ import LeftLayers from "../LeftLayers/LeftLayers";
 import RightLayers from "../RightLayers/RightLayers";
 import { useDispatch } from "react-redux";
 import { setSwapLayers } from "../../../../../features/multiMapLayers/multiMapLayersSlice";
+import { useTranslation } from "react-i18next";
 
 export const SplitMode = () => {
   const [value, setValue] = React.useState("left");
@@ -23,6 +24,8 @@ export const SplitMode = () => {
   const swapLayer = () => {
     dispatch(setSwapLayers());
   };
+
+  const { t } = useTranslation();
   return (
     <div>
       <Divider>
@@ -37,8 +40,8 @@ export const SplitMode = () => {
             onChange={handleChange}
             aria-label="lab API tabs example"
           >
-            <Tab label="Left" value="left" />
-            <Tab label="right" value="right" />
+            <Tab label={t("left")} value="left" />
+            <Tab label={t("right")} value="right" />
           </TabList>
         </Box>
         <TabPanel value="left">

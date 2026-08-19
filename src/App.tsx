@@ -1,19 +1,19 @@
 import { ThemeProvider } from "@emotion/react";
 import PublicIcon from "@mui/icons-material/Public";
+import SettingsIcon from "@mui/icons-material/Settings";
 import ThunderstormIcon from "@mui/icons-material/Thunderstorm";
 import TimelapseIcon from "@mui/icons-material/Timelapse";
 import { Box, createTheme, CssBaseline } from "@mui/material";
 import { lazy, useEffect, useMemo, useState } from "react";
 import { MapProvider } from "react-map-gl/mapbox";
-import { Provider, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Toaster } from "sonner";
-import { store, type RootState } from "./app/store";
-import Map from "./map/Map";
+import { type RootState } from "./app/store";
 import { SidebarProvider } from "./components/SideBar/SidebarProvider";
 import type { ConfigType } from "./components/SideBar/types";
 import TerraScopeLoader from "./components/TerraScopeLoader/TerraScopeLoader";
+import Map from "./map/Map";
 import { getDesignTokens } from "./theme/theme";
-import SettingsIcon from "@mui/icons-material/Settings";
 
 const Discover = lazy(() => import("./pages/Home/Discover/Discover"));
 const Weather = lazy(() => import("./pages/Home/Weather/Weather"));
@@ -54,7 +54,6 @@ const sidebarConfig: ConfigType[] = [
 function App() {
   const [loading, setLoading] = useState(true);
   const mode = useSelector((state: RootState) => state.setting.mode);
-  console.log(mode);
 
   const theme = useMemo(() => createTheme(getDesignTokens(mode)), [mode]);
 
@@ -71,7 +70,7 @@ function App() {
       <CssBaseline />
       <Toaster position="top-right" richColors />
       <MapProvider>
-        <TerraScopeLoader visible={loading} />
+        {/* <TerraScopeLoader visible={loading} /> */}
         <SidebarProvider config={sidebarConfig}>
           <Box sx={{ flex: 1, width: "100%", height: "100%" }}>
             <Map />

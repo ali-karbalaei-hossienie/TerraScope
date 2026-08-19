@@ -7,6 +7,7 @@ import BaseLayer from "../BaseLayer/BaseLayer";
 import { SplitMode } from "../SplitMode/SplitMode";
 import type { RootState } from "../../../../../app/store";
 import { setIsSplitMode } from "../../../../../features/multiMapLayers/multiMapLayersSlice";
+import { useTranslation } from "react-i18next";
 
 const MapLayers = () => {
   const { classes } = useMapLayerStyles();
@@ -15,15 +16,17 @@ const MapLayers = () => {
     (state: RootState) => state.multiMapLayer,
   );
 
+  const { t } = useTranslation();
+
   return (
     <div>
       <Typography variant="subtitle1">
-        {isSplitMode ? "Multi Map Layers" : "Map Layers"}
+        {isSplitMode ? t("multiMapLayers") : t("Map Layers")}
       </Typography>
       <Divider sx={{ mt: 1 }} />
       <Box className={classes["split-mode-toggle"]}>
         <Typography component="div">
-          {isSplitMode ? "Single Mode" : "Split Mode"}
+          {isSplitMode ? t("singleMode") : t("splitMode")}
         </Typography>
         <Switch
           checked={isSplitMode}

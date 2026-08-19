@@ -1,9 +1,11 @@
 import { Box, MenuItem, Select, Typography } from "@mui/material";
 import React from "react";
 import ThemeSection from "./components/ThemeSection/ThemeSection";
+import { useTranslation } from "react-i18next";
 
 export default function SettingPanel() {
   const [lang, setLang] = React.useState("en");
+  const { t } = useTranslation();
 
   return (
     <>
@@ -13,7 +15,7 @@ export default function SettingPanel() {
       {/* Language Section */}
       <Box>
         <Typography variant="body2" sx={{ color: "#aaa", mb: 1.5 }}>
-          Language
+          {t("language")}
         </Typography>
         <Select
           value={lang}
@@ -30,8 +32,8 @@ export default function SettingPanel() {
             ".MuiSvgIcon-root": { color: "#aaa" },
           }}
         >
-          <MenuItem value="en">English</MenuItem>
-          <MenuItem value="fa">فارسی</MenuItem>
+          <MenuItem value="en">{t("en")}</MenuItem>
+          <MenuItem value="fa">{t("fa")}</MenuItem>
         </Select>
       </Box>
     </>

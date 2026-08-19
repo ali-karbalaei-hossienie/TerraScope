@@ -12,18 +12,20 @@ import ExpandableBox from "../ExpandableBox/ExpandableBox";
 import DeleteIcon from "../../../components/assets/DeleteIcon";
 import MapControl from "../MapControl/MapControl";
 import { getGeoman } from "../../utils/drawStore";
+import { useTranslation } from "react-i18next";
 
 type EditMode = "edit" | "change" | "delete" | "drag" | "rotate" | null;
 
 const EDIT_MODES = [
-  { value: "drag", title: "Drag", icon: <DragIcon fontSize="small" /> },
-  { value: "edit", title: "Edit", icon: <EditIcon fontSize="small" /> },
-  { value: "rotate", title: "Rotate", icon: <RotateIcon fontSize="small" /> },
-  { value: "delete", title: "Delete", icon: <DeleteIcon fontSize="small" /> },
+  { value: "drag", title: "drag", icon: <DragIcon fontSize="small" /> },
+  { value: "edit", title: "edit", icon: <EditIcon fontSize="small" /> },
+  { value: "rotate", title: "rotate", icon: <RotateIcon fontSize="small" /> },
+  { value: "delete", title: "delete", icon: <DeleteIcon fontSize="small" /> },
 ] as const;
 
 const Edit = () => {
   const [activeMode, setActiveMode] = useState<EditMode>(null);
+  const { t } = useTranslation();
 
   const { classes } = useStyles();
   const { map } = useMap();
@@ -92,7 +94,7 @@ const Edit = () => {
               }}
             />
           }
-          accordionText="Edit"
+          accordionText={t("edit")}
         >
           <ToggleButtonGroup
             color="primary"
@@ -104,7 +106,7 @@ const Edit = () => {
             {EDIT_MODES.map((mode) => (
               <Tooltip
                 key={mode.value}
-                title={mode.title}
+                title={t(mode.title)}
                 placement="left"
                 disableInteractive
               >

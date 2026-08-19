@@ -13,23 +13,24 @@ import PolygonIcon from "../../../components/assets/PolygonIcon";
 import { getGeoman } from "../../utils/drawStore";
 import MapControl from "../MapControl/MapControl";
 import ExpandableBox from "../ExpandableBox/ExpandableBox";
+import { useTranslation } from "react-i18next";
 
 type ModeType = "marker" | "circle" | "polygon" | "line" | null;
 
 const DRAW_MODES = [
-  { value: "marker", title: "Marker", icon: <RoomIcon fontSize="small" /> },
-  { value: "circle", title: "Circle", icon: <CircleIcon fontSize="small" /> },
+  { value: "marker", title: "marker", icon: <RoomIcon fontSize="small" /> },
+  { value: "circle", title: "circle", icon: <CircleIcon fontSize="small" /> },
   {
     value: "polygon",
-    title: "Polygon",
+    title: "polygon",
     icon: <PolygonIcon fontSize="small" />,
   },
-  { value: "line", title: "Line", icon: <PolylineIcon fontSize="small" /> },
+  { value: "line", title: "line", icon: <PolylineIcon fontSize="small" /> },
 ] as const;
 
 const Draw = () => {
   const [activeMode, setActiveMode] = useState<ModeType>(null);
-
+  const { t } = useTranslation();
   const { classes } = useStyles();
   const { map } = useMap();
 
@@ -57,7 +58,7 @@ const Draw = () => {
     <div>
       <MapControl position="top-right">
         <ExpandableBox
-          accordionText="Draw"
+          accordionText={t("draw")}
           accordionIcon={
             <GestureIcon
               sx={{
@@ -78,7 +79,7 @@ const Draw = () => {
             {DRAW_MODES.map((mode) => (
               <Tooltip
                 key={mode.value}
-                title={mode.title}
+                title={t(mode.title)}
                 placement="left"
                 disableInteractive
               >

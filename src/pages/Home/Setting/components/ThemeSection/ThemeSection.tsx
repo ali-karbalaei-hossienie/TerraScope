@@ -9,13 +9,16 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../../../../../app/store";
 import { toggleColorMode } from "../../../../../features/setting/settingSlice";
+import { useTranslation } from "react-i18next";
 const ThemeSection = () => {
   const mode = useSelector((state: RootState) => state.setting.mode);
   const dispatch = useDispatch();
+  const { t } = useTranslation();
+
   return (
     <Box sx={{ mb: 4 }}>
       <Typography variant="body2" sx={{ color: "text.secondary", mb: 1.5 }}>
-        Theme
+        {t("theme")}
       </Typography>
       <ToggleButtonGroup
         value={mode}
@@ -44,10 +47,11 @@ const ThemeSection = () => {
         })}
       >
         <ToggleButton value="light">
-          <WbSunnyOutlinedIcon sx={{ mr: 1, fontSize: 18 }} /> Light
+          <WbSunnyOutlinedIcon sx={{ mr: 1, fontSize: 18 }} />
+          {t("light")}
         </ToggleButton>
         <ToggleButton value="dark">
-          <DarkModeOutlinedIcon sx={{ mr: 1, fontSize: 18 }} /> Dark
+          <DarkModeOutlinedIcon sx={{ mr: 1, fontSize: 18 }} /> {t("dark")}
         </ToggleButton>
       </ToggleButtonGroup>
     </Box>
