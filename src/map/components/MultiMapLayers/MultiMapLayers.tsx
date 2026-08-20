@@ -1,13 +1,15 @@
 import LayersIcon from "@mui/icons-material/Layers";
 import { memo } from "react";
+import { useTranslation } from "react-i18next";
 import MapButton from "../MapButton/MapButton";
+import MapControl from "../MapControl/MapControl";
 import MapLayers from "./components/MapLayers/MapLayers";
 import { useMultiMapLayers } from "./hooks/useMultiMapLayers";
-import MapControl from "../MapControl/MapControl";
 
 const MultiMapLayers = () => {
   const { swipeRef, isSplitMode, startDragging, swipeRatio } =
     useMultiMapLayers();
+  const { t } = useTranslation();
 
   return (
     <div>
@@ -16,6 +18,7 @@ const MultiMapLayers = () => {
           style={{ width: 400, backgroundColor: "background.paper" }}
           newPlacement="right-start"
           icon={<LayersIcon fontSize="small" />}
+          title={t("mapLayers")}
         >
           <MapLayers />
         </MapButton>

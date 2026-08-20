@@ -1,16 +1,34 @@
 import { Box, MenuItem, Select, Typography } from "@mui/material";
+import { alpha } from "@mui/material/styles";
 import { useTranslation } from "react-i18next";
 
 const LanguageSection = () => {
   const { t, i18n } = useTranslation();
-
   const currentLang = i18n.language || "fa";
 
   const handleLanguageChange = (e: any) => {
     const newLang = e.target.value;
-
     i18n.changeLanguage(newLang);
   };
+
+  const menuItemSx = (theme: any) => ({
+    color: theme.palette.text.primary,
+    transition: "all 0.3s ease-in-out",
+    "&.Mui-selected": {
+      color: theme.palette.primary.main,
+      bgcolor: alpha(
+        theme.palette.primary.main,
+        theme.palette.action.selectedOpacity,
+      ),
+      "&:hover": {
+        bgcolor: alpha(
+          theme.palette.primary.main,
+          theme.palette.action.selectedOpacity +
+            theme.palette.action.hoverOpacity,
+        ),
+      },
+    },
+  });
 
   return (
     <Box>
@@ -23,33 +41,33 @@ const LanguageSection = () => {
         fullWidth
         size="small"
         sx={(theme) => ({
-          color: theme.palette.text.primary,
+          color: theme.palette.primary.main,
+
+          bgcolor: alpha(
+            theme.palette.primary.main,
+            theme.palette.action.selectedOpacity,
+          ),
+
+          ".MuiSelect-icon": {
+            color: theme.palette.primary.main,
+          },
+
           ".MuiOutlinedInput-notchedOutline": {
-            border: `1px solid ${theme.palette.divider}`,
+            borderColor: alpha(theme.palette.primary.main, 0.5),
+            transition: "all 0.3s ease-in-out",
           },
           "&:hover .MuiOutlinedInput-notchedOutline": {
-            // bgcolor: theme.palette.action.hover,
+            borderColor: theme.palette.primary.main,
           },
           "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-            // color: theme.palette.primary.main,
-            // bgcolor: theme.palette.action.selected,
+            borderColor: theme.palette.primary.main,
           },
         })}
       >
-        <MenuItem
-          sx={(theme) => ({
-            color: theme.palette.text.primary,
-          })}
-          value="en"
-        >
+        <MenuItem sx={menuItemSx} value="en">
           {t("en")}
         </MenuItem>
-        <MenuItem
-          sx={(theme) => ({
-            color: theme.palette.text.primary,
-          })}
-          value="fa"
-        >
+        <MenuItem sx={menuItemSx} value="fa">
           {t("fa")}
         </MenuItem>
       </Select>

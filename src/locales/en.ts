@@ -3,7 +3,7 @@ const translations = {
   setting: "Setting",
   dark: "Dark",
   light: "Light",
-  discover: "discover",
+  discover: "Discover",
   language: "Language",
   en: "English",
   fa: "Persian",

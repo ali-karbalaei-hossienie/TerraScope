@@ -4,6 +4,7 @@ import {
   IconButton,
   Paper,
   Popper,
+  Tooltip,
   Typography,
   type PopperPlacementType,
 } from "@mui/material";
@@ -15,10 +16,17 @@ interface MapButtonProps {
   children?: React.ReactNode;
   icon: React.ReactNode;
   newPlacement: PopperPlacementType;
+  title: string;
 
   style?: CSSProperties;
 }
-const MapButton = ({ children, icon, newPlacement, style }: MapButtonProps) => {
+const MapButton = ({
+  children,
+  icon,
+  newPlacement,
+  style,
+  title,
+}: MapButtonProps) => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const [open, setOpen] = useState(false);
   const [placement, setPlacement] = React.useState<PopperPlacementType>();
@@ -36,6 +44,7 @@ const MapButton = ({ children, icon, newPlacement, style }: MapButtonProps) => {
   return (
     <div>
       <Popper
+        disablePortal
         sx={{ zIndex: 1200 }}
         style={style}
         open={open}
@@ -81,13 +90,15 @@ const MapButton = ({ children, icon, newPlacement, style }: MapButtonProps) => {
           },
         })}
       >
-        <IconButton
-          disableRipple
-          className={classes["mapLayers-button"]}
-          onClick={handleClick(newPlacement)}
-        >
-          {icon}
-        </IconButton>
+        <Tooltip title={title} placement="right">
+          <IconButton
+            disableRipple
+            className={classes["mapLayers-button"]}
+            onClick={handleClick(newPlacement)}
+          >
+            {icon}
+          </IconButton>
+        </Tooltip>
       </Paper>
     </div>
   );

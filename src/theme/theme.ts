@@ -30,17 +30,4 @@ export const getDesignTokens = (mode: PaletteMode) => ({
       textTransform: "none" as const,
     },
   },
-  components: {
-    MuiIconButton: {
-      styleOverrides: {
-        root: ({ theme }: any) => ({
-          border: "none !important",
-          textTransform: "none",
-          "&:hover": {
-            backgroundColor: `${theme.palette.primary.main} !important`,
-          },
-        }),
-      },
-    },
-  },
 });

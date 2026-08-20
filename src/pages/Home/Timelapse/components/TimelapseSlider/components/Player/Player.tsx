@@ -2,6 +2,7 @@ import { IconButton } from "@mui/material";
 import React, { type FC } from "react";
 import PlayArrowRoundedIcon from "@mui/icons-material/PlayArrowRounded";
 import PauseRoundedIcon from "@mui/icons-material/PauseRounded";
+import { useTranslation } from "react-i18next";
 // import { usePlayer } from "./styles/usePlayer";
 
 interface PlayerProps {
@@ -9,6 +10,9 @@ interface PlayerProps {
   setIsPlay: React.Dispatch<React.SetStateAction<boolean>>;
 }
 const Player: FC<PlayerProps> = ({ setIsPlay, isPlay }) => {
+  const { i18n } = useTranslation();
+  const isRTL = i18n.language.startsWith("fa");
+
   return (
     <IconButton
       size="small"
@@ -21,7 +25,13 @@ const Player: FC<PlayerProps> = ({ setIsPlay, isPlay }) => {
       })}
       onClick={() => setIsPlay((prev: boolean) => !prev)}
     >
-      {isPlay ? <PauseRoundedIcon /> : <PlayArrowRoundedIcon />}
+      {isPlay ? (
+        <PauseRoundedIcon />
+      ) : (
+        <PlayArrowRoundedIcon
+          sx={{ transform: isRTL ? "scaleX(-1)" : "none" }}
+        />
+      )}
     </IconButton>
   );
 };

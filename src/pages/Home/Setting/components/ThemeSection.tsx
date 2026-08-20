@@ -6,10 +6,12 @@ import {
   ToggleButtonGroup,
   Typography,
 } from "@mui/material";
+import { alpha } from "@mui/material/styles";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../../../../app/store";
 import { toggleColorMode } from "../../../../features/setting/settingSlice";
+
 const ThemeSection = () => {
   const mode = useSelector((state: RootState) => state.setting.mode);
   const dispatch = useDispatch();
@@ -23,34 +25,44 @@ const ThemeSection = () => {
       <ToggleButtonGroup
         value={mode}
         exclusive
-        onChange={(e, newTheme) =>
+        onChange={(_, newTheme) =>
           newTheme && dispatch(toggleColorMode(newTheme))
         }
         fullWidth
         size="small"
         sx={(theme) => ({
-          border: `1px solid ${theme.palette.divider}`,
           "& .MuiToggleButton-root": {
             color: theme.palette.text.secondary,
             borderColor: theme.palette.divider,
             transition: "all 0.3s ease-in-out",
 
+            display: "flex",
+            gap: 1,
+
             "&.Mui-selected": {
               color: theme.palette.primary.main,
-              bgcolor: theme.palette.action.selected,
+              bgcolor: alpha(
+                theme.palette.primary.main,
+                theme.palette.action.selectedOpacity,
+              ),
               "&:hover": {
-                bgcolor: theme.palette.action.hover,
+                bgcolor: alpha(
+                  theme.palette.primary.main,
+                  theme.palette.action.selectedOpacity +
+                    theme.palette.action.hoverOpacity,
+                ),
               },
             },
           },
         })}
       >
         <ToggleButton value="light">
-          <WbSunnyOutlinedIcon sx={{ mr: 1, fontSize: 18 }} />
+          <WbSunnyOutlinedIcon sx={{ fontSize: 18 }} />
           {t("light")}
         </ToggleButton>
         <ToggleButton value="dark">
-          <DarkModeOutlinedIcon sx={{ mr: 1, fontSize: 18 }} /> {t("dark")}
+          <DarkModeOutlinedIcon sx={{ fontSize: 18 }} />
+          {t("dark")}
         </ToggleButton>
       </ToggleButtonGroup>
     </Box>
