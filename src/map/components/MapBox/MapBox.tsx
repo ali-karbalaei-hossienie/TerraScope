@@ -7,10 +7,10 @@ import { registerGeoman, unregisterGeoman } from "../../../map/utils/drawStore";
 import FullscreenControl from "../../../map/components/FullScreen/FullScreenControl";
 import MultiMapLayers from "../../../map/components/MultiMapLayers/MultiMapLayers";
 import Slider from "../../../components/Slider/Slider";
-import MapNavigation from "../../../components/zoomBox/ZoomBox";
 import CoordinateDisplay from "../CoordinateDisplay/CoordinateDisplay";
 import Edit from "../Edit/Edit";
 import Draw from "../Draw/Draw";
+import MapNavigation from "../MapNavigation/MapNavigation";
 
 const blankStyle: StyleSpecification = {
   version: 8,

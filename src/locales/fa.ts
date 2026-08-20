@@ -39,6 +39,10 @@ const translations = {
   multiMapLayers: "لایه‌های نقشه چندگانه",
   left: "چپ",
   right: "راست",
+  home: "خانه",
+  zoomIn: "افزایش زوم",
+  zoomOut: "کاهش زوم",
+  resetNorth: "بازنشانی جهت شمال ",
 } as const;
 
 export default translations;

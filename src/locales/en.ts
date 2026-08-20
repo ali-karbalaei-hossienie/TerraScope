@@ -40,6 +40,10 @@ const translations = {
   multiMapLayers: "Multi Map Layers",
   left: "Left",
   right: "Right",
+  home: "Home",
+  zoomIn: "zoom-in",
+  zoomOut: "zoom-out",
+  resetNorth: "reset North",
 } as const;
 
 export default translations;
