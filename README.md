@@ -91,7 +91,7 @@ Built with **React** and **Mapbox GL**, TerraScope supports both **Persian** and
 | Build Tool           | Vite                         |
 | Map Rendering        | Mapbox GL / React Map GL     |
 | Base Maps & Styles   | MapTiler                     |
-| Satellite Imagery    | NASA GIBS / WMTS             |
+| Satellite Imagery    | Soaratlas                    |
 | Weather Data         | NASA data services           |
 | Drawing Tools        | Geoman                       |
 | UI Components        | Material UI (MUI)            |
@@ -103,11 +103,11 @@ Built with **React** and **Mapbox GL**, TerraScope supports both **Persian** and
 
 ## Data Sources
 
-| Source                                                                                               | Usage                                            |
-| ---------------------------------------------------------------------------------------------------- | ------------------------------------------------ |
-| [NASA GIBS](https://www.earthdata.nasa.gov/eosdis/science-system-description/eosdis-components/gibs) | Satellite imagery and WMTS layers                |
-| NASA data services                                                                                   | Weather and environmental map data               |
-| [MapTiler](https://www.maptiler.com/)                                                                | Base maps, map styles, and geographic map layers |
+| Source                                | Usage                                            |
+| ------------------------------------- | ------------------------------------------------ |
+| [NASA GIBS](https://soaratlas.com/)   | Satellite imagery                                |
+| NASA data services                    | Weather and environmental map data               |
+| [MapTiler](https://www.maptiler.com/) | Base maps, map styles, and geographic map layers |
 
 ---
 
@@ -126,6 +126,6 @@ Make sure you have the following installed:
 1. Clone the repository:
 
 ```bash
-   git clone https://github.com/YOUR_USERNAME/terra-scope.git
+   git clone https://github.com/ali-karbalaei-hossienie/terra-scope.git
 
 ```
