@@ -44,6 +44,7 @@ const translations = {
   zoomIn: "zoom-in",
   zoomOut: "zoom-out",
   resetNorth: "reset North",
+  tools: "Tools",
 } as const;
 
 export default translations;

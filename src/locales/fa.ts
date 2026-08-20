@@ -25,7 +25,7 @@ const translations = {
   seaTemperature: "دمای دریا",
   remove: "حذف",
   drawTools: "ابزارهای ترسیم",
-  draw: "ترسیم",
+  draw: "رسم",
   marker: "نشانگر",
   circle: "دایره",
   polygon: "چندضلعی",
@@ -43,6 +43,7 @@ const translations = {
   zoomIn: "افزایش زوم",
   zoomOut: "کاهش زوم",
   resetNorth: "بازنشانی جهت شمال ",
+  tools: "ابزار",
 } as const;
 
 export default translations;

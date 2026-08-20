@@ -15,6 +15,7 @@ import {
   getMapToolAccordionButtonSx,
   getMapToolButtonSx,
 } from "./styles/mapToolButtonStyles";
+import { useTranslation } from "react-i18next";
 
 interface ExpandableBoxProps {
   children: ReactNode;
@@ -31,6 +32,7 @@ const ExpandableBox: FC<ExpandableBoxProps> = ({
 }) => {
   const theme = useTheme();
   const [expanded, setExpanded] = useState(false);
+  const { t } = useTranslation();
 
   return (
     <Paper
@@ -47,7 +49,7 @@ const ExpandableBox: FC<ExpandableBoxProps> = ({
     >
       {/* Main Toggle Button (Always visible) */}
       <Tooltip
-        title={`${accordionText} Tools`}
+        title={`${accordionText} ${t("tools")}`}
         placement="left"
         disableInteractive
       >
