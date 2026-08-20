@@ -4,7 +4,9 @@ import { useTranslation } from "react-i18next";
 
 const LanguageSection = () => {
   const { t, i18n } = useTranslation();
-  const currentLang = i18n.language || "fa";
+  const rawLang = i18n.language || localStorage.getItem("i18nextLng") || "fa";
+  const currentLang =
+    rawLang.substring(0, 2).toLowerCase() === "en" ? "en" : "fa";
 
   const handleLanguageChange = (e: any) => {
     const newLang = e.target.value;
@@ -36,7 +38,6 @@ const LanguageSection = () => {
         {t("language")}
       </Typography>
       <Select
-        defaultValue="en"
         value={currentLang}
         onChange={handleLanguageChange}
         fullWidth

@@ -4,6 +4,7 @@ import { Tooltip } from "@mui/material";
 import type { FC } from "react";
 import SplitLayoutIcon from "../../../../../../../../public/assets/SplitIcon";
 import SingleLayoutIcon from "../../../../../../../../public/assets/SingleLayoutIcon";
+import { useTranslation } from "react-i18next";
 
 interface SplitTimeLapseProps {
   mapMode: "single" | "split";
@@ -17,6 +18,7 @@ const SplitTimeLapse: FC<SplitTimeLapseProps> = ({
   mapMode,
   handleMapMode,
 }) => {
+  const { t } = useTranslation();
   return (
     <ToggleButtonGroup
       value={mapMode}
@@ -27,7 +29,7 @@ const SplitTimeLapse: FC<SplitTimeLapseProps> = ({
       size="small"
       sx={{ marginTop: 2 }}
     >
-      <Tooltip title="Single Mode" arrow placement="top">
+      <Tooltip title={t("singleMode")} arrow placement="top">
         <ToggleButton
           sx={{ padding: "4px 8px" }}
           value="single"
@@ -36,7 +38,7 @@ const SplitTimeLapse: FC<SplitTimeLapseProps> = ({
           <SingleLayoutIcon />
         </ToggleButton>
       </Tooltip>
-      <Tooltip title="Split Mode" arrow placement="top">
+      <Tooltip title={t("splitMode")} arrow placement="top">
         <ToggleButton
           sx={{ padding: "4px 8px" }}
           value="split"

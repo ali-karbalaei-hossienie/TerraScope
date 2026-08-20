@@ -4,11 +4,13 @@ import Tooltip from "@mui/material/Tooltip";
 import type { SplitDiscoverProps } from "../../types";
 import SingleLayoutIcon from "../../../../../../public/assets/SingleLayoutIcon";
 import SplitLayoutIcon from "../../../../../../public/assets/SplitIcon";
+import { useTranslation } from "react-i18next";
 
 export default function SplitDiscover({
   mapMode,
   handleMapMode,
 }: SplitDiscoverProps) {
+  const { t } = useTranslation();
   return (
     <ToggleButtonGroup
       value={mapMode}
@@ -17,7 +19,7 @@ export default function SplitDiscover({
       aria-label="view mode selection"
       color="primary"
     >
-      <Tooltip title="Single Mode" arrow placement="top">
+      <Tooltip title={t("singleMode")} arrow placement="top">
         <ToggleButton
           sx={{ padding: "4px 8px" }}
           value="single"
@@ -27,7 +29,7 @@ export default function SplitDiscover({
         </ToggleButton>
       </Tooltip>
 
-      <Tooltip title="Split Mode" arrow placement="top">
+      <Tooltip title={t("splitMode")} arrow placement="top">
         <ToggleButton
           sx={{ padding: "4px 8px" }}
           value="split"
