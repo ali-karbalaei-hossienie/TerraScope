@@ -1,9 +1,7 @@
-// src/i18next.d.ts
+import "i18next";
+import enTranslations from "../src/locales/en";
 
-import "react-i18next";
-import type enTranslations from "./i18n/locales/en";
-
-declare module "react-i18next" {
+declare module "i18next" {
   interface CustomTypeOptions {
     defaultNS: "translation";
     resources: {

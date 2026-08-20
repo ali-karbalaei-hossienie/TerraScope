@@ -15,6 +15,7 @@ import {
   ALL_SLIDER_LAYERS,
   ALL_SLIDER_SOURCES,
 } from "../../../../../pages/Home/Timelapse/components/TimelapseSlider/hooks/useTimeLapseSlider";
+import { useTranslation } from "react-i18next";
 
 export const useMoreCard = ({ mode }: UseMoreDiscoverProps) => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
@@ -25,6 +26,7 @@ export const useMoreCard = ({ mode }: UseMoreDiscoverProps) => {
   const { map } = useMap();
   const mapBox = map?.getMap();
   const timeLaps = useSelector((state: RootState) => state.timeLapse);
+  const { t } = useTranslation();
 
   const dispatch = useDispatch();
 
@@ -64,11 +66,11 @@ export const useMoreCard = ({ mode }: UseMoreDiscoverProps) => {
     event.stopPropagation();
     if (mode === "discover") {
       dispatch(addTimeLapseAction(data));
-      toast.success("Item added successfully.");
+      toast.success(t("toastAdded"));
     } else {
       dispatch(removeTimeLapseAction({ id: data.id }));
       removeImageOnMap(data);
-      toast.success("Item removed successfully.");
+      toast.success(t("toastRemoved"));
     }
     setAnchorEl(null);
   };

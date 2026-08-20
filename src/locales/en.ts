@@ -45,6 +45,8 @@ const translations = {
   zoomOut: "zoom-out",
   resetNorth: "reset North",
   tools: "Tools",
+  toastAdded: "Item added successfully.",
+  toastRemoved: "Item removed successfully.",
 } as const;
 
 export default translations;

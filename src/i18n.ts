@@ -2,14 +2,13 @@ import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
 
-// Import translation files
 import enTranslations from "./locales/en";
 import faTranslations from "./locales/fa";
 
-const resources = {
+export const resources = {
   en: { translation: enTranslations },
   fa: { translation: faTranslations },
-};
+} as const;
 
 i18n
   .use(LanguageDetector)
@@ -17,7 +16,7 @@ i18n
   .init({
     resources,
     fallbackLng: "en",
-    debug: true,
+    debug: import.meta.env.DEV,
     interpolation: {
       escapeValue: false,
     },

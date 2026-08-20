@@ -44,6 +44,8 @@ const translations = {
   zoomOut: "کاهش زوم",
   resetNorth: "بازنشانی جهت شمال ",
   tools: "ابزار",
+  toastAdded: "آیتم با موفقیت اضافه شد",
+  toastRemoved: "آیتم حذف شد.",
 } as const;
 
 export default translations;
