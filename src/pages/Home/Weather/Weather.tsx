@@ -78,7 +78,7 @@ const Weather = () => {
                     : theme.palette.primary.contrastText,
               })}
             >
-              {t(option.label)}
+              {t(option.label as never)}
             </Typography>
           </Box>
         ))}

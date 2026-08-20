@@ -146,7 +146,7 @@ const MapNavigation: FC = () => {
 
           // Render normal IconButtons
           return (
-            <Tooltip title={t(control.title)} placement="right">
+            <Tooltip title={t(control.title as never)} placement="right">
               <IconButton
                 key={control.id}
                 onClick={control.onClick}

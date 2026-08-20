@@ -77,7 +77,7 @@ export const SidebarProvider = ({ config, children }: SidebarProviderProps) => {
           <SideBarItem
             key={item.id}
             icon={item.icon}
-            label={t(item.textButton)}
+            label={t(item.textButton as never)}
             isActive={activeMenu === item.id}
             onClick={() => handleMenuClick(item.id)}
           />
@@ -139,7 +139,7 @@ export const SidebarProvider = ({ config, children }: SidebarProviderProps) => {
                   >
                     <Typography variant="h6" className={classes.panelTitle}>
                       <span>{t("panel")}</span>
-                      <span>{t(activeItem?.textButton)}</span>
+                      <span>{t(activeItem.textButton as never)}</span>
                     </Typography>
                     <IconButton
                       size="small"
