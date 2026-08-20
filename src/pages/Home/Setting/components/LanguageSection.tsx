@@ -36,6 +36,7 @@ const LanguageSection = () => {
         {t("language")}
       </Typography>
       <Select
+        defaultValue="en"
         value={currentLang}
         onChange={handleLanguageChange}
         fullWidth

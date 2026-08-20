@@ -5,7 +5,7 @@ export const discoverData: CardItemType[] = [
     id: 1,
     createdAt: "2026-08-15T14:30:00.000Z",
     title: "Zone 1 (Top-Left)",
-    image: "/public/images/140802.png",
+    image: "/images/140802.png",
     description: "by StandFord university",
     coordinates: [
       [-122.4, 37.8], // Top-Left
@@ -18,7 +18,7 @@ export const discoverData: CardItemType[] = [
     id: 2,
     title: "Zone 2 (Top-Center)",
     createdAt: "2026-07-15T18:00:00.000Z",
-    image: "/public/images/140844.png",
+    image: "/images/140844.png",
     description: "by StandFord university",
     coordinates: [
       [-122.39, 37.8],
@@ -31,7 +31,7 @@ export const discoverData: CardItemType[] = [
     id: 3,
     title: "Zone 3 (Top-Right)",
     createdAt: "2026-04-15T10:30:00.000Z",
-    image: "/public/images/140916.png",
+    image: "/images/140916.png",
     description: "by StandFord university",
     coordinates: [
       [-122.38, 37.8],
@@ -44,7 +44,7 @@ export const discoverData: CardItemType[] = [
     id: 4,
     title: "Zone 4 (Middle-Left)",
     createdAt: "2026-01-15T19:00:00.000Z",
-    image: "/public/images/141239.png",
+    image: "/images/141239.png",
     description: "by StandFord university",
     coordinates: [
       [-122.4, 37.79],
@@ -57,7 +57,7 @@ export const discoverData: CardItemType[] = [
     id: 5,
     title: "Zone 5 (Center)",
     createdAt: "2026-02-15T20:30:00.000Z",
-    image: "/public/images/141266.png",
+    image: "/images/141266.png",
     description: "by StandFord university",
     coordinates: [
       [-122.39, 37.79],
@@ -70,7 +70,7 @@ export const discoverData: CardItemType[] = [
     id: 6,
     title: "Zone 6 (Middle-Right)",
     createdAt: "2025-11-15T22:00:00.000Z",
-    image: "/public/images/141669.png",
+    image: "/images/141669.png",
     description: "by StandFord university",
     coordinates: [
       [-122.38, 37.79],
@@ -83,7 +83,7 @@ export const discoverData: CardItemType[] = [
     id: 7,
     title: "Zone 7 (Bottom-Left)",
     createdAt: "2025-10-15T09:30:00.000Z",
-    image: "/public/images/141834.png",
+    image: "/images/141834.png",
     description: "by StandFord university",
     coordinates: [
       [-122.4, 37.78],
@@ -96,7 +96,7 @@ export const discoverData: CardItemType[] = [
     id: 8,
     title: "Zone 8 (Bottom-Center)",
     createdAt: "2025-08-15T13:30:00.000Z",
-    image: "/public/images/141837.png",
+    image: "/images/141837.png",
     description: "by StandFord university",
     coordinates: [
       [-122.39, 37.78],
@@ -109,7 +109,7 @@ export const discoverData: CardItemType[] = [
     id: 9,
     title: "Zone 9 (Bottom-Right)",
     createdAt: "2025-04-15T18:30:00.000Z",
-    image: "/public/images/142042.png",
+    image: "/images/142042.png",
     description: "by StandFord university",
     coordinates: [
       [-122.38, 37.78],
