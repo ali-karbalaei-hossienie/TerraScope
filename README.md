@@ -46,7 +46,7 @@ Built with **React** and **Mapbox GL**, TerraScope supports both **Persian** and
 
 <div align="center">
   <img
-    src="/public/screenshots/terraScope-demo.gif"
+    src="./public/screenshots/terrascope-demo.gif"
     alt="Comparing satellite imagery layers in Split View"
     width="900"
   />
@@ -117,7 +117,7 @@ Built with **React** and **Mapbox GL**, TerraScope supports both **Persian** and
 
 | Source                                | Usage                                            |
 | ------------------------------------- | ------------------------------------------------ |
-| [NASA GIBS](https://soaratlas.com/)   | Satellite imagery                                |
+| [soarAtlas](https://soaratlas.com/)   | Satellite imagery                                |
 | NASA data services                    | Weather and environmental map data               |
 | [MapTiler](https://www.maptiler.com/) | Base maps, map styles, and geographic map layers |
 
@@ -131,7 +131,6 @@ Make sure you have the following installed:
 
 - [Node.js](https://nodejs.org/) — version `18` or later recommended
 - npm, pnpm, or yarn
-- A MapTiler API key
 
 ### Installation
 
@@ -139,5 +138,8 @@ Make sure you have the following installed:
 
 ```bash
    git clone https://github.com/ali-karbalaei-hossienie/terra-scope.git
+   cd terra-scope
+   npm install
+   npm run dev
 
 ```
