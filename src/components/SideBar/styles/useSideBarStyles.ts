@@ -31,40 +31,39 @@ export const useSideBarStyles = makeStyles<SideBarStyleProps>()(
       flexDirection: "column",
       alignItems: "center",
       cursor: "pointer",
-      padding: "8px 6px 8px 6px",
+      padding: "8px 6px",
       borderRadius: "10px",
       width: "76px",
       boxSizing: "border-box",
 
       backgroundColor: isActive
-        ? `${theme.palette.background.paper}`
+        ? theme.palette.background.paper
         : "transparent",
+
       border: "1px solid",
-      borderColor: isActive ? `${theme.palette.primary.main}` : "transparent",
+      borderColor: isActive ? theme.palette.primary.main : "transparent",
+
       color: isActive
         ? theme.palette.primary.main
         : theme.palette.text.secondary,
-      transition: "all 0.3s ease",
-      "&:hover": { color: theme.palette.primary.main },
-    },
-    sidebarItem: {
-      margin: 0,
-      padding: 0,
-    },
-    sidebarButton: {
-      display: "flex",
-      flexDirection: "column",
-      padding: 0,
-      margin: 0,
-      "& .MuiSvgIcon-root": {
-        fontSize: 22,
-        marginBottom: 2,
-        transition: "color 0.2s ease",
+
+      transition: "all 0.3s ease-in-out",
+
+      "& .MuiSvgIcon-root, & .MuiListItemText-primary": {
+        color: isActive
+          ? theme.palette.primary.main
+          : theme.palette.text.secondary,
+        transition: "color 0.3s ease-in-out",
       },
       "&:hover": {
-        backgroundColor: "inherit !important",
+        color: theme.palette.primary.main,
+
+        "& .MuiSvgIcon-root, & .MuiListItemText-primary": {
+          color: theme.palette.primary.main,
+        },
       },
     },
+
     menuPanel: {
       width: isMenuOpen ? "400px" : "0px",
       transition: "width 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
