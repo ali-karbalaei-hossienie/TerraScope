@@ -18,7 +18,7 @@ export const useTimeLapseSliderStyles = makeStyles()((theme) => ({
       height: 75,
       width: 3,
       transform: "translateX(-50%)",
-      backgroundColor: theme.palette.primary.contrastText,
+      backgroundColor: theme.palette.text.primary,
       borderRadius: 0,
       zIndex: 3,
       "&:focus, &:hover, &.Mui-active, &.Mui-focusVisible": {

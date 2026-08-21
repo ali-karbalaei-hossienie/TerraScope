@@ -27,7 +27,6 @@ export const useSliderStyle = makeStyles()((theme) => ({
       height: 4,
       top: 0,
       transform: "none",
-      backgroundColor: theme.palette.primary.contrastText,
       border: "none",
       zIndex: 2,
     },
@@ -36,7 +35,7 @@ export const useSliderStyle = makeStyles()((theme) => ({
       width: 3,
       top: 0,
       transform: "translateX(-50%)",
-      backgroundColor: theme.palette.primary.contrastText,
+      backgroundColor: theme.palette.text.primary,
       borderRadius: 0,
       zIndex: 3,
       "&:focus, &:hover, &.Mui-active, &.Mui-focusVisible": {

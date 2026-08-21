@@ -46,7 +46,7 @@ Built with **React** and **Mapbox GL**, TerraScope supports both **Persian** and
 
 <div align="center">
   <img
-    src="./public/screenshots/terrascope-demo.gif"
+    src="/public/screenshots/terrascope-demo.gif"
     alt="Comparing satellite imagery layers in Split View"
     width="900"
   />

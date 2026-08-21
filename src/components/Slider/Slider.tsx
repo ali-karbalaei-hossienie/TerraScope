@@ -1,8 +1,9 @@
 import { Box, Slider as SliderMui } from "@mui/material";
-import Player from "./components/player/Player";
 import { useSlider } from "./hooks/useSlider";
 import { useSliderStyle } from "./style/useSliderStyle";
 import MapControl from "../../map/components/MapControl/MapControl";
+import { useTranslation } from "react-i18next";
+import Player from "../Player/Player";
 
 const Slider = () => {
   const {
@@ -16,10 +17,14 @@ const Slider = () => {
   } = useSlider();
   const { classes } = useSliderStyle();
 
+  const { i18n } = useTranslation();
+
   if (!sliderData.length || !isVisible) return null;
 
   return (
-    <MapControl position="bottom-left">
+    <MapControl
+      position={i18n?.dir() === "ltr" ? "bottom-left" : "bottom-right"}
+    >
       <Box className={classes.sliderContainer}>
         <Player isPlay={isPlay} setIsPlay={setIsPlay} />
         <SliderMui

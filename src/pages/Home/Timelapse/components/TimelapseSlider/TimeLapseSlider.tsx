@@ -1,8 +1,8 @@
 import { Box, Slider } from "@mui/material";
 import { useTimeLapseSlider } from "./hooks/useTimeLapseSlider";
-import Player from "./components/Player/Player";
 import { useTimeLapseSliderStyles } from "./styles/useTimeLapseSliderStyles";
 import SplitTimeLapse from "./components/SplitTimeLapse/SplitTimeLapse";
+import Player from "../../../../../components/Player/Player";
 
 const TimeLapseSlider = () => {
   const {

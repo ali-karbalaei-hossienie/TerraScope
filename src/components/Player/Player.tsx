@@ -3,7 +3,6 @@ import React, { type FC } from "react";
 import PlayArrowRoundedIcon from "@mui/icons-material/PlayArrowRounded";
 import PauseRoundedIcon from "@mui/icons-material/PauseRounded";
 import { useTranslation } from "react-i18next";
-// import { usePlayer } from "./styles/usePlayer";
 
 interface PlayerProps {
   isPlay: boolean;
